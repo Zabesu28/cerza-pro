@@ -33,6 +33,30 @@ db.connect(function (err) {
 
 // Routes
 // - GET :
+// Permet de récupérer les comptes de tous les utilisateurs
+app.get("/utilisateurs", (req, res) => {
+  db.query(
+    "SELECT idEmploye, nomEmploye, prenomEmploye, login, libelleFonction FROM employes INNER JOIN fonctions ON idFonctionEmploye = idFonction",
+    function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
+});
+
+// Permet de récupérer le compte d'un utilisateur spécifique
+app.get("/utilisateurs/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  db.query(
+    "SELECT idEmploye, nomEmploye, prenomEmploye, login, libelleFonction FROM employes INNER JOIN fonctions ON idFonctionEmploye = idFonction WHERE idEmploye = " +
+      id,
+    function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
+});
 
 // - POST :
 // Permet de vérifier la connexion au site de cerza
@@ -75,8 +99,8 @@ app.post("/verifCnx", (req, res) => {
   );
 });
 
-// Inscrire un utilisateur
-app.post("/inscrUtil", (req, res) => {
+// Ajout d'un utilisateur
+app.post("/ajoutUtil", (req, res) => {
   const data = {
     nomEmploye: req.body.nom,
     prenomEmploye: req.body.prenom,
@@ -97,7 +121,7 @@ app.post("/inscrUtil", (req, res) => {
   });
 });
 
-// Verifier si un utilisateur existe en regardant par son nom ET son prénom OU par son identifiant
+// Verifier si un utilisateur existe en regardant par son nom ET son prénom OU par son identifiant OU par les trois en même temps
 app.post("/verifUtilExist", (req, res) => {
   const data = {
     nomEmploye: req.body.nom,
@@ -105,26 +129,197 @@ app.post("/verifUtilExist", (req, res) => {
     login: req.body.identifiant,
   };
 
-  if (data.nomEmploye != "" && data.prenomEmploye != "" && data.login == "") {
-    res.json({ cas: "1" });
-  } else if (
-    data.nomEmploye == "" &&
-    data.prenomEmploye == "" &&
-    data.login != ""
+  if (
+    typeof data.nomEmploye != "undefined" &&
+    typeof data.prenomEmploye != "undefined" &&
+    typeof data.login != "undefined"
   ) {
-    res.json({ cas: "2" });
-  } else if (
-    data.nomEmploye != "" &&
-    data.prenomEmploye != "" &&
-    data.login != ""
-  ) {
-    res.json({ cas: "3" });
+    if (data.nomEmploye != "" && data.prenomEmploye != "" && data.login == "") {
+      db.query(
+        "SELECT COUNT(*) AS nb_compte_exist FROM employes WHERE nomEmploye = '" +
+          data.nomEmploye +
+          "' AND prenomEmploye ='" +
+          data.prenomEmploye +
+          "'",
+        function (err, result) {
+          if (err) throw err;
+
+          if (result[0].nb_compte_exist == 0) {
+            res.json({ isExist: false });
+          } else {
+            res.json({ isExist: true });
+          }
+        }
+      );
+    } else if (
+      data.nomEmploye == "" &&
+      data.prenomEmploye == "" &&
+      data.login != ""
+    ) {
+      db.query(
+        "SELECT COUNT(*) AS nb_compte_exist FROM employes WHERE login = '" +
+          data.login +
+          "'",
+        function (err, result) {
+          if (err) throw err;
+
+          if (result[0].nb_compte_exist == 0) {
+            res.json({ isExist: false });
+          } else {
+            res.json({ isExist: true });
+          }
+        }
+      );
+    } else if (
+      data.nomEmploye != "" &&
+      data.prenomEmploye != "" &&
+      data.login != ""
+    ) {
+      db.query(
+        "SELECT COUNT(*) AS nb_compte_exist FROM employes WHERE nomEmploye = '" +
+          data.nomEmploye +
+          "' AND prenomEmploye ='" +
+          data.prenomEmploye +
+          "' AND login = '" +
+          data.login +
+          "'",
+        function (err, result) {
+          if (err) throw err;
+
+          if (result[0].nb_compte_exist == 0) {
+            res.json({ isExist: false });
+          } else {
+            res.json({ isExist: true });
+          }
+        }
+      );
+    } else {
+      res.status(400).json({
+        error:
+          "Veuillez saisir soit le prénom ET le nom, soit l'identifiant uniquement ou soit les trois en même temps !",
+      });
+    }
   } else {
-    res.json({ error: "zebi" });
+    res.status(400).json({
+      error:
+        "Veuillez saisir le body complet de la requête HTTP ('nom', 'prenom' et 'identifiant') !",
+    });
   }
-  console.log(data);
 });
 
 // - PUT :
+// Modifier les informations d'un utilisateur
+app.put("/modifUtil/:id", (req, res) => {
+  const idModif = parseInt(req.params.id);
+
+  const data = {
+    nomEmploye: req.body.nom,
+    prenomEmploye: req.body.prenom,
+    login: req.body.identifiant,
+    mdp: req.body.password,
+    idFonctionEmploye: req.body.fonction,
+  };
+
+  let cptUpdate = 0;
+
+  if (typeof data.nomEmploye !== "undefined" && data.nomEmploye != "") {
+    db.query(
+      "UPDATE employes SET nomEmploye = '" +
+        data.nomEmploye +
+        "' WHERE idEmploye = " +
+        idModif,
+      function (err, result) {
+        if (err) throw err;
+      }
+    );
+
+    cptUpdate++;
+  }
+
+  if (typeof data.prenomEmploye !== "undefined" && data.prenomEmploye != "") {
+    db.query(
+      "UPDATE employes SET prenomEmploye = '" +
+        data.prenomEmploye +
+        "' WHERE idEmploye = " +
+        idModif,
+      function (err, result) {
+        if (err) throw err;
+      }
+    );
+
+    cptUpdate++;
+  }
+
+  if (typeof data.login !== "undefined" && data.login != "") {
+    db.query(
+      "UPDATE employes SET login = '" +
+        data.login +
+        "' WHERE idEmploye = " +
+        idModif,
+      function (err, result) {
+        if (err) throw err;
+      }
+    );
+
+    cptUpdate++;
+  }
+
+  if (typeof data.mdp !== "undefined" && data.mdp != "") {
+    db.query(
+      "UPDATE employes SET mdp = '" +
+        createHash("sha256").update(data.mdp).digest("hex") +
+        "' WHERE idEmploye = " +
+        idModif,
+      function (err, result) {
+        if (err) throw err;
+      }
+    );
+
+    cptUpdate++;
+  }
+
+  if (
+    typeof data.idFonctionEmploye !== "undefined" &&
+    data.idFonctionEmploye != ""
+  ) {
+    db.query(
+      "UPDATE employes SET idFonctionEmploye = '" +
+        data.idFonctionEmploye +
+        "' WHERE idEmploye = " +
+        idModif,
+      function (err, result) {
+        if (err) throw err;
+      }
+    );
+
+    cptUpdate++;
+  }
+
+  if (cptUpdate == 0) {
+    res.status(400).json({
+      status: "failure",
+      reason:
+        "Aucune modification n'a été réalisée, veuillez saisir au moins un élément pour réaliser une modification !",
+    });
+  } else {
+    res.json({
+      status: "succes",
+      nb_update: cptUpdate,
+    });
+  }
+});
 
 // - DELETE :
+// Supprimer un utilisateur
+app.delete("/supprUtil/:id", (req, res) => {
+  const idSuppr = parseInt(req.params.id);
+
+  db.query(
+    "DELETE FROM employes WHERE idEmploye = " + idSuppr,
+    function (err, result) {
+      if (err) throw err;
+
+      res.json(result);
+    }
+  );
+});
