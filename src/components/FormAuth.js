@@ -3,8 +3,10 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FormAuth = (typeForm) => {
+  const navigate = useNavigate();
   const [identifiant, setIdentifiant] = useState("");
   const [mdp, setMdp] = useState("");
   const [idInputError, setIdInputError] = useState(false);
