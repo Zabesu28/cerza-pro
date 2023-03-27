@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 
+
 const ModifAlerte = () => {
   // state variables
   const [descriptionAlerte, descriptionAlertechange] = useState('');
@@ -62,6 +63,12 @@ const ModifAlerte = () => {
     []
     );
     
+    function change(idNiveau, libelle) {
+      // Mise à jour de l'état "libelleNiveau"
+      libelleNiveauchange(libelle);
+    
+      // Autres traitements à effectuer ici
+    }
 
   const handlesubmit = (e) => {
       e.preventDefault();
@@ -94,13 +101,20 @@ const ModifAlerte = () => {
       Description
       <input type="textarea" name="descriptionAlerte" value={descriptionAlerte} onChange={e => descriptionAlertechange(e.target.value)}/>
     </label>
-    <select name="idEmployeAlerte" onChange={e => idEmployechange(e.target.value)}> 
-  <option value={idEmployeAlerte}>{nomEmploye + " " + prenomEmploye}</option>
-  {(employes.filter(unEmploye => unEmploye.idEmploye != idEmployeAlerte).map(unEmploye => <option value={unEmploye.idEmploye}>{unEmploye.nomEmploye + " " + unEmploye.prenomEmploye}</option>))}
+    <select name="idEmployeAlerte" onChange={e => {
+      idEmployechange(e.target.value); 
+      // nomEmployechange(e.target.value); 
+      // prenomEmployechange(e.target.value);
+      }}> 
+  <option value={idEmployeAlerte} >{nomEmploye + " " + prenomEmploye}</option>
+  {(employes/*.filter(unEmploye => unEmploye.idEmploye != idEmployeAlerte)*/.map(leEmploye => <option value={leEmploye.idEmploye}>{leEmploye.nomEmploye + " " + leEmploye.prenomEmploye}</option>))}
     </select>
-    <select name="idNiveauAlerte" onChange={e => idNiveauchange(e.target.value)}> 
+    <select name="idNiveauAlerte" onChange={e => {
+      idNiveauchange(e.target.value);
+      // libelleNiveau(e.target.value);
+    }}> 
   <option value={idNiveauAlerte}>{libelleNiveau}</option>
-  {(niveau.filter(unNiveau => unNiveau.idNiveau != idNiveauAlerte).map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
+  {(niveau/*.filter(unNiveau => unNiveau.idNiveau != idNiveauAlerte)*/.map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
     </select>
     <input type="submit" value="Modifier"/>
   </form>

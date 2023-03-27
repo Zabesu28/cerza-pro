@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./connect_bdd.js");
+const moment = require('moment');
 
 // Déclaration des variables qui contiendront le serveur Express et le port du serveur.
 const app = express();
@@ -33,8 +34,102 @@ db.connect(function (err) {
 // Routes
 // - GET :
 
+app.get("/ListAlerte", (req, res) => {
+  let sql = "SELECT idAlerte, descriptionAlerte, active, dateAlerte, idEmployeAlerte, idNiveauAlerte, nomEmploye, prenomEmploye, libelleNiveau FROM alerte INNER JOIN Employes ON idEmployeAlerte = idEmploye INNER JOIN Niveau ON idNiveauAlerte = idNiveau";
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+      res.json({results});    
+  })
+});
+
+app.get('/ListAlerte/:id', (req, res) => {
+
+  const id = parseInt(req.params.id) // prend l'id dans la route
+  let sql = "SELECT idAlerte, descriptionAlerte, active, dateAlerte, idEmployeAlerte, idNiveauAlerte, nomEmploye, prenomEmploye, libelleNiveau FROM alerte INNER JOIN Employes ON idEmployeAlerte = idEmploye INNER JOIN Niveau ON idNiveauAlerte = idNiveau WHERE idAlerte ="+id
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+      res.json({results});
+  })
+});
+
+app.get("/ListEmployesCB", (req, res) => {
+  let sql = "SELECT idEmploye, nomEmploye, prenomEmploye FROM employes";
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+      res.json({results});    
+  })
+});
+
+app.get("/ListEmployesCBModif/:id", (req, res) => {
+  const id = parseInt(req.params.id) // prend l'id dans la route
+  let sql = "SELECT idEmploye, nomEmploye, prenomEmploye FROM employes WHERE idEmploye NOT IN(SELECT idEmploye FROM employes WHERE idEmploye ="+id+")";
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+      res.json({results});    
+  })
+});
+
+app.get("/ListNiveauCBModif/:id", (req, res) => {
+  const id = parseInt(req.params.id) // prend l'id dans la route
+  let sql = "SELECT idNiveau, libelleNiveau FROM niveau WHERE idNiveau NOT IN(SELECT idNiveau FROM niveau WHERE idNiveau ="+id+")";
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+      res.json({results});    
+  })
+});
+
+app.get("/ListNiveau", (req, res) => {
+  let sql = "SELECT idNiveau, libelleNiveau FROM niveau";
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+      res.json({results});    
+  })
+});
+
 // - POST :
+
+app.post("/AddAlerte", (req, res) => {
+  const descriptionAlerte =  req.body.descriptionAlerte;
+  const active =  0;
+  const dateAlerte = moment(Date()).format('YYYY-MM-DD HH:mm:ss');
+  const idEmployeAlerte = req.body.idEmploye;
+  const idNiveauAlerte = req.body.idNiveau;
+  let sql = "INSERT INTO alerte (descriptionAlerte, active, idEmployeAlerte, idNiveauAlerte, dateAlerte) VALUES ('" + descriptionAlerte + "','" + active + "','" + idNiveauAlerte + "','" + idEmployeAlerte + "','" + dateAlerte + "')"
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+  })
+})
 
 // - PUT :
 
+app.put("/ModifAlerte/:id", (req, res) => {
+  res.send(req.body);
+  const id = parseInt(req.params.id)
+  const descriptionAlerte =  req.body.descriptionAlerte;
+  const idEmployeAlerte = parseInt(req.body.idEmployeAlerte);
+  const idNiveauAlerte = parseInt(req.body.idNiveauAlerte);
+  let sql = "UPDATE alerte SET descriptionAlerte ='"+descriptionAlerte+"', idEmployeAlerte ="+idEmployeAlerte+", idNiveauAlerte="+idNiveauAlerte+" WHERE idAlerte ="+id 
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+      
+  })
+})
+
 // - DELETE :
+
+app.delete("/DeleteAlerte/:id", (req, res) => {
+  const id = parseInt(req.params.id)
+  let sql = "DELETE FROM alerte WHERE idAlerte = "+id
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+  })
+})
