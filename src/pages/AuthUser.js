@@ -11,8 +11,12 @@ const AuthUser = () => {
     return (
       <div>
         <Navbar />
+        <h1>Page de connexion (utilisateur)</h1>
         <FormAuth typeForm="1" />
-        <NavLink to="/AuthAdmin">Vous êtes administrateur ?</NavLink>
+
+        <div className="Auth-link">
+          <NavLink to="/AuthAdmin">Vous êtes administrateur ?</NavLink>
+        </div>
       </div>
     );
   }

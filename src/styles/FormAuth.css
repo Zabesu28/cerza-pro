@@ -1,0 +1,17 @@
+.FormAuth-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.FormAuth-grid {
+  display: grid;
+  grid-template: 1fr 1fr 1fr/1fr;
+  grid-gap: 20px;
+}
+
+.btn-form {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}

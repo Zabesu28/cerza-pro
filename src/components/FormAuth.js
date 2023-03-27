@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../styles/FormAuth.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -46,7 +47,12 @@ const FormAuth = (typeForm) => {
       setMdpInputError(true);
     }
 
-    if (!mdpInputError && !idInputError) {
+    if (
+      mdp !== "" &&
+      regMDP.test(mdp) &&
+      identifiant !== "" &&
+      regIdentifiant.test(identifiant)
+    ) {
       axios
         .post("http://localhost:4000/verifCnx", {
           identifiant: identifiant,
@@ -67,6 +73,7 @@ const FormAuth = (typeForm) => {
                     droitCnx: res.data.cnx_droit,
                   })
                 );
+                navigate("/");
               } else {
                 alert(
                   "Vous ne disposez pas des droits pour vous connecter en tant qu'administrateur !"
@@ -81,6 +88,7 @@ const FormAuth = (typeForm) => {
                     droitCnx: res.data.cnx_droit,
                   })
                 );
+                navigate("/");
               } else {
                 alert(
                   "En tant qu'administrateur, veuillez vous connecter sur l'interface d'authentification prévu à cette effet !"
@@ -93,35 +101,51 @@ const FormAuth = (typeForm) => {
   };
 
   return (
-    <div>
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        onSubmit={HandleSubmit}
-      >
-        <TextField
-          id="identifiant"
-          label="Identifiant"
-          variant="outlined"
-          onChange={inputIdentifiant}
-          required
-          error={idInputError}
-        />
+    <div className="FormAuth-flex">
+      <div className="FormAuth-flex-element">
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          onSubmit={HandleSubmit}
+        >
+          <div className="FormAuth-grid">
+            <div className="FormAuth-grid-element">
+              <TextField
+                id="identifiant"
+                label="Identifiant"
+                variant="outlined"
+                onChange={inputIdentifiant}
+                required
+                error={idInputError}
+              />
+            </div>
 
-        <TextField
-          id="mdp"
-          label="Mot de passe"
-          variant="outlined"
-          onChange={inputMdp}
-          required
-          error={mdpInputError}
-        />
+            <div className="FormAuth-grid-element">
+              <TextField
+                id="mdp"
+                label="Mot de passe"
+                variant="outlined"
+                onChange={inputMdp}
+                required
+                error={mdpInputError}
+                type="password"
+              />
+            </div>
 
-        <Button variant="contained" size="medium" type="submit">
-          Connexion
-        </Button>
-      </Box>
+            <div className="FormAuth-grid-element">
+              <Button
+                className="btn-form"
+                variant="contained"
+                size="medium"
+                type="submit"
+              >
+                Connexion
+              </Button>
+            </div>
+          </div>
+        </Box>
+      </div>
     </div>
   );
 };
