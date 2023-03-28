@@ -40,7 +40,7 @@ function Navbar() {
   const handleLogoutClick = (event) => {
     event.preventDefault();
     localStorage.removeItem("userConnected");
-    navigate("/");
+    navigate("/authUser");
   };
 
   return (
