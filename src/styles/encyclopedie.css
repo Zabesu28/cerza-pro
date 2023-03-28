@@ -1,0 +1,32 @@
+.gridEspece{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 50px;
+      margin: 50px;
+}
+
+.gridImage{
+      margin: 5%;
+      width: 90%;
+      height: 250px;
+      object-fit: contain;
+}
+
+.carte{
+      border: 1px solid gray;
+      border-radius: 20px;
+      box-shadow: gray 5px 3px 3px;
+      transition: 0.5s;
+      scale: 1;
+}
+
+.carte:hover{
+      transition: 0.5s;
+      scale: 1.1;
+}
+
+.titre{
+      text-align: center;
+      text-decoration: none;
+      font-size: 20px;
+}

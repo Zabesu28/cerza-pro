@@ -32,7 +32,31 @@ db.connect(function (err) {
 
 // Routes
 // - GET :
+app.get('/getEspeces', (req, res) => {
+  db.query("select idEspece, libelleEspece, imageEspece from especes",
+  function (err, result) {
+        if (err) throw err;
+        res.status(200).json(result);
+  }) 
+});
 
+app.get('/getEspeces/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  db.query("select libelleEspece, regime, poidsMin, poidsMax, description from especes where idEspece = "+id,
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+});
+
+app.get('/getImages/:idEspece', (req, res) => {
+  const idEspece = parseInt(req.params.idEspece);
+  db.query("select idImage, lienImage from images where idEspeceImage = "+idEspece,
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+});
 // - POST :
 
 // - PUT :
