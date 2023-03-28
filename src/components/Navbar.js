@@ -16,7 +16,6 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
 const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -38,11 +37,10 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-  const handleSettingClick = (event) => {
-    console.log(event.target.innerHTML);
-    if (event.target.innerHTML === "Logout") {
-      localStorage.removeItem("userConnected");
-    }
+  const handleLogoutClick = (event) => {
+    event.preventDefault();
+    localStorage.removeItem("userConnected");
+    navigate("/");
   };
 
   return (
@@ -162,16 +160,11 @@ function Navbar() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography
-                        textAlign="center"
-                        onClick={handleSettingClick}
-                      >
-                        {setting}
-                      </Typography>
-                    </MenuItem>
-                  ))}
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center" onClick={handleLogoutClick}>
+                      Logout
+                    </Typography>
+                  </MenuItem>
                 </Menu>
               </div>
             ) : (
