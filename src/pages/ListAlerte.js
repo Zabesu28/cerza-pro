@@ -80,22 +80,30 @@ const ListAlerte = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {alerte.filter(laAlerte => laAlerte.idNiveauAlerte == idNiveauAlerte || idNiveauAlerte == 0).map((uneAlerte) => (
-            <TableRow
-              key={uneAlerte.idAlerte}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell align="left">{uneAlerte.idAlerte}</TableCell>
-              <TableCell align="left">{uneAlerte.descriptionAlerte}</TableCell>
-              <TableCell align="left">{uneAlerte.active}</TableCell>
-              <TableCell align="left">{uneAlerte.idEmployeAlerte}</TableCell>
-              <TableCell align="left">{uneAlerte.idNiveauAlerte}</TableCell>
-              <TableCell align="left">
-                <Link to={`/modifAlerte/${uneAlerte.idAlerte}`}><button onClick={() => Update(uneAlerte.idAlerte)}>Modifier</button></Link>
-                </TableCell>
-              <TableCell align="left"><a href="/gestionAlerte"><button onClick={() => Delete(uneAlerte.idAlerte)}>X</button></a></TableCell>
-            </TableRow>
-          ))}
+        {alerte.length === 0 ? (
+          
+          <TableCell align="left">Chargement...</TableCell>
+        ) : (
+          <>
+            {alerte.filter(laAlerte => laAlerte.idNiveauAlerte == idNiveauAlerte || idNiveauAlerte == 0).map((uneAlerte) => (
+                  <TableRow
+                    key={uneAlerte.idAlerte}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell align="left">{uneAlerte.idAlerte}</TableCell>
+                    <TableCell align="left">{uneAlerte.descriptionAlerte}</TableCell>
+                    <TableCell align="left">{uneAlerte.active}</TableCell>
+                    <TableCell align="left">{uneAlerte.idEmployeAlerte}</TableCell>
+                    <TableCell align="left">{uneAlerte.idNiveauAlerte}</TableCell>
+                    <TableCell align="left">
+                      <Link to={`/modifAlerte/${uneAlerte.idAlerte}`}><button onClick={() => Update(uneAlerte.idAlerte)}>Modifier</button></Link>
+                      </TableCell>
+                    <TableCell align="left"><a href="/gestionAlerte"><button onClick={() => Delete(uneAlerte.idAlerte)}>X</button></a></TableCell>
+                  </TableRow>
+                ))}
+            </>
+          )}
+                
         </TableBody>
       </Table>
       <a href="/addAlerte"><button>Add</button></a>
