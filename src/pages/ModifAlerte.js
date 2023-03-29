@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 
 
 
@@ -63,18 +63,31 @@ const ModifAlerte = () => {
     []
     );
     
-    function change(idNiveau, libelle) {
-      // Mise à jour de l'état "libelleNiveau"
-      libelleNiveauchange(libelle);
-    
-      // Autres traitements à effectuer ici
-    }
 
   const handlesubmit = (e) => {
       e.preventDefault();
       const empobj = { descriptionAlerte, idEmployeAlerte, idNiveauAlerte };
-  
-      axios.put('http://localhost:4000/ModifAlerte/' + id, empobj, {
+
+    let isValid = true;
+
+  if (descriptionAlerte == "") {
+    isValid = false;  
+    alert("La description de l'alerte est obligatoire");
+  }
+
+  if (idEmployeAlerte == "0") {
+    isValid = false;
+    alert("Vous devez sélectionner un employé");
+  }
+
+  if (idNiveauAlerte == "0") {
+    isValid = false;
+    alert("Vous devez sélectionner un niveau");
+  }
+
+  if (isValid) {
+    // Envoyer la requête PUT
+    axios.put('http://localhost:4000/ModifAlerte/' + id, empobj, {
         method: 'PUT',
         headers: {
           'content-Type': 'application/json'
@@ -82,17 +95,19 @@ const ModifAlerte = () => {
         body: JSON.stringify(empobj)
         
       })
-      .then(() => {
-        console.log('Données ajoutées :', empobj);
-        // navigate(-1);
-      })
-      .catch((error) => {
-        console.log('Erreur :', error.message);
-      });
-
- 
+    .then((response) => {
+      console.log(response);
+      alert("L'alerte a été modifié avec succès");
+      // Réinitialiser les champs du formulaire
+      e.target.reset();
+      window.location.replace('http://localhost:3000/gestionAlerte')
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Une erreur s'est produite lors de la modification de l'alerte");
+    });
+  }
   console.log(empobj);
-
   }
   return (
     
@@ -106,17 +121,19 @@ const ModifAlerte = () => {
       // nomEmployechange(e.target.value); 
       // prenomEmployechange(e.target.value);
       }}> 
-  <option value={idEmployeAlerte} >{nomEmploye + " " + prenomEmploye}</option>
+  <option value={idEmployeAlerte} >{nomEmploye + " " + prenomEmploye +" (valeur de base)"}</option>
   {(employes/*.filter(unEmploye => unEmploye.idEmploye != idEmployeAlerte)*/.map(leEmploye => <option value={leEmploye.idEmploye}>{leEmploye.nomEmploye + " " + leEmploye.prenomEmploye}</option>))}
     </select>
+    
     <select name="idNiveauAlerte" onChange={e => {
       idNiveauchange(e.target.value);
       // libelleNiveau(e.target.value);
     }}> 
-  <option value={idNiveauAlerte}>{libelleNiveau}</option>
+  <option value={idNiveauAlerte}>{libelleNiveau +" (valeur de base)"}</option>
   {(niveau/*.filter(unNiveau => unNiveau.idNiveau != idNiveauAlerte)*/.map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
     </select>
     <input type="submit" value="Modifier"/>
+    <button><Link to="/gestionAlerte">Retour</Link></button>
   </form>
   );
 };

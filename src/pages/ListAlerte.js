@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { DataGrid } from '@mui/x-data-grid';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,49 +8,66 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-// const columns = [
-//     { field: 'id', headerName: 'ID', width: 70 },
-//     { field: 'descriptionAlerte', headerName: 'Description Alerte', width: 130 },
-//     { field: 'active', headerName: 'Active', width: 130 },
-//     { field: 'idEmployeAlerte', headerName: 'ID Employe', width: 130 },
-//     { field: 'idNiveauAlerte', headerName: 'ID Niveau', width: 130 }
-//   ];
-
-class ListAlerte extends Component {
-    state = {
-        post: []
-      }
-      Delete = (idAlerte) => {
+const ListAlerte = () => {
+  
+    const [idNiveauAlerte, idNiveauchange] = useState(0);
+    const [alerte, setAlerte] = useState([]);
+    const [niveau, setNiveau] = useState([]);
+    
+     const Delete = (idAlerte) => {
         //1 copie
         console.log(idAlerte);
         fetch('http://localhost:4000/DeleteAlerte/'+idAlerte, { method: 'DELETE' })  
     }
-    Update = (idAlerte) => {
+    const Update = (idAlerte) => {
       //1 copie
       console.log(idAlerte + "c'est la modif");
       fetch('http://localhost:3000/modifAlerte/'+idAlerte)
       
   }
 
-    componentDidMount(){
+  useEffect(() => {
         fetch('http://localhost:4000/ListAlerte')
         .then((response) => {
           return response.json()
         })
         .then((result) => {
           setTimeout(() => {     
-            this.setState({post: result.results})
+            setAlerte(result.results)
             console.log(result.results);
-            console.log(this.state.post);
+            console.log(alerte);
+          }, 1500) 
+          console.log(result.results.length);
+        })
+
+        fetch('http://localhost:4000/ListNiveau')
+        .then((response) => {
+          return response.json()
+        })
+        .then((result) => {
+          setTimeout(() => {     
+            setNiveau(result.results)
+            console.log(result.results);
+            console.log(niveau);
           }, 1500) 
           console.log(result.results.length);
         })
       }
 
-    render() {
+  , 
+[]
+);
+
     return (
         <div>
           <h1>Gestion des Alertes</h1>
+          <select name="idNiveauAlerte" onChange={e => 
+      idNiveauchange(e.target.value)
+    }> 
+    <option value={0}>Tout</option>
+  {(niveau.map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
+    </select>
+    
             <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
@@ -64,7 +80,7 @@ class ListAlerte extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.state.post.map((uneAlerte) => (
+          {alerte.filter(laAlerte => laAlerte.idNiveauAlerte == idNiveauAlerte || idNiveauAlerte == 0).map((uneAlerte) => (
             <TableRow
               key={uneAlerte.idAlerte}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -75,9 +91,9 @@ class ListAlerte extends Component {
               <TableCell align="left">{uneAlerte.idEmployeAlerte}</TableCell>
               <TableCell align="left">{uneAlerte.idNiveauAlerte}</TableCell>
               <TableCell align="left">
-                <Link to={`/modifAlerte/${uneAlerte.idAlerte}`}><button onClick={() => this.Update(uneAlerte.idAlerte)}>Modifier</button></Link>
+                <Link to={`/modifAlerte/${uneAlerte.idAlerte}`}><button onClick={() => Update(uneAlerte.idAlerte)}>Modifier</button></Link>
                 </TableCell>
-              <TableCell align="left"><a href="/gestionAlerte"><button onClick={() => this.Delete(uneAlerte.idAlerte)}>X</button></a></TableCell>
+              <TableCell align="left"><a href="/gestionAlerte"><button onClick={() => Delete(uneAlerte.idAlerte)}>X</button></a></TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -85,7 +101,7 @@ class ListAlerte extends Component {
       <a href="/addAlerte"><button>Add</button></a>
     </TableContainer>
    </div>)} 
-};
+
 
 
 export default ListAlerte;
