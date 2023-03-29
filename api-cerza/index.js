@@ -35,7 +35,7 @@ db.connect(function (err) {
 // - GET :
 
 app.get("/ListAlerte", (req, res) => {
-  let sql = "SELECT idAlerte, descriptionAlerte, active, dateAlerte, idEmployeAlerte, idNiveauAlerte, nomEmploye, prenomEmploye, libelleNiveau FROM alerte INNER JOIN Employes ON idEmployeAlerte = idEmploye INNER JOIN Niveau ON idNiveauAlerte = idNiveau";
+  let sql = "SELECT idAlerte, descriptionAlerte, active, dateAlerte, idEmployeAlerte, idNiveauAlerte FROM alerte ORDER by idAlerte";
   db.query(sql,(err, results) =>{
       if(err) {throw err}
       console.log(results);
@@ -100,7 +100,7 @@ app.post("/AddAlerte", (req, res) => {
   const dateAlerte = moment(Date()).format('YYYY-MM-DD HH:mm:ss');
   const idEmployeAlerte = req.body.idEmploye;
   const idNiveauAlerte = req.body.idNiveau;
-  let sql = "INSERT INTO alerte (descriptionAlerte, active, idEmployeAlerte, idNiveauAlerte, dateAlerte) VALUES ('" + descriptionAlerte + "','" + active + "','" + idNiveauAlerte + "','" + idEmployeAlerte + "','" + dateAlerte + "')"
+  let sql = "INSERT INTO alerte (descriptionAlerte, active, idEmployeAlerte, idNiveauAlerte, dateAlerte) VALUES ('" + descriptionAlerte + "','" + active + "','" + idEmployeAlerte + "','" + idNiveauAlerte + "','" + dateAlerte + "')"
   db.query(sql,(err, results) =>{
       if(err) {throw err}
       console.log(results);
