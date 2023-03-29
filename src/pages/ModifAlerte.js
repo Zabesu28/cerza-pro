@@ -38,11 +38,9 @@ const ModifAlerte = () => {
         .then((response) => {
           return response.json()
         })
-        .then((result) => {
-          setTimeout(() => {     
+        .then((result) => {    
             setEmployes(result.results)
-            console.log(employes);
-          }, 1500) 
+            console.log(employes); 
           console.log(result.results);
           console.log(result.results.length);
         })
@@ -51,11 +49,9 @@ const ModifAlerte = () => {
         .then((response) => {
           return response.json()
         })
-        .then((result) => {
-          setTimeout(() => {     
+        .then((result) => {   
             setNiveau(result.results)
             console.log(niveau);
-          }, 1500) 
           console.log(result.results);
           console.log(result.results.length);
         })

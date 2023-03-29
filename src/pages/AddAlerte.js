@@ -36,18 +36,11 @@ const AddAlerte = () => {
       descriptionAlerte,
       idEmploye,
       idNiveau
-    })
-    .then((response) => {
-      console.log(response);
+    })   
       alert("L'alerte a été ajoutée avec succès");
       // Réinitialiser les champs du formulaire
       e.target.reset();
       window.location.replace('http://localhost:3000/gestionAlerte')
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Une erreur s'est produite lors de l'ajout de l'alerte");
-    });
   }
 
 }
@@ -57,11 +50,10 @@ const AddAlerte = () => {
         .then((response) => {
           return response.json()
         })
-        .then((result) => {
-          setTimeout(() => {     
+        .then((result) => {    
             setEmploye(result.results)
             console.log(employe);
-          }, 1500) 
+      
           console.log(result.results.length);
         })
 
@@ -70,10 +62,8 @@ const AddAlerte = () => {
       return response.json()
     })
     .then((result) => {
-      setTimeout(() => {     
         setNiveau(result.results)
         console.log(niveau);
-      }, 1500) 
       console.log(result.results.length);
     })
   }, 

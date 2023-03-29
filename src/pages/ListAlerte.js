@@ -17,7 +17,8 @@ const ListAlerte = () => {
      const Delete = (idAlerte) => {
         //1 copie
         console.log(idAlerte);
-        fetch('http://localhost:4000/DeleteAlerte/'+idAlerte, { method: 'DELETE' })  
+        fetch('http://localhost:4000/DeleteAlerte/'+idAlerte, { method: 'DELETE' }) 
+        alert("L'alerte a bien été supprimé"); 
     }
     const Update = (idAlerte) => {
       //1 copie
@@ -32,11 +33,11 @@ const ListAlerte = () => {
           return response.json()
         })
         .then((result) => {
-          setTimeout(() => {     
+              
             setAlerte(result.results)
             console.log(result.results);
             console.log(alerte);
-          }, 1500) 
+         
           console.log(result.results.length);
         })
 
@@ -61,6 +62,7 @@ const ListAlerte = () => {
     return (
         <div>
           <h1>Gestion des Alertes</h1>
+          <a href="/addAlerte"><button>Add</button></a>
           <select name="idNiveauAlerte" onChange={e => 
       idNiveauchange(e.target.value)
     }> 
@@ -106,7 +108,7 @@ const ListAlerte = () => {
                 
         </TableBody>
       </Table>
-      <a href="/addAlerte"><button>Add</button></a>
+      
     </TableContainer>
    </div>)} 
 
