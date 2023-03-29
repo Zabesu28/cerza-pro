@@ -5,6 +5,10 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const FormAuth = (typeForm) => {
   const navigate = useNavigate();
@@ -12,11 +16,17 @@ const FormAuth = (typeForm) => {
   const [mdp, setMdp] = useState("");
   const [idInputError, setIdInputError] = useState(false);
   const [mdpInputError, setMdpInputError] = useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   let regIdentifiant = new RegExp(/^[a-zA-Z0-9]{4,}$/);
   let regMDP = new RegExp(
     /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
   );
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const inputIdentifiant = (event) => {
     event.preventDefault();
@@ -118,6 +128,7 @@ const FormAuth = (typeForm) => {
                 onChange={inputIdentifiant}
                 required
                 error={idInputError}
+                style={{ width: 225 }}
               />
             </div>
 
@@ -129,7 +140,22 @@ const FormAuth = (typeForm) => {
                 onChange={inputMdp}
                 required
                 error={mdpInputError}
-                type="password"
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                style={{ width: 225 }}
               />
             </div>
 

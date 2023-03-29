@@ -1,14 +1,29 @@
-import React from "react";
-import "../styles/gestionComptes.css";
+import React, { useState, useEffect } from "react";
+import "../styles/GestionComptes.css";
 import Navbar from "../components/Navbar";
+import CardUser from "../components/CardUser";
+import axios from "axios";
 
-const gestionComptes = () => {
+const GestionComptes = () => {
+  const [lesUtilisateurs, setLesUtilisateurs] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/utilisateurs")
+      .then((res) => setLesUtilisateurs(res.data));
+  }, []);
+
   return (
     <div>
       <Navbar />
-      <p>test</p>
+      <div className="allUserCard-Grid">
+        {lesUtilisateurs.map((unUtilisateur, index) => (
+          <div className="UserCard-Only">
+            <CardUser key={index} User={unUtilisateur} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default gestionComptes;
+export default GestionComptes;
