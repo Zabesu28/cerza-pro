@@ -90,6 +90,7 @@ const handleCheckboxChange = (event) => {
     return (
         <div>
           <h1>Gestion des Alertes</h1>
+          <a href="/addAlerteUser"><button>Créer une alerte</button></a>
           <select name="idNiveauAlerte" onChange={e => 
       idNiveauchange(e.target.value)
     }> 
@@ -133,7 +134,6 @@ const handleCheckboxChange = (event) => {
           )}
         </TableBody>
       </Table>
-      <a href="/addAlerte"><button>Add</button></a>
     </TableContainer>
    </div>)} 
 
