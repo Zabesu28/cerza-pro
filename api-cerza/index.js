@@ -133,3 +133,12 @@ app.delete("/DeleteAlerte/:id", (req, res) => {
       console.log(results);
   })
 })
+
+app.delete("/DeleteAlerteClear", (req, res) => {
+  let sql = "DELETE from alerte where DATEDIFF(NOW(), dateAlerte) > 0 AND active = 1"
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+  })
+})
+
