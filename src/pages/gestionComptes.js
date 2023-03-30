@@ -16,9 +16,9 @@ const GestionComptes = () => {
     <div>
       <Navbar />
       <div className="allUserCard-Grid">
-        {lesUtilisateurs.map((unUtilisateur, index) => (
-          <div className="UserCard-Only">
-            <CardUser key={index} User={unUtilisateur} />
+        {lesUtilisateurs.map((unUtilisateur) => (
+          <div key={unUtilisateur.idEmploye} className="UserCard-Only">
+            <CardUser User={unUtilisateur} />
           </div>
         ))}
       </div>

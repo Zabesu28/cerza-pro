@@ -9,9 +9,21 @@
   grid-column: 1 / span 2;
 }
 
+.UserCard-modifForm {
+  width: 400px;
+  background-color: aqua;
+  display: grid;
+  grid-template: repeat(5, 1fr) 1fr / 1fr 1fr;
+}
+
 .UserCard-Title {
   text-decoration: underline;
   font-weight: bold;
+}
+
+.UserCard-Title-Modif {
+  text-align: right !important;
+  margin-right: 10px;
 }
 
 p {
@@ -23,4 +35,8 @@ p {
   display: block !important;
   margin-left: auto !important;
   margin-right: auto !important;
+}
+
+.MuiFormControl-root {
+  margin-top: 12px !important;
 }

@@ -58,8 +58,36 @@ app.get("/utilisateurs/:id", (req, res) => {
   );
 });
 
+app.get("/fonctions", (req, res) => {
+  db.query(
+    "SELECT idFonction, libelleFonction FROM fonctions",
+    function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
+});
+
+// Permet de récupérer les fonctions
+
 // - POST :
 // Permet de vérifier la connexion au site de cerza
+app.post("/getIdFonctionByLibelle", (req, res) => {
+  const data = {
+    libelleFonction: req.body.libFonction,
+  };
+
+  db.query(
+    "SELECT idFonction FROM fonctions WHERE libelleFonction = '" +
+      data.libelleFonction +
+      "'",
+    function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
+});
+
 app.post("/verifCnx", (req, res) => {
   const data = {
     login: req.body.identifiant,
