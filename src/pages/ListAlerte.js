@@ -10,9 +10,15 @@ import Paper from '@mui/material/Paper';
 
 const ListAlerte = () => {
   
+  
     const [idNiveauAlerte, idNiveauchange] = useState(0);
     const [alerte, setAlerte] = useState([]);
     const [niveau, setNiveau] = useState([]);
+
+    const Clear = () =>{
+      fetch('http://localhost:4000/DeleteAlerteClear', { method: 'DELETE' }) 
+
+    }
     
      const Delete = (idAlerte) => {
         //1 copie
@@ -68,7 +74,7 @@ const ListAlerte = () => {
     }> 
     <option value={0}>Tout</option>
   {(niveau.map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
-    </select>
+    </select><a href="/gestionAlerte" onClick={Clear}><button>Clear</button></a>
     
             <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
