@@ -48,12 +48,14 @@ const handlesubmit = (e) => {
 // Envoyer la requête PUT
 axios({
   method: 'PUT',
-  url: 'http://localhost:4000/ModifMissionCheckbox/'+2+'/'+idMission,
+  url: 'http://localhost:4000/ModifMissionCheckbox',
   headers: {
     'content-Type': 'application/json'
   },
   data: {
-    idEtatAttribuer: selectedId
+    idEtatAttribuer: selectedId,
+    idMissionAttribuer: idMission,
+    idEmployeAttribuer: 2
     
   }
 })
@@ -62,7 +64,7 @@ axios({
   alert("La mission a bien été fini");
   // Réinitialiser les champs du formulaire
   e.target.reset();
-  window.location.replace('http://localhost:3000/listMissionUser/'+2)
+  // window.location.replace('http://localhost:3000/listMissionUser/'+2)
 })
 .catch((error) => {
   console.log(error);
@@ -70,6 +72,7 @@ axios({
 });
 
 console.log(selectedId);
+console.log(idMission);
 }
 
 const handleCheckboxChange = (event) => {
@@ -94,30 +97,28 @@ const handleCheckboxChange = (event) => {
             {uneMission.date}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              En cours / fini
-            </Typography>
+              {uneMission.libelleEtat}
+              </Typography>
             <Typography variant="body2">
               commentaire
             </Typography>
-            </CardContent><CardActions>
+            <form method="PUT" onSubmit={handlesubmit}>
+                      <input type="checkbox" disabled={uneMission.idEtatAttribuer === 2} name="active" id={uneMission.idMissionAttribuer} value={2} onChange={e => {setSelectedId(e.target.value); setIdMission(e.target.id); handleCheckboxChange(e)}}>
+                      </input>
+                      <input type="submit" disabled={!checkboxChecked || uneMission.idEtatAttribuer === 2}></input>
+                      
+                      </form> 
+            
+
+            </CardContent>
+            <CardActions>
                   <Button size="small">Soumettre</Button>
                 </CardActions>
               </Card> 
-              </div>
-                  // <p align="left">{uneMission.libelleMission}</p>
-                  // <p align="left">{uneMission.date}</p>
-                  // <p align="left">
-                  //   <form method="PUT" onSubmit={handlesubmit}>
-                  //     <input type="checkbox" disabled={uneMission.idEtatAttribuer === 2} name="active" id={uneMission.idMissionAttribuer} value={2} onChange={e => {setSelectedId(e.target.id); setIdMission(e.target.value); handleCheckboxChange(e)}}>
-                  //     </input>
-                  //     <input type="submit" disabled={!checkboxChecked || uneMission.idEtatAttribuer === 2}></input>
-                      
-                  //     </form> </p>
-                  
-                 
-                ))}
-               
+
               
+              </div>
+                ))}          
    </div>)} 
 
 export default ListMissionUser
