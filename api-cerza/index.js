@@ -33,7 +33,7 @@ db.connect(function (err) {
 // Routes
 // - GET :
 app.get('/getLesQuestions', (req, res) => {
-  db.query("select libelleQuestion from questionnaire",
+  db.query("select idQuestion, libelleQuestion from questionnaire",
   function (err, result) {
     if (err) throw err;
     res.status(200).json(result);
@@ -92,7 +92,19 @@ app.get('/getImages/:idEspece', (req, res) => {
   })
 });
 // - POST :
-
+app.post('/insertReponses', (req, res) => {
+  const data = {
+    idAnimal: req.body.idAnimal,
+    idQuestion: req.body.idQuestion,
+    date: req.body.date,
+    reponse: req.body.reponse,
+  };
+  db.query("Insert into repondre values('"+data.idAnimal+"', '"+data.idQuestion+"', '"+data.date+"','"+data.reponse+"')",
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+})
 // - PUT :
 
 // - DELETE :

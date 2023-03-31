@@ -74,9 +74,10 @@ const QuestionnaireSante = () => {
                               <p>DATE DE NAISSANCE : {unAnimal.dateNaissAnimal.substring(0,10)}</p>
                               <p>SEXE : {unAnimal.sexeAnimal == 0 ? <label>Femelle</label> : <label>Mâle</label>}</p>
                               <p>ENCLOS : {unAnimal.codeEnclosAnimal}</p>
+                              <Questionnaire idAnimal={unAnimal.idAnimal}></Questionnaire>
                         </div>
                   ))}
-                  <Questionnaire></Questionnaire>
+                  
             </div>
       );
 };
