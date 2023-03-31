@@ -6,7 +6,7 @@
 }
 
 .gridImage{
-      margin: 5%;
+      /* margin: 5%; */
       width: 90%;
       height: 250px;
       object-fit: contain;
@@ -15,18 +15,23 @@
 .carte{
       border: 1px solid gray;
       border-radius: 20px;
-      box-shadow: gray 5px 3px 3px;
+      box-shadow: gray 5px 3px 5px;
       transition: 0.5s;
       scale: 1;
+      text-decoration: none;
 }
 
 .carte:hover{
-      transition: 0.5s;
-      scale: 1.1;
+      transition: 1s;
+      scale: 1.075;
 }
 
 .titre{
       text-align: center;
       text-decoration: none;
       font-size: 20px;
+}
+
+.noDeco{
+      text-decoration: none;
 }

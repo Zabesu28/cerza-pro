@@ -32,8 +32,33 @@ db.connect(function (err) {
 
 // Routes
 // - GET :
+app.get('/getEspecesLibelle', (req, res) => {
+  db.query("select idEspece, libelleEspece from especes",
+  function (err, result) {
+        if (err) throw err;
+        res.status(200).json(result);
+  }) 
+});
+
+app.get('/getAnimaux', (req, res) => {
+  db.query("select idAnimal, nomAnimal from animaux",
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+});
+
+app.get('/getAnimal/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  db.query("select idAnimal, nomAnimal, dateNaissAnimal, sexeAnimal, libelleEspece, codeEnclosAnimal from animaux inner join especes on idEspeceAnimal = idespece where idAnimal ="+id,
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+})
+
 app.get('/getEspeces', (req, res) => {
-  db.query("select idEspece, libelleEspece, imageEspece from especes",
+  db.query("select idEspece, libelleEspece, description, imageEspece from especes",
   function (err, result) {
         if (err) throw err;
         res.status(200).json(result);

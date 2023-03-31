@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Encyclopedie from './Encyclopedie';
 import Description from './Description';
+import QuestionnaireSante from './QuestionnaireSante';
 
 function App() {
   const [showNav, setShowNav] = useState(false);
@@ -17,6 +18,7 @@ function App() {
           <Route path="home" element={<Home/>} />
           <Route path="encyclopedie" element={<Encyclopedie/>}></Route>
           <Route path="encyclopedie/:espece" element={<Description/>}></Route>
+          <Route path="questionnaireSante" element={<QuestionnaireSante/>}></Route>
       </Routes>
     </BrowserRouter>
     </div>
