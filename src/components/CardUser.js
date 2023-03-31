@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/CardUser.css";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
@@ -14,6 +15,24 @@ const CardUser = (props) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [lesFonctions, setLesFonctions] = useState([]);
   const [idFonctDefault, SetIdFonctDefault] = useState(0);
+
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [identifiant, setIdentifiant] = useState("");
+  const [mdp, setMdp] = useState("");
+  const [fonction, setFonction] = useState("");
+
+  const [idInputError, setIdInputError] = useState(false);
+  const [mdpInputError, setMdpInputError] = useState(false);
+  const [nomInputError, setNomInputError] = useState(false);
+  const [prenomInputError, setPrenomInputError] = useState(false);
+
+  let regNomPrenom = new RegExp(/^[a-zA-Z]{3,}$/);
+  let regIdentifiant = new RegExp(/^[a-zA-Z0-9]{4,}$/);
+  let regMDP = new RegExp(
+    /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+  );
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/fonctions")
@@ -45,132 +64,201 @@ const CardUser = (props) => {
     event.preventDefault();
   };
 
+  const inputNom = (event) => {
+    event.preventDefault();
+    setNom(event.target.value.trim().toUpperCase());
+
+    if (event.target.value.trim() !== "" && nomInputError) {
+      setNomInputError(false);
+    }
+  };
+
+  const inputPrenom = (event) => {
+    event.preventDefault();
+    setPrenom(
+      event.target.value.trim().charAt(0).toUpperCase() +
+        event.target.value.trim().substring(1).toLowerCase()
+    );
+
+    if (event.target.value.trim() !== "" && prenomInputError) {
+      setPrenomInputError(false);
+    }
+  };
+
+  const inputIdentifiant = (event) => {
+    event.preventDefault();
+    setIdentifiant(event.target.value.trim());
+
+    if (event.target.value.trim() !== "" && idInputError) {
+      setIdInputError(false);
+    }
+  };
+
+  const inputMdp = (event) => {
+    event.preventDefault();
+    setMdp(event.target.value.trim());
+
+    if (event.target.value.trim() !== "" && mdpInputError) {
+      setMdpInputError(false);
+    }
+  };
+
+  const inputFonction = (event) => {
+    event.preventDefault();
+    setFonction(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (identifiant !== "" && !regIdentifiant.test(identifiant)) {
+      setIdInputError(true);
+    }
+
+    if (mdp !== "" && !regMDP.test(mdp)) {
+      setMdpInputError(true);
+    }
+  };
+
   return (
     <div>
       {moidifForm ? (
-        <div className="UserCard-modifForm">
-          <div className="UserCard-element">
-            <p className="UserCard-Title-Modif">
-              <span className="UserCard-Title">Nom :</span>
-            </p>
-          </div>
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
+          <div className="UserCard-modifForm">
+            <div className="UserCard-element">
+              <p className="UserCard-Title-Modif">
+                <span className="UserCard-Title">Nom :</span>
+              </p>
+            </div>
 
-          <div className="UserCard-element">
-            <TextField
-              id="standard-basic"
-              variant="standard"
-              placeholder={props.User.nomEmploye}
-              style={{ width: 100 }}
-            />
-          </div>
+            <div className="UserCard-element">
+              <TextField
+                id="standard-basic"
+                variant="standard"
+                placeholder={props.User.nomEmploye}
+                style={{ width: 100 }}
+                onChange={inputNom}
+                error={nomInputError}
+              />
+            </div>
 
-          <div className="UserCard-element">
-            <p className="UserCard-Title-Modif">
-              <span className="UserCard-Title">Prénom :</span>
-            </p>
-          </div>
+            <div className="UserCard-element">
+              <p className="UserCard-Title-Modif">
+                <span className="UserCard-Title">Prénom :</span>
+              </p>
+            </div>
 
-          <div className="UserCard-element">
-            <TextField
-              id="standard-basic"
-              variant="standard"
-              placeholder={props.User.prenomEmploye}
-              style={{ width: 100 }}
-            />
-          </div>
+            <div className="UserCard-element">
+              <TextField
+                id="standard-basic"
+                variant="standard"
+                placeholder={props.User.prenomEmploye}
+                style={{ width: 100 }}
+                onChange={inputPrenom}
+              />
+            </div>
 
-          <div className="UserCard-element">
-            <p className="UserCard-Title-Modif">
-              <span className="UserCard-Title">Identifiant :</span>
-            </p>
-          </div>
+            <div className="UserCard-element">
+              <p className="UserCard-Title-Modif">
+                <span className="UserCard-Title">Identifiant :</span>
+              </p>
+            </div>
 
-          <div className="UserCard-element">
-            <TextField
-              id="standard-basic"
-              variant="standard"
-              placeholder={props.User.login}
-              style={{ width: 100 }}
-            />
-          </div>
+            <div className="UserCard-element">
+              <TextField
+                id="standard-basic"
+                variant="standard"
+                placeholder={props.User.login}
+                style={{ width: 100 }}
+                onChange={inputIdentifiant}
+              />
+            </div>
 
-          <div className="UserCard-element">
-            <p className="UserCard-Title-Modif">
-              <span className="UserCard-Title">Mot de passe :</span>
-            </p>
-          </div>
+            <div className="UserCard-element">
+              <p className="UserCard-Title-Modif">
+                <span className="UserCard-Title">Mot de passe :</span>
+              </p>
+            </div>
 
-          <div className="UserCard-element">
-            <TextField
-              id="standard-basic"
-              variant="standard"
-              placeholder="********"
-              type={showPassword ? "text" : "password"}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              style={{ width: 100 }}
-            />
-          </div>
+            <div className="UserCard-element">
+              <TextField
+                id="standard-basic"
+                variant="standard"
+                placeholder="********"
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                style={{ width: 100 }}
+                onChange={inputMdp}
+              />
+            </div>
 
-          <div className="UserCard-element">
-            <p className="UserCard-Title-Modif">
-              <span className="UserCard-Title">Fonction :</span>
-            </p>
-          </div>
+            <div className="UserCard-element">
+              <p className="UserCard-Title-Modif">
+                <span className="UserCard-Title">Fonction :</span>
+              </p>
+            </div>
 
-          <div className="UserCard-element">
-            <TextField
-              id="standard-basic-select"
-              select
-              defaultValue={idFonctDefault}
-              variant="standard"
-              style={{ width: 100 }}
-            >
-              {lesFonctions.map((uneFonction) => (
-                <MenuItem
-                  key={uneFonction.idFonction}
-                  value={uneFonction.idFonction}
-                >
-                  {uneFonction.libelleFonction}
-                </MenuItem>
-              ))}
-            </TextField>
-          </div>
+            <div className="UserCard-element">
+              <TextField
+                id="standard-basic-select"
+                select
+                defaultValue={idFonctDefault}
+                variant="standard"
+                style={{ width: 100 }}
+                onChange={inputFonction}
+              >
+                {lesFonctions.map((uneFonction) => (
+                  <MenuItem
+                    key={uneFonction.idFonction}
+                    value={uneFonction.idFonction}
+                  >
+                    {uneFonction.libelleFonction}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </div>
 
-          <div className="UserCard-element">
-            <Button
-              className="btn-modifier"
-              variant="contained"
-              size="medium"
-              onClick={handleModifBtn}
-            >
-              Valider
-            </Button>
-          </div>
+            <div className="UserCard-element">
+              <Button
+                className="btn-modifier"
+                variant="contained"
+                size="medium"
+                type="submit"
+              >
+                Valider
+              </Button>
+            </div>
 
-          <div className="UserCard-element">
-            <Button
-              className="btn-modifier"
-              variant="contained"
-              size="medium"
-              onClick={handleAnnulerBtn}
-            >
-              Annuler
-            </Button>
+            <div className="UserCard-element">
+              <Button
+                className="btn-modifier"
+                variant="contained"
+                size="medium"
+                onClick={handleAnnulerBtn}
+              >
+                Annuler
+              </Button>
+            </div>
           </div>
-        </div>
+        </Box>
       ) : (
         <div className="UserCard">
           <div className="UserCard-element-large">
