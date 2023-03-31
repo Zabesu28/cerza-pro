@@ -30,7 +30,7 @@ const CardUser = (props) => {
   let regNomPrenom = new RegExp(/^[a-zA-Z]{3,}$/);
   let regIdentifiant = new RegExp(/^[a-zA-Z0-9]{4,}$/);
   let regMDP = new RegExp(
-    /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
   );
 
   useEffect(() => {
@@ -57,6 +57,15 @@ const CardUser = (props) => {
     event.preventDefault();
 
     setModifForm(false);
+    setNom("");
+    setPrenom("");
+    setIdentifiant("");
+    setMdp("");
+    setFonction("");
+    setIdInputError(false);
+    setMdpInputError(false);
+    setNomInputError(false);
+    setPrenomInputError(false);
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -108,15 +117,47 @@ const CardUser = (props) => {
     setFonction(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (identifiant !== "" && !regIdentifiant.test(identifiant)) {
-      setIdInputError(true);
+      await setIdInputError(true);
     }
 
     if (mdp !== "" && !regMDP.test(mdp)) {
-      setMdpInputError(true);
+      await setMdpInputError(true);
+    }
+
+    if (nom !== "" && !regNomPrenom.test(nom)) {
+      await setNomInputError(true);
+    }
+
+    if (prenom !== "" && !regNomPrenom.test(prenom)) {
+      await setPrenomInputError(true);
+    }
+
+    if (
+      nom === "" &&
+      prenom === "" &&
+      mdp === "" &&
+      identifiant === "" &&
+      fonction === ""
+    ) {
+      alert(
+        "Pour réaliser une modification, veuillez au moins saisir une donnée !"
+      );
+    } else {
+      console.log(
+        idInputError +
+          " " +
+          mdpInputError +
+          " " +
+          nomInputError +
+          " " +
+          prenomInputError +
+          " " +
+          mdpInputError
+      );
     }
   };
 
@@ -160,6 +201,7 @@ const CardUser = (props) => {
                 placeholder={props.User.prenomEmploye}
                 style={{ width: 100 }}
                 onChange={inputPrenom}
+                error={prenomInputError}
               />
             </div>
 
@@ -176,6 +218,7 @@ const CardUser = (props) => {
                 placeholder={props.User.login}
                 style={{ width: 100 }}
                 onChange={inputIdentifiant}
+                error={idInputError}
               />
             </div>
 
@@ -207,6 +250,7 @@ const CardUser = (props) => {
                 }}
                 style={{ width: 100 }}
                 onChange={inputMdp}
+                error={mdpInputError}
               />
             </div>
 
