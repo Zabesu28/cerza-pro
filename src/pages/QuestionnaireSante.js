@@ -10,7 +10,7 @@ const QuestionnaireSante = () => {
 
       const [animaux, setAnimaux] = useState([]);
 
-      const [quest, setQuest] = useState(1);
+      const [infoAnimal, setQuest] = useState([]);
 
       useEffect(() => {
             axios.get("http://localhost:4000/getEspecesLibelle").then((response) => {
@@ -19,6 +19,9 @@ const QuestionnaireSante = () => {
             axios.get("http://localhost:4000/getAnimaux/1").then((response) => {
                   setAnimaux(response.data);
             });
+            axios.get("http://localhost:4000/getAnimal/1").then((response) => {
+                  setQuest(response.data);
+            })
       }, []);
 
       const handleChangeEspece = (event) => {
@@ -30,7 +33,9 @@ const QuestionnaireSante = () => {
 
       const handleChangeAnimal = (event) => {
             event.preventDefault();
-            setQuest(event.target.value);
+            axios.get("http://localhost:4000/getAnimal/"+event.target.value).then((response) => {
+                  setQuest(response.data);
+            })
       }
 
       return (
@@ -63,7 +68,15 @@ const QuestionnaireSante = () => {
                         </MenuItem>
                         ))}
                   </TextField>
-                  <Questionnaire key={quest} idAnimal={quest}></Questionnaire>
+                  {infoAnimal.map((unAnimal) => (
+                        <div key={unAnimal.idEspece}>
+                              <p>NOM : {unAnimal.nomAnimal}</p>
+                              <p>DATE DE NAISSANCE : {unAnimal.dateNaissAnimal.substring(0,10)}</p>
+                              <p>SEXE : {unAnimal.sexeAnimal == 0 ? <label>Femelle</label> : <label>Mâle</label>}</p>
+                              <p>ENCLOS : {unAnimal.codeEnclosAnimal}</p>
+                        </div>
+                  ))}
+                  <Questionnaire></Questionnaire>
             </div>
       );
 };

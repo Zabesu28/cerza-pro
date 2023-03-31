@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Slider from '@mui/material/Slider';
+import '../styles/questionnaireSante.css'
 
-const Questionnaire = ({idAnimal}) => {
+const Questionnaire = () => {
 
-      const [animal, setAnimal] = useState([]);
+      const [questions, setQuestions] = useState([]);
 
       useEffect(() => {
-            axios.get("http://localhost:4000/getAnimal/"+idAnimal).then((response) => {
-                  setAnimal(response.data);
+            axios.get("http://localhost:4000/getLesQuestions").then((response) => {
+                  setQuestions(response.data);
             })
       }, []);
 
       return (
             <div>
-                  {console.log(idAnimal)}
-                  {animal.map((unAnimal) => (
-                        <div key={unAnimal.idEspece}>
-                              <p>NOM : {unAnimal.nomAnimal}</p>
-                              <p>DATE DE NAISSANCE : {unAnimal.dateNaissAnimal.substring(0,10)}</p>
-                              <p>SEXE : {unAnimal.sexeAnimal == 0 ? <label>Femelle</label> : <label>Mâle</label>}</p>
-                              <p>ENCLOS : {unAnimal.codeEnclosAnimal}</p>
+                  {questions.map((uneQuestion) => (
+                        <div className='question'>
+                              {uneQuestion.libelleQuestion}
+                              <Slider valueLabelDisplay="auto" defaultValue={1} step={1} marks min={1} max={5}/>
                         </div>
                   ))}
             </div>

@@ -32,6 +32,14 @@ db.connect(function (err) {
 
 // Routes
 // - GET :
+app.get('/getLesQuestions', (req, res) => {
+  db.query("select libelleQuestion from questionnaire",
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+})
+
 app.get('/getEspecesLibelle', (req, res) => {
   db.query("select idEspece, libelleEspece from especes",
   function (err, result) {
