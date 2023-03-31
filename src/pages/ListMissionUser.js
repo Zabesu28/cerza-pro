@@ -7,6 +7,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
 import axios from 'axios';
 
 const ListMissionUser = () => {
@@ -73,40 +80,44 @@ const handleCheckboxChange = (event) => {
     return (
         <div>
           <h1>Missions du jour</h1>
-            <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">Objectif</TableCell>
-            <TableCell align="left">Date attribution</TableCell>
-            <TableCell align="left">Valider</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {mission.length === 0 ? (
           
-          <TableCell align="left">Chargement...</TableCell>
-        ) : (
-          <>
+        
             {mission.map((uneMission) => (
-                  <TableRow
-                  >
-                    <TableCell align="left">{uneMission.libelleMission}</TableCell>
-                    <TableCell align="left">{uneMission.date}</TableCell>
-                    <TableCell align="left">
-                      <form method="PUT" onSubmit={handlesubmit}>
-                        <input type="checkbox" disabled={uneMission.idEtatAttribuer === 2} name="active" id={uneMission.idMissionAttribuer} value={2} onChange={e => {setSelectedId(e.target.id); setIdMission(e.target.value); handleCheckboxChange(e)}}>
-                        </input>
-                        <input type="submit" disabled={!checkboxChecked || uneMission.idEtatAttribuer === 2}></input>
-                        
-                        </form> </TableCell>
-                  </TableRow>
+              <div class="game-board">
+              <Card sx={{ minWidth: 275 }}>
+              
+               <CardContent>
+            <Typography variant="h5" component="div">
+            {uneMission.libelleMission}
+            </Typography>
+            <Typography variant="h5" component="div">
+            {uneMission.date}
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              En cours / fini
+            </Typography>
+            <Typography variant="body2">
+              commentaire
+            </Typography>
+            </CardContent><CardActions>
+                  <Button size="small">Soumettre</Button>
+                </CardActions>
+              </Card> 
+              </div>
+                  // <p align="left">{uneMission.libelleMission}</p>
+                  // <p align="left">{uneMission.date}</p>
+                  // <p align="left">
+                  //   <form method="PUT" onSubmit={handlesubmit}>
+                  //     <input type="checkbox" disabled={uneMission.idEtatAttribuer === 2} name="active" id={uneMission.idMissionAttribuer} value={2} onChange={e => {setSelectedId(e.target.id); setIdMission(e.target.value); handleCheckboxChange(e)}}>
+                  //     </input>
+                  //     <input type="submit" disabled={!checkboxChecked || uneMission.idEtatAttribuer === 2}></input>
+                      
+                  //     </form> </p>
+                  
+                 
                 ))}
-            </>
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+               
+              
    </div>)} 
 
 export default ListMissionUser
