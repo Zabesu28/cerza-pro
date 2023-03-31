@@ -1,17 +1,3 @@
-// import React from 'react';
-// import '../styles/encyclopedie.css'
-
-// const Espece = ({espece}) => {
-//       return (
-//             <div className='carte'>
-//                   <img className="gridImage" src={espece.imageEspece}></img>
-//                   <p className='titre'>{espece.libelleEspece}</p>
-//             </div>
-//       );
-// };
-
-// export default Espece;
-
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -41,7 +27,7 @@ const Espece = ({espece}) => {
                 </CardContent>
               </CardActionArea>
             </Card>
-          );
+      );
 }
 
 export default Espece;

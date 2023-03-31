@@ -40,8 +40,9 @@ app.get('/getEspecesLibelle', (req, res) => {
   }) 
 });
 
-app.get('/getAnimaux', (req, res) => {
-  db.query("select idAnimal, nomAnimal from animaux",
+app.get('/getAnimaux/:idEspece', (req, res) => {
+  const idEspece = parseInt(req.params.idEspece);
+  db.query("select idAnimal, nomAnimal from animaux where idEspeceAnimal ="+idEspece,
   function (err, result) {
     if (err) throw err;
     res.status(200).json(result);
