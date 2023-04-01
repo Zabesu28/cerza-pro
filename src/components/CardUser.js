@@ -11,8 +11,10 @@ import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 
 const CardUser = (props) => {
-  const [moidifForm, setModifForm] = useState(false);
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [modifForm, setModifForm] = useState(false);
+  const [supprForm, setSupprForm] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
   const [lesFonctions, setLesFonctions] = useState([]);
   const [idFonctDefault, SetIdFonctDefault] = useState(0);
 
@@ -33,6 +35,39 @@ const CardUser = (props) => {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
   );
 
+  if (
+    (props.isModif !== "" &&
+      props.isModif !== props.User.idEmploye &&
+      modifForm) ||
+    (props.isSuppr !== "" &&
+      props.isSuppr !== props.User.idEmploye &&
+      supprForm)
+  ) {
+    if (modifForm) {
+      setModifForm(false);
+    }
+
+    if (supprForm) {
+      setSupprForm(false);
+    }
+  }
+
+  if (props.isModif === "" && modifForm) {
+    setModifForm(false);
+  }
+
+  if (props.isSuppr === "" && supprForm) {
+    setSupprForm(false);
+  }
+
+  if (props.isAjout && modifForm) {
+    setModifForm(false);
+  }
+
+  if (props.isAjout && supprForm) {
+    setSupprForm(false);
+  }
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/fonctions")
@@ -50,7 +85,19 @@ const CardUser = (props) => {
   const handleModifBtn = (event) => {
     event.preventDefault();
 
+    props.setIsAjout(false);
     setModifForm(true);
+    props.setIdModif(props.User.idEmploye);
+    props.setIdSuppr("");
+  };
+
+  const handleSupprBtn = (event) => {
+    event.preventDefault();
+
+    props.setIsAjout(false);
+    setSupprForm(true);
+    props.setIdSuppr(props.User.idEmploye);
+    props.setIdModif("");
   };
 
   const handleAnnulerBtn = (event) => {
@@ -66,6 +113,7 @@ const CardUser = (props) => {
     setMdpInputError(false);
     setNomInputError(false);
     setPrenomInputError(false);
+    setSupprForm(false);
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -117,7 +165,7 @@ const CardUser = (props) => {
     setFonction(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmitModif = async (event) => {
     event.preventDefault();
 
     if (identifiant !== "" && !regIdentifiant.test(identifiant)) {
@@ -147,28 +195,125 @@ const CardUser = (props) => {
         "Pour réaliser une modification, veuillez au moins saisir une donnée !"
       );
     } else {
-      console.log(
-        idInputError +
-          " " +
-          mdpInputError +
-          " " +
-          nomInputError +
-          " " +
-          prenomInputError +
-          " " +
-          mdpInputError
-      );
+      let bodyModif = {
+        nom: "",
+        prenom: "",
+        identifiant: "",
+        password: "",
+        fonction: "",
+      };
+
+      let verifIdentifiant = false;
+      let verifMdp = false;
+      let verifNom = false;
+      let verifPrenom = false;
+
+      if (identifiant !== "") {
+        verifIdentifiant = true;
+        if (regIdentifiant.test(identifiant)) {
+          bodyModif.identifiant = identifiant;
+          verifIdentifiant = false;
+        }
+      }
+
+      if (mdp !== "") {
+        verifMdp = true;
+        if (regMDP.test(mdp)) {
+          bodyModif.password = mdp;
+          verifMdp = false;
+        }
+      }
+
+      if (nom !== "") {
+        verifNom = true;
+        if (regNomPrenom.test(nom)) {
+          bodyModif.nom = nom;
+          verifNom = false;
+        }
+      }
+
+      if (prenom !== "") {
+        verifPrenom = true;
+        if (regNomPrenom.test(prenom)) {
+          bodyModif.prenom = prenom;
+          verifPrenom = false;
+        }
+      }
+
+      if (fonction !== "") {
+        bodyModif.fonction = fonction;
+      }
+
+      if (!verifNom && !verifPrenom && !verifIdentifiant && !verifMdp) {
+        let verifUtilExiste = false;
+
+        if (bodyModif.identifiant !== "") {
+          await axios
+            .post("http://localhost:4000/verifUtilExist", {
+              nom: "",
+              prenom: "",
+              identifiant: bodyModif.identifiant,
+            })
+            .then((res) => {
+              verifUtilExiste = res.data.isExist;
+            });
+        }
+
+        if (!verifUtilExiste) {
+          axios.put(
+            "http://localhost:4000/modifUtil/" + props.User.idEmploye,
+            bodyModif
+          );
+
+          if (bodyModif.nom === "") {
+            bodyModif.nom = props.User.nomEmploye;
+          }
+
+          if (bodyModif.prenom === "") {
+            bodyModif.prenom = props.User.prenomEmploye;
+          }
+
+          if (bodyModif.identifiant === "") {
+            bodyModif.identifiant = props.User.login;
+          }
+
+          if (bodyModif.fonction === "") {
+            bodyModif.fonction = props.User.libelleFonction;
+          } else {
+            await axios
+              .get("http://localhost:4000/fonctions/" + bodyModif.fonction)
+              .then(
+                (res) => (bodyModif.fonction = res.data[0].libelleFonction)
+              );
+          }
+
+          props.Modif(bodyModif, props.User.idEmploye);
+
+          setModifForm(false);
+        } else {
+          alert(
+            "L'identifiant que vous avez saisi correspond déjà à un utilisateur existant, veuillez en saisir un autre !"
+          );
+        }
+      }
     }
+  };
+
+  const handleSubmitSuppr = (event) => {
+    event.preventDefault();
+
+    axios.delete("http://localhost:4000/supprUtil/" + props.User.idEmploye);
+    props.Suppr(props.User.idEmploye);
   };
 
   return (
     <div>
-      {moidifForm ? (
+      {modifForm ? (
         <Box
           component="form"
           noValidate
           autoComplete="off"
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmitModif}
         >
           <div className="UserCard-modifForm">
             <div className="UserCard-element">
@@ -304,45 +449,85 @@ const CardUser = (props) => {
           </div>
         </Box>
       ) : (
-        <div className="UserCard">
-          <div className="UserCard-element-large">
-            <p>
-              <span className="UserCard-Title">Nom :</span>
-              {" " + props.User.nomEmploye}
-            </p>
-            <p>
-              <span className="UserCard-Title">Prénom :</span>
-              {" " + props.User.prenomEmploye}
-            </p>
-            <p>
-              <span className="UserCard-Title">Identifiant :</span>
-              {" " + props.User.login}
-            </p>
-            <p>
-              <span className="UserCard-Title">Mot de passe :</span> ********
-            </p>
-            <p>
-              <span className="UserCard-Title">Fonction :</span>
-              {" " + props.User.libelleFonction}
-            </p>
-          </div>
+        <div>
+          {supprForm ? (
+            <div className="UserCard-supprForm">
+              <div className="UserCard-element-large">
+                <p>Voulez-vous supprimer cette utilisateur ?</p>
+              </div>
 
-          <div className="UserCard-element">
-            <Button
-              className="btn-modifier"
-              variant="contained"
-              size="medium"
-              onClick={handleModifBtn}
-            >
-              Modifier
-            </Button>
-          </div>
+              <div className="UserCard-element">
+                <Button
+                  className="btn-modifier"
+                  variant="contained"
+                  size="medium"
+                  onClick={handleSubmitSuppr}
+                >
+                  Oui
+                </Button>
+              </div>
 
-          <div className="UserCard-element">
-            <Button className="btn-suppr" variant="contained" size="medium">
-              Supprimer
-            </Button>
-          </div>
+              <div className="UserCard-element">
+                <Button
+                  className="btn-modifier"
+                  variant="contained"
+                  size="medium"
+                  onClick={handleAnnulerBtn}
+                >
+                  Non
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <div className="UserCard">
+                <div className="UserCard-element-large">
+                  <p>
+                    <span className="UserCard-Title">Nom :</span>
+                    {" " + props.User.nomEmploye}
+                  </p>
+                  <p>
+                    <span className="UserCard-Title">Prénom :</span>
+                    {" " + props.User.prenomEmploye}
+                  </p>
+                  <p>
+                    <span className="UserCard-Title">Identifiant :</span>
+                    {" " + props.User.login}
+                  </p>
+                  <p>
+                    <span className="UserCard-Title">Mot de passe :</span>{" "}
+                    ********
+                  </p>
+                  <p>
+                    <span className="UserCard-Title">Fonction :</span>
+                    {" " + props.User.libelleFonction}
+                  </p>
+                </div>
+
+                <div className="UserCard-element">
+                  <Button
+                    className="btn-modifier"
+                    variant="contained"
+                    size="medium"
+                    onClick={handleModifBtn}
+                  >
+                    Modifier
+                  </Button>
+                </div>
+
+                <div className="UserCard-element">
+                  <Button
+                    className="btn-suppr"
+                    variant="contained"
+                    size="medium"
+                    onClick={handleSupprBtn}
+                  >
+                    Supprimer
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

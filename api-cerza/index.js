@@ -68,6 +68,18 @@ app.get("/fonctions", (req, res) => {
   );
 });
 
+app.get("/fonctions/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  db.query(
+    "SELECT libelleFonction FROM fonctions WHERE idFonction = " + id,
+    function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
+});
+
 // Permet de récupérer les fonctions
 
 // - POST :
@@ -81,6 +93,20 @@ app.post("/getIdFonctionByLibelle", (req, res) => {
     "SELECT idFonction FROM fonctions WHERE libelleFonction = '" +
       data.libelleFonction +
       "'",
+    function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
+});
+
+app.post("/getIdUtilByIdentifiant", (req, res) => {
+  const data = {
+    login: req.body.identifiant,
+  };
+
+  db.query(
+    "SELECT idEmploye FROM employes WHERE login = '" + data.login + "'",
     function (err, result) {
       if (err) throw err;
       res.json(result);
