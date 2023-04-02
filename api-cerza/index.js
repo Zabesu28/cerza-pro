@@ -58,6 +58,7 @@ app.get("/utilisateurs/:id", (req, res) => {
   );
 });
 
+// Permet de récupérer les fonctions
 app.get("/fonctions", (req, res) => {
   db.query(
     "SELECT idFonction, libelleFonction FROM fonctions",
@@ -68,6 +69,7 @@ app.get("/fonctions", (req, res) => {
   );
 });
 
+// Permet de récupérer une fonction spécifique via son id
 app.get("/fonctions/:id", (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -80,10 +82,8 @@ app.get("/fonctions/:id", (req, res) => {
   );
 });
 
-// Permet de récupérer les fonctions
-
 // - POST :
-// Permet de vérifier la connexion au site de cerza
+// Permet de récupérer l'id d'une fonction via son libellé
 app.post("/getIdFonctionByLibelle", (req, res) => {
   const data = {
     libelleFonction: req.body.libFonction,
@@ -100,6 +100,7 @@ app.post("/getIdFonctionByLibelle", (req, res) => {
   );
 });
 
+// Permet de récupérer l'id (BDD) d'un utilisateur via son identifiant (login)
 app.post("/getIdUtilByIdentifiant", (req, res) => {
   const data = {
     login: req.body.identifiant,
@@ -114,6 +115,7 @@ app.post("/getIdUtilByIdentifiant", (req, res) => {
   );
 });
 
+// Permet de vérifier la connexion au site de cerza
 app.post("/verifCnx", (req, res) => {
   const data = {
     login: req.body.identifiant,
