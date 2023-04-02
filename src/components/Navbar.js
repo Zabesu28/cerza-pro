@@ -43,6 +43,11 @@ function Navbar() {
     navigate("/authUser");
   };
 
+  const handleGestionComptesClick = (event) => {
+    event.preventDefault();
+    navigate("/gestionComptes");
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -160,10 +165,17 @@ function Navbar() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center" onClick={handleLogoutClick}>
-                      Logout
-                    </Typography>
+                  {JSON.parse(localStorage.getItem("userConnected"))
+                    .droitCnx === "Administrateur" ? (
+                    <MenuItem onClick={handleGestionComptesClick}>
+                      <Typography textAlign="center">
+                        Gestion des comptes
+                      </Typography>
+                    </MenuItem>
+                  ) : null}
+
+                  <MenuItem onClick={handleLogoutClick}>
+                    <Typography textAlign="center">Logout</Typography>
                   </MenuItem>
                 </Menu>
               </div>
