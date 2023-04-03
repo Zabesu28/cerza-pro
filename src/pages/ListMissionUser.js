@@ -22,6 +22,9 @@ const ListMissionUser = () => {
     const [idMission, setIdMission] = useState(null);
     const [selectedId, setSelectedId] = useState(null);
     const [checkboxChecked, setCheckboxChecked] = useState(false);
+    const [commentaire, setCommentaire] = useState(null);
+    const [date, setDate] = useState(null);
+    const [isChecked, setIsChecked] = useState(null);
     
 
   useEffect(() => {
@@ -43,37 +46,47 @@ const ListMissionUser = () => {
 );
 const handlesubmit = (e) => {
   e.preventDefault();
-
+  console.log(date)
+  if((commentaire === '' || commentaire === null) && date === null)
+  {
+    alert("Le commentaire est vide")
+  }
+  else{
+    axios({
+      method: 'PUT',
+      url: 'http://localhost:4000/ModifMissionCheckbox',
+      headers: {
+        'content-Type': 'application/json'
+      },
+      data: {
+        idEtatAttribuer: selectedId,
+        idMissionAttribuer: idMission,
+        idEmployeAttribuer: 2,
+        commentaire: commentaire,
+        dateAttribuer: date
+        
+      }
+    })
+    .then((response) => {
+      console.log(response);
+      alert("La mission a bien été fini");
+      // Réinitialiser les champs du formulaire
+      e.target.reset();
+      // window.location.replace('http://localhost:3000/listMissionUser/'+2)
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Une erreur s'est produite lors de la validation de la mission");
+    });
+  }
 
 // Envoyer la requête PUT
-axios({
-  method: 'PUT',
-  url: 'http://localhost:4000/ModifMissionCheckbox',
-  headers: {
-    'content-Type': 'application/json'
-  },
-  data: {
-    idEtatAttribuer: selectedId,
-    idMissionAttribuer: idMission,
-    idEmployeAttribuer: 2
-    
-  }
-})
-.then((response) => {
-  console.log(response);
-  alert("La mission a bien été fini");
-  // Réinitialiser les champs du formulaire
-  e.target.reset();
-  // window.location.replace('http://localhost:3000/listMissionUser/'+2)
-})
-.catch((error) => {
-  console.log(error);
-  alert("Une erreur s'est produite lors de la validation de la mission");
-});
+
 
 console.log(selectedId);
 console.log(idMission);
 }
+
 
 const handleCheckboxChange = (event) => {
   setSelectedId(event.target.value);
@@ -82,13 +95,14 @@ const handleCheckboxChange = (event) => {
 }
     return (
         <div>
-          <h1>Missions du jour</h1>
+          <h1 class="center">Missions du jour</h1>
           
         
             {mission.map((uneMission) => (
               <div class="game-board">
+                
               <Card sx={{ minWidth: 275 }}>
-              
+              <form method="PUT" onSubmit={handlesubmit}>
                <CardContent>
             <Typography variant="h5" component="div">
             {uneMission.libelleMission}
@@ -99,24 +113,42 @@ const handleCheckboxChange = (event) => {
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {uneMission.libelleEtat}
               </Typography>
-            <Typography variant="body2">
-              commentaire
-            </Typography>
-            <form method="PUT" onSubmit={handlesubmit}>
-                      <input type="checkbox" disabled={uneMission.idEtatAttribuer === 2} name="active" id={uneMission.idMissionAttribuer} value={2} onChange={e => {setSelectedId(e.target.value); setIdMission(e.target.id); handleCheckboxChange(e)}}>
-                      </input>
-                      <input type="submit" disabled={!checkboxChecked || uneMission.idEtatAttribuer === 2}></input>
-                      
-                      </form> 
-            
-
-            </CardContent>
-            <CardActions>
-                  <Button size="small">Soumettre</Button>
-                </CardActions>
-              </Card> 
-
               
+            <Typography variant="body2">           
+              <input 
+              type="textarea" 
+              name="commentaire" 
+              value={uneMission.commentaire} 
+              id={uneMission.date} 
+              disabled={(uneMission.commentaire == null) === false}  
+              onChange={e => {
+                setCommentaire(e.target.value); 
+                setDate(e.target.id);}}>
+                  </input> 
+
+              <input 
+              type="checkbox" 
+              disabled={uneMission.idEtatAttribuer === 2} 
+              name={uneMission.date} 
+              id={uneMission.idMissionAttribuer} 
+              value={isChecked ? 1 : 2}
+              onChange={e => {
+                setSelectedId(e.target.value); 
+                setIdMission(e.target.id); 
+                setDate(e.target.name); 
+                handleCheckboxChange(e)
+                setIsChecked(e.target.checked);
+                }}
+                checked={isChecked}
+                >
+              </input>
+            </Typography>       
+            </CardContent>         
+            <CardActions>
+                  <Button size="small" type="submit" disabled={!isChecked && uneMission.commentaire}>Soumettre</Button>
+                </CardActions>
+                </form> 
+              </Card>          
               </div>
                 ))}          
    </div>)} 
