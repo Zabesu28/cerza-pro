@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/FiltreUser.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { width } from "@mui/system";
+import axios from "axios";
+import MenuItem from "@mui/material/MenuItem";
 
 const FiltreUser = (props) => {
+  const [lesFonctions, setLesFonctions] = useState([]);
+
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
   const [identifiant, setIdentifiant] = useState("");
+  const [fonction, setFonction] = useState("Default");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/fonctions")
+      .then((res) => setLesFonctions(res.data));
+  }, []);
 
   const inputNom = (event) => {
     event.preventDefault();
@@ -32,6 +42,7 @@ const FiltreUser = (props) => {
       nomFiltre: nom.trim().toLowerCase(),
       prenomFiltre: prenom.trim().toLowerCase(),
       identifiantFiltre: identifiant.trim().toLowerCase(),
+      fonctionFiltre: fonction,
     };
 
     props.trierComptes(filtre);
@@ -43,6 +54,12 @@ const FiltreUser = (props) => {
     setNom("");
     setPrenom("");
     setIdentifiant("");
+    setFonction("Default");
+  };
+
+  const inputFonction = (event) => {
+    event.preventDefault();
+    setFonction(event.target.value);
   };
 
   return (
@@ -92,6 +109,27 @@ const FiltreUser = (props) => {
               onChange={inputIdentifiant}
               value={identifiant}
             />
+          </div>
+
+          <div>
+            <TextField
+              id="standard-basic-select"
+              select
+              defaultValue={fonction}
+              value={fonction}
+              variant="outlined"
+              onChange={inputFonction}
+            >
+              <MenuItem value="Default">Choisir une fonction</MenuItem>
+              {lesFonctions.map((uneFonction) => (
+                <MenuItem
+                  key={uneFonction.idFonction}
+                  value={uneFonction.libelleFonction}
+                >
+                  {uneFonction.libelleFonction}
+                </MenuItem>
+              ))}
+            </TextField>
           </div>
 
           <div className="filtre-grid-element">

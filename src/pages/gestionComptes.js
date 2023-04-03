@@ -88,6 +88,12 @@ const GestionComptes = () => {
       );
     }
 
+    if (filtre.fonctionFiltre !== "Default") {
+      trieDesComptes = trieDesComptes.filter(
+        (unCompte) => unCompte.libelleFonction === filtre.fonctionFiltre
+      );
+    }
+
     setLesUtilisateurs(trieDesComptes);
   };
 
