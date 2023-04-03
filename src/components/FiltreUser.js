@@ -93,16 +93,6 @@ const FiltreUser = (props) => {
 
           <div className="filtre-grid-element">
             <TextField
-              id="prenom"
-              label="Prénom"
-              variant="outlined"
-              onChange={inputPrenom}
-              value={prenom}
-            />
-          </div>
-
-          <div className="filtre-grid-element">
-            <TextField
               id="identifiant"
               label="Identifiant"
               variant="outlined"
