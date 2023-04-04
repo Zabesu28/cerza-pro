@@ -82,6 +82,17 @@ app.get("/fonctions/:id", (req, res) => {
   );
 });
 
+// Permet de récupérer toutes les missions
+app.get("/missions", (req, res) => {
+  db.query(
+    "SELECT idMission, libelleMission FROM missions",
+    function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
+});
+
 // - POST :
 // Permet de récupérer l'id d'une fonction via son libellé
 app.post("/getIdFonctionByLibelle", (req, res) => {
@@ -263,6 +274,23 @@ app.post("/verifUtilExist", (req, res) => {
   }
 });
 
+// Permet d'ajouter une mission
+app.post("/ajoutMission", (req, res) => {
+  const data = {
+    libelleMission: req.body.libMission,
+  };
+
+  const query = "insert into missions (libelleMission) values (?)";
+
+  db.query(query, Object.values(data), (error) => {
+    if (error) {
+      res.json({ status: "failure", reason: error.code });
+    } else {
+      res.json({ satuts: "succes", data: data });
+    }
+  });
+});
+
 // - PUT :
 // Modifier les informations d'un utilisateur
 app.put("/modifUtil/:id", (req, res) => {
@@ -365,6 +393,111 @@ app.put("/modifUtil/:id", (req, res) => {
   }
 });
 
+// Modifier une mission
+app.put("/modifMission/:id", (req, res) => {
+  const idModif = parseInt(req.params.id);
+
+  const data = {
+    libelleMission: req.body.libMission,
+  };
+
+  let cptUpdate = 0;
+
+  if (typeof data.libelleMission !== "undefined" && data.libMission != "") {
+    db.query(
+      "UPDATE missions SET libelleMission = '" +
+        data.libelleMission +
+        "' WHERE idMission = " +
+        idModif,
+      function (err, result) {
+        if (err) throw err;
+      }
+    );
+
+    cptUpdate++;
+  }
+
+  if (cptUpdate == 0) {
+    res.status(400).json({
+      status: "failure",
+      reason:
+        "Aucune modification n'a été réalisée, veuillez saisir au moins un élément pour réaliser une modification !",
+    });
+  } else {
+    res.json({
+      status: "succes",
+      nb_update: cptUpdate,
+    });
+  }
+});
+
+// Modifier une mission attribuée
+app.put("/modifMission/attribuer/:id", (req, res) => {
+  const idModif = parseInt(req.params.id);
+
+  const data = {
+    idEmployeAttribuer: req.body.idEmploye,
+    codeEnclosAttribuer: req.body.codeEnclos,
+  };
+
+  let cptUpdate = 0;
+
+  if (
+    typeof data.idEmployeAttribuer !== "undefined" &&
+    data.idEmployeAttribuer != ""
+  ) {
+    db.query(
+      "UPDATE attribuer SET idEmployeAttribuer = '" +
+        data.idEmployeAttribuer +
+        "' WHERE idMissionAttribuer = " +
+        idModif,
+      function (err, result) {
+        if (err) throw err;
+      }
+    );
+
+    cptUpdate++;
+  }
+
+  if (
+    typeof data.codeEnclosAttribuer !== "undefined" &&
+    data.codeEnclosAttribuer != ""
+  ) {
+    db.query(
+      "UPDATE attribuer SET codeEnclosAttribuer = '" +
+        data.codeEnclosAttribuer +
+        "' WHERE idMissionAttribuer = " +
+        idModif,
+      function (err, result) {
+        if (err) throw err;
+      }
+    );
+
+    cptUpdate++;
+  }
+
+  if (cptUpdate == 0) {
+    res.status(400).json({
+      status: "failure",
+      reason:
+        "Aucune modification n'a été réalisée, veuillez saisir au moins un élément pour réaliser une modification !",
+    });
+  } else {
+    db.query(
+      "UPDATE attribuer SET commentaire = '', dateValidation = NULL, idEtatAttribuer =  (SELECT idEtat FROM etats WHERE libelleEtat = 'Validée') WHERE idMissionAttribuer = " +
+        idModif,
+      function (err, result) {
+        if (err) throw err;
+      }
+    );
+
+    res.json({
+      status: "succes",
+      nb_update: cptUpdate,
+    });
+  }
+});
+
 // - DELETE :
 // Supprimer un utilisateur
 app.delete("/supprUtil/:id", (req, res) => {
@@ -372,6 +505,51 @@ app.delete("/supprUtil/:id", (req, res) => {
 
   db.query(
     "DELETE FROM employes WHERE idEmploye = " + idSuppr,
+    function (err, result) {
+      if (err) throw err;
+
+      res.json(result);
+    }
+  );
+});
+
+// Supprimer une mission
+app.delete("/supprMission/:id", (req, res) => {
+  const idSuppr = parseInt(req.params.id);
+
+  db.query(
+    "SELECT COUNT(*) AS nbMissionAttribuer FROM attribuer WHERE idMissionAttribuer = " +
+      idSuppr,
+    function (err, result) {
+      if (err) throw err;
+
+      if (result[0].nbMissionAttribuer !== 0) {
+        db.query(
+          "DELETE FROM attribuer WHERE idMissionAttribuer = " + idSuppr,
+          function (err, result) {
+            if (err) throw err;
+          }
+        );
+      }
+    }
+  );
+
+  db.query(
+    "DELETE FROM missions WHERE idMission = " + idSuppr,
+    function (err, result) {
+      if (err) throw err;
+
+      res.json(result);
+    }
+  );
+});
+
+// Supprimer une mission attribuées
+app.delete("/supprMission/attribuer/:id", (req, res) => {
+  const idSuppr = parseInt(req.params.id);
+
+  db.query(
+    "DELETE FROM attribuer WHERE idMissionAttribuer = " + idSuppr,
     function (err, result) {
       if (err) throw err;
 
