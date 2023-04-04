@@ -26,7 +26,7 @@ const ListAlerteUser = () => {
         })
         .then((result) => {
           setTimeout(() => {   
-            setActive(result.results[0].active)  
+            setActive(result.results.active)  
             setAlerte(result.results)
             console.log(result.results);
             console.log(alerte);
