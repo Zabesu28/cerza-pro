@@ -15,6 +15,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import axios from 'axios';
+const moment = require('moment');
 
 const ListMissionUser = () => {
   
@@ -25,6 +26,25 @@ const ListMissionUser = () => {
     const [commentaire, setCommentaire] = useState(null);
     const [date, setDate] = useState(null);
     const [isChecked, setIsChecked] = useState(null);
+
+ function convertDate(date){
+  const dater = new Date(date);
+          const options = { weekday: 'long', hour: 'numeric', minute: 'numeric' };
+          const formattedDate = dater.toLocaleDateString('fr-FR', options);
+          
+          const formattedDateCapitalized = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+          
+          console.log(new Date());
+          return formattedDateCapitalized
+ }   
+
+ function convertDateSansMaj(date){
+  const dater = new Date(date);
+          const options = { weekday: 'long', hour: 'numeric', minute: 'numeric' };
+          const formattedDate = dater.toLocaleDateString('fr-FR', options);
+          
+          return formattedDate
+ }   
     
 
   useEffect(() => {
@@ -40,18 +60,23 @@ const ListMissionUser = () => {
           console.log(result.results.length);
         })
       }
+      
 
   , 
 []
 );
+
+
 const handlesubmit = (e) => {
+  let dateValid
   e.preventDefault();
-  console.log(date)
   if((commentaire === '' || commentaire === null) && date === null)
   {
     alert("Le commentaire est vide")
   }
   else{
+    dateValid = moment(Date()).format('YYYY-MM-DD HH:mm:ss');
+    console.log(dateValid);
     axios({
       method: 'PUT',
       url: 'http://localhost:4000/ModifMissionCheckbox',
@@ -63,13 +88,19 @@ const handlesubmit = (e) => {
         idMissionAttribuer: idMission,
         idEmployeAttribuer: 2,
         commentaire: commentaire,
-        dateAttribuer: date
+        dateAttribuer: date,
+        dateValidation: dateValid
         
       }
     })
     .then((response) => {
-      console.log(response);
-      alert("La mission a bien été fini");
+      console.log(response.data);
+      if(!(response.data.idEtatAttribuer === null)){
+        alert("La mission a bien été fini");
+      }
+      if(response.data.commentaire){
+      alert("Le commentaire a bien été ajouté");
+      }
       // Réinitialiser les champs du formulaire
       e.target.reset();
       // window.location.replace('http://localhost:3000/listMissionUser/'+2)
@@ -92,6 +123,7 @@ const handleCheckboxChange = (event) => {
   setSelectedId(event.target.value);
   setIdMission(event.target.id);
   setCheckboxChecked(event.target.checked);
+  
 }
     return (
         <div>
@@ -99,6 +131,7 @@ const handleCheckboxChange = (event) => {
           
         
             {mission.map((uneMission) => (
+              
               <div class="game-board">
                 
               <Card sx={{ minWidth: 275 }}>
@@ -107,11 +140,11 @@ const handleCheckboxChange = (event) => {
             <Typography variant="h5" component="div">
             {uneMission.libelleMission}
             </Typography>
-            <Typography variant="h5" component="div">
-            {uneMission.date}
+            <Typography variant="h6" component="div">
+            {convertDate(uneMission.dateJ)}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              {uneMission.libelleEtat}
+              {uneMission.libelleEtat} {uneMission.dateValide ? convertDateSansMaj(uneMission.dateValide) : ''}
               </Typography>
               
             <Typography variant="body2">           
