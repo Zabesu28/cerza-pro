@@ -122,8 +122,8 @@ console.log(idMission);
       
       <div>
         
-          <h1 class="center">Missions du jour</h1>
-          <div class="game-board">
+          <h1 class="center">Missions</h1>
+          <div class="missions-user-board">
         
             {mission.map((uneMission) => (
               

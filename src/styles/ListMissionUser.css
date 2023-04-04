@@ -2,7 +2,7 @@ body{
   background-color: #f2f2f3;
 }
 
-.game-board {
+.missions-user-board {
     display: grid;
     grid-template-columns: repeat(3, 20%);
     grid-template-rows: repeat(20, 60%);
@@ -22,7 +22,7 @@ body{
 @media screen and (max-width: 1000px){
 
 
-  .game-board {
+  .missions-user-board {
     display: grid;
     grid-template-columns: repeat(2, 45%);
     grid-template-rows: repeat(20, 60%);
