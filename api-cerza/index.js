@@ -94,6 +94,60 @@ app.get("/missions", (req, res) => {
 });
 
 // - POST :
+// Permet de vérifier si une mission est attibuée, si c'est le cas, on retourne l'employé, la date d'atribution, le code de l'enclos, le commentaire, la date de validation et l'etat attribuer
+app.post("/missions/:id/isAttribuer", (req, res) => {
+  const idMission = parseInt(req.params.id);
+
+  db.query(
+    "SELECT COUNT(*) as nbMissionAttribuer FROM attribuer WHERE idMissionAttribuer = " +
+      idMission,
+    function (err, result) {
+      if (err) throw err;
+      if (result[0].nbMissionAttribuer == 0) {
+        res.json({ isAttribuer: false });
+      } else {
+        db.query(
+          "SELECT dateAttribuer, codeEnclosAttribuer, commentaire, dateValidation, libelleEtat FROM attribuer INNER JOIN etats ON idEtatAttribuer = idEtat WHERE idMissionAttribuer = " +
+            idMission,
+          function (err, result) {
+            if (err) throw err;
+            let dateValid = "";
+            const dtAttrFormat = new Date(result[0].dateAttribuer);
+            const options = {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            };
+
+            if (result[0].dateValidation !== null) {
+              const dtValidFormat = new Date(result[0].dateValidation);
+
+              dateValid =
+                dtValidFormat.toLocaleDateString("fr-FR", options) +
+                " à " +
+                dtValidFormat.toLocaleTimeString("fr-FR");
+            }
+
+            res.json({
+              isAttribuer: true,
+              data: [
+                {
+                  dateAttribuer:
+                    dtAttrFormat.toLocaleDateString("fr-FR", options) +
+                    " à " +
+                    dtAttrFormat.toLocaleTimeString("fr-FR"),
+                  dateValidation: dateValid,
+                },
+              ],
+            });
+          }
+        );
+      }
+    }
+  );
+});
+
 // Permet de récupérer l'id d'une fonction via son libellé
 app.post("/getIdFonctionByLibelle", (req, res) => {
   const data = {
@@ -281,6 +335,26 @@ app.post("/ajoutMission", (req, res) => {
   };
 
   const query = "insert into missions (libelleMission) values (?)";
+
+  db.query(query, Object.values(data), (error) => {
+    if (error) {
+      res.json({ status: "failure", reason: error.code });
+    } else {
+      res.json({ satuts: "succes", data: data });
+    }
+  });
+});
+
+// Permet d'ajouter une mission attribuée
+app.post("/ajoutMission/attribuer", (req, res) => {
+  const data = {
+    idEmployeAttribuer: req.body.idEmploye,
+    idMissionAttribuer: req.body.idMission,
+    codeEnclosAttribuer: req.body.codeEnclos,
+  };
+
+  const query =
+    "insert into attribuer (idEmployeAttribuer, idMissionAttribuer, dateAttribuer, codeEnclosAttribuer, commentaire, dateValidation, idEtatAttribuer) values (?,?,CONCAT(CURDATE(), ' ', CURTIME()),?,'',NULL,(SELECT idEtat FROM etats WHERE libelleEtat = 'En cours'))";
 
   db.query(query, Object.values(data), (error) => {
     if (error) {
@@ -484,7 +558,7 @@ app.put("/modifMission/attribuer/:id", (req, res) => {
     });
   } else {
     db.query(
-      "UPDATE attribuer SET commentaire = '', dateValidation = NULL, idEtatAttribuer =  (SELECT idEtat FROM etats WHERE libelleEtat = 'Validée') WHERE idMissionAttribuer = " +
+      "UPDATE attribuer SET dateAttribuer = CONCAT(CURDATE(), ' ', CURTIME()), commentaire = '', dateValidation = NULL, idEtatAttribuer = (SELECT idEtat FROM etats WHERE libelleEtat = 'En cours') WHERE idMissionAttribuer = " +
         idModif,
       function (err, result) {
         if (err) throw err;
@@ -544,7 +618,7 @@ app.delete("/supprMission/:id", (req, res) => {
   );
 });
 
-// Supprimer une mission attribuées
+// Supprimer une mission attribuée
 app.delete("/supprMission/attribuer/:id", (req, res) => {
   const idSuppr = parseInt(req.params.id);
 
