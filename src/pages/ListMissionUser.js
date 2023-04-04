@@ -118,29 +118,25 @@ console.log(selectedId);
 console.log(idMission);
 }
 
-
-const handleCheckboxChange = (event) => {
-  setSelectedId(event.target.value);
-  setIdMission(event.target.id);
-  setCheckboxChecked(event.target.checked);
-  
-}
     return (
-        <div>
+      
+      <div>
+        
           <h1 class="center">Missions du jour</h1>
-          
+          <div class="game-board">
         
             {mission.map((uneMission) => (
               
-              <div class="game-board">
+              
                 
-              <Card sx={{ minWidth: 275 }}>
+                
+              <Card sx={{ minWidth: 300 }}>
               <form method="PUT" onSubmit={handlesubmit}>
                <CardContent>
-            <Typography variant="h5" component="div">
+            <Typography variant="h6" component="div">
             {uneMission.libelleMission}
             </Typography>
-            <Typography variant="h6" component="div">
+            <Typography variant="" component="div">
             {convertDate(uneMission.dateJ)}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -168,11 +164,10 @@ const handleCheckboxChange = (event) => {
               onChange={e => {
                 setSelectedId(e.target.value); 
                 setIdMission(e.target.id); 
-                setDate(e.target.name); 
-                handleCheckboxChange(e)
+                setDate(e.target.name);     
                 setIsChecked(e.target.checked);
                 }}
-                checked={isChecked}
+                
                 >
               </input>
             </Typography>       
@@ -181,9 +176,10 @@ const handleCheckboxChange = (event) => {
                   <Button size="small" type="submit" disabled={!isChecked && uneMission.commentaire}>Soumettre</Button>
                 </CardActions>
                 </form> 
-              </Card>          
-              </div>
-                ))}          
+              </Card>  
+                ))}  
+                        
+   </div>
    </div>)} 
 
 export default ListMissionUser
