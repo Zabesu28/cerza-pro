@@ -1,4 +1,16 @@
 .question{
-      width: 40%;
+      width: 80%;
+      margin-left: 10%;
+}
+
+.questionnaire{
+      border: 2px black solid;
+      border-radius: 20px;
+}
+
+.questionnaires{
       margin-left: 5%;
+      display: grid;
+      grid-template-columns: repeat(2, 40%);
+      grid-gap: 10%;
 }

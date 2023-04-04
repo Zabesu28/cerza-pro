@@ -91,6 +91,17 @@ app.get('/getImages/:idEspece', (req, res) => {
     res.status(200).json(result);
   })
 });
+
+
+app.get('/getDernierQuestionnaire/:idAnimal', (req, res) => {
+  const idAnimal = parseInt(req.params.idAnimal);
+  db.query("select libelleQuestion, idQuestionRepondre, reponse, dateRepondre FROM repondre INNER JOIN questionnaire ON idQuestion = idQuestionRepondre WHERE idAnimalRepondre = "+idAnimal+" and dateRepondre = (SELECT MAX(dateRepondre) FROM repondre WHERE idAnimalRepondre = "+idAnimal+") ORDER BY idQuestionRepondre",
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+})
+
 // - POST :
 app.post('/insertReponses', (req, res) => {
   const data = {

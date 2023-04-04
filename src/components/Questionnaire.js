@@ -11,7 +11,6 @@ const Questionnaire = ({idAnimal}) => {
 
       const handleClick = () => {
             var date = new Date();
-            // date = date.toLocaleString();
             date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
             var i = 1;
             repondre.map((uneReponse) => (
@@ -38,7 +37,8 @@ const Questionnaire = ({idAnimal}) => {
       }, []);
 
       return (
-            <div>
+            <div className='questionnaire'>
+                  <p>Evaluation de la santé de l'animal : </p>
                   {questions.map((uneQuestion) => (
                         <div className='question'>
                               {uneQuestion.libelleQuestion}

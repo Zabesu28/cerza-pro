@@ -3,6 +3,8 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Questionnaire from '../components/Questionnaire';
+import Navbar from '../components/Navbar';
+import LastQuestionnaire from '../components/LastQuestionnaire';
 
 const QuestionnaireSante = () => {
 
@@ -40,6 +42,7 @@ const QuestionnaireSante = () => {
 
       return (
             <div>
+                  <Navbar></Navbar>
                   <TextField
                         id="cbEspeces"
                         select
@@ -74,7 +77,11 @@ const QuestionnaireSante = () => {
                               <p>DATE DE NAISSANCE : {unAnimal.dateNaissAnimal.substring(0,10)}</p>
                               <p>SEXE : {unAnimal.sexeAnimal == 0 ? <label>Femelle</label> : <label>Mâle</label>}</p>
                               <p>ENCLOS : {unAnimal.codeEnclosAnimal}</p>
-                              <Questionnaire idAnimal={unAnimal.idAnimal}></Questionnaire>
+                              <div class="questionnaires">
+                                    <LastQuestionnaire key={"A"+unAnimal.idAnimal} idAnimal={unAnimal.idAnimal}></LastQuestionnaire>
+                                    <Questionnaire key={"B"+unAnimal.idAnimal} idAnimal={unAnimal.idAnimal}></Questionnaire>
+                              </div>
+                              
                         </div>
                   ))}
                   

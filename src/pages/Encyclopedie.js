@@ -4,6 +4,7 @@ import Espece from '../components/Espece';
 import '../styles/encyclopedie.css'
 import { NavLink } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
+import Navbar from '../components/Navbar';
 
 const Encyclopedie = () => {
 
@@ -26,9 +27,10 @@ const Encyclopedie = () => {
 
       return (
             <div>
-                 <h1>Les espèces présentes dans le zoo</h1>
-                 <TextField id="outlined-basic" label="Rechercher" variant="outlined" onChange={handleChange}/>
-                 <div className="gridEspece">
+                  <Navbar></Navbar>
+                  <h1>Les espèces présentes dans le zoo</h1>
+                  <TextField id="outlined-basic" label="Rechercher" variant="outlined" onChange={handleChange}/>
+                  <div className="gridEspece">
                         {dataFilter.map((uneEspece) => (
                               <NavLink className="noDeco" key={uneEspece.idEspece} to={uneEspece.libelleEspece} state={uneEspece.idEspece}>
                                     <Espece key={uneEspece.idEspece} espece={uneEspece}></Espece>

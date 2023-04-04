@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 const Description = () => {
       let location = useLocation();
@@ -15,6 +16,7 @@ const Description = () => {
 
       return (
             <div>
+                  <Navbar></Navbar>
                   {data.map((espece) => (
                         <div key={espece.idEspece}>
                               <h1>{espece.libelleEspece}</h1>
