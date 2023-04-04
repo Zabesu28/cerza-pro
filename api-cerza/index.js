@@ -107,10 +107,11 @@ app.post("/missions/:id/isAttribuer", (req, res) => {
         res.json({ isAttribuer: false });
       } else {
         db.query(
-          "SELECT dateAttribuer, codeEnclosAttribuer, commentaire, dateValidation, libelleEtat FROM attribuer INNER JOIN etats ON idEtatAttribuer = idEtat WHERE idMissionAttribuer = " +
+          "SELECT nomEmploye, prenomEmploye, dateAttribuer, codeEnclosAttribuer, commentaire, dateValidation, libelleEtat FROM attribuer INNER JOIN etats ON idEtatAttribuer = idEtat INNER JOIN employes ON idEmployeAttribuer = idEmploye WHERE idMissionAttribuer = " +
             idMission,
           function (err, result) {
             if (err) throw err;
+
             let dateValid = "";
             const dtAttrFormat = new Date(result[0].dateAttribuer);
             const options = {
@@ -133,11 +134,20 @@ app.post("/missions/:id/isAttribuer", (req, res) => {
               isAttribuer: true,
               data: [
                 {
+                  Employe: [
+                    {
+                      nomEmploye: result[0].nomEmploye,
+                      prenomEmploye: result[0].prenomEmploye,
+                    },
+                  ],
                   dateAttribuer:
                     dtAttrFormat.toLocaleDateString("fr-FR", options) +
                     " à " +
                     dtAttrFormat.toLocaleTimeString("fr-FR"),
                   dateValidation: dateValid,
+                  codeEnclos: result[0].codeEnclosAttribuer,
+                  commentaire: result[0].commentaire,
+                  etat: result[0].libelleEtat,
                 },
               ],
             });

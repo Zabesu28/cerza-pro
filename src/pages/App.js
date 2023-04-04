@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthAdmin from "./AuthAdmin";
 import AuthUser from "./AuthUser";
 import GestionComptes from "./GestionComptes";
+import GestionMissions from "./GestionMissions";
 
 function App() {
   const [showNav, setShowNav] = useState(false);
@@ -18,6 +19,7 @@ function App() {
           <Route path="authAdmin" element={<AuthAdmin />} />
           <Route path="authUser" element={<AuthUser />} />
           <Route path="gestionComptes" element={<GestionComptes />} />
+          <Route path="gestionMissions" element={<GestionMissions />} />
         </Routes>
       </BrowserRouter>
     </div>
