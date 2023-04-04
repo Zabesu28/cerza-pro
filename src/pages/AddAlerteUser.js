@@ -1,6 +1,11 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const AddAlerteUser = () => {
   
@@ -56,9 +61,13 @@ const AddAlerteUser = () => {
   );
 
   return (
-
+    <div class="boxAlerteUserAdd">
+    <Card sx={{ minWidth: 300 }}>
      <form method="POST" onSubmit={handlesubmit}>
-  <label>
+      
+              
+               <CardContent>
+               <label>
     Description
     <input type="textarea" name="descriptionAlerte" />
   </label>
@@ -76,10 +85,18 @@ const AddAlerteUser = () => {
   )}
 </select>
  
-  </label>
-  <input type="submit" value="Ajouter"/>
-  <button><Link to="/ListAlerte">Retour</Link></button>
-</form>
+  </label>         
+            </CardContent>         
+            <CardActions>
+                  <Button size="small" type="submit" value="Ajouter">Soumettre</Button>
+                  <Button size="small"><Link to="/ListAlerte">Retour</Link></Button>
+                </CardActions>
+                </form>
+                </Card>
+                </div>
+      
+ 
+
 
   ); 
 }

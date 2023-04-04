@@ -7,7 +7,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+
 
 const ListAlerteUser = () => {
   
@@ -90,51 +100,60 @@ const handleCheckboxChange = (event) => {
     return (
         <div>
           <h1>Gestion des Alertes</h1>
-          <a href="/addAlerteUser"><button>Créer une alerte</button></a>
+          
           <select name="idNiveauAlerte" onChange={e => 
       idNiveauchange(e.target.value)
     }> 
     <option value={0}>Tout</option>
   {(niveau.map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
     </select>
-            <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">Description</TableCell>
-            <TableCell align="left">Alerteur</TableCell>
-            <TableCell align="left">Niveau Alerte</TableCell>
-            <TableCell align="left">Valider</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
+    <div class="missions-user-board">
+     
           {alerte.length === 0 ? (
           
-          <TableCell align="left">Chargement...</TableCell>
+          <p align="left">Chargement...</p>
         ) : (
           <>
             {alerte.filter(laAlerte => laAlerte.idNiveauAlerte == idNiveauAlerte || idNiveauAlerte == 0).map((uneAlerte) => (
-                  <TableRow
-                    key={uneAlerte.idAlerte}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell align="left">{uneAlerte.descriptionAlerte}</TableCell>
-                    <TableCell align="left">{uneAlerte.nomEmploye} {uneAlerte.prenomEmploye}</TableCell>
-                    <TableCell align="left">{uneAlerte.libelleNiveau + " (" + uneAlerte.idNiveauAlerte + ")"}</TableCell>
-                    <TableCell align="left">
-                      <form method="PUT" onSubmit={handlesubmit}>
-                        <input type="checkbox" disabled={uneAlerte.active === 1} name="active" id={uneAlerte.idAlerte} value={1} onChange={e => {setSelectedId(e.target.id); setActive(e.target.value); handleCheckboxChange(e)}}>
-                        </input>
-                        <input type="submit" disabled={!checkboxChecked || uneAlerte.active === 1}></input>
-                        
-                        </form> </TableCell>
-                  </TableRow>
-                ))}
+              <div>
+              <Card sx={{ minWidth: 300 }}>
+              <form method="PUT" onSubmit={handlesubmit}>
+               <CardContent>
+            <Typography variant="h6" component="div">
+            {uneAlerte.descriptionAlerte}
+            </Typography>
+            <Typography variant="" component="div">
+            {uneAlerte.nomEmploye} {uneAlerte.prenomEmploye}
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            {uneAlerte.libelleNiveau + " (" + uneAlerte.idNiveauAlerte + ")"}
+              </Typography>
+              
+            <Typography variant="body2">
+                  <input type="checkbox" 
+                  disabled={uneAlerte.active === 1} 
+                  name="active" 
+                  id={uneAlerte.idAlerte} 
+                  value={1} 
+                  onChange={e => {
+                    setSelectedId(e.target.id); 
+                    setActive(e.target.value); 
+                    handleCheckboxChange(e)
+                    }}>
+              </input>
+            </Typography>       
+            </CardContent>         
+            <CardActions>
+                  <Button size="small" type="submit" disabled={(!checkboxChecked || uneAlerte.active === 1 ) || !(uneAlerte.idAlerte == selectedId)}>Soumettre</Button>
+                </CardActions>
+                </form> 
+              </Card>
+                  
+                  </div>   ))}
+                  <a href="/addAlerteUser" class="btnAlertAdd"><Button variant="contained" >Créer une alerte</Button></a>
             </>
           )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+   </div>
    </div>)} 
 
 export default ListAlerteUser
