@@ -17,6 +17,8 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
+import Checkbox from '@mui/material/Checkbox';
+import MenuItem from '@mui/material/MenuItem';
 
 
 const ListAlerteUser = () => {
@@ -99,20 +101,26 @@ const handleCheckboxChange = (event) => {
 }
     return (
         <div>
-          <h1>Gestion des Alertes</h1>
+          <h1 class="center">Liste des Alertes</h1>
           
-          <select name="idNiveauAlerte" onChange={e => 
-      idNiveauchange(e.target.value)
-    }> 
-    <option value={0}>Tout</option>
-  {(niveau.map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
-    </select>
-    <div class="missions-user-board">
+          <TextField name="idNiveauAlerte" onChange={e => 
+            idNiveauchange(e.target.value)
+            }
+
+            select
+            defaultValue={0}
+            style={{width : 200, paddingLeft: 60}}
+            > 
+            <MenuItem value={0}>Tout</MenuItem>
+             {(niveau.map(unNiveau => <MenuItem value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</MenuItem>))}
+          </TextField>
+          <a href="/addAlerteUser" class="btnAddAlerte"><Button variant="contained" >Créer une alerte</Button></a>
+          <div class="alertes-user-board">
      
           {alerte.length === 0 ? (
           
           <p align="left">Chargement...</p>
-        ) : (
+          ) : (
           <>
             {alerte.filter(laAlerte => laAlerte.idNiveauAlerte == idNiveauAlerte || idNiveauAlerte == 0).map((uneAlerte) => (
               <div>
@@ -123,14 +131,25 @@ const handleCheckboxChange = (event) => {
             {uneAlerte.descriptionAlerte}
             </Typography>
             <Typography variant="" component="div">
-            {uneAlerte.nomEmploye} {uneAlerte.prenomEmploye}
+            {"Alerteur : " + uneAlerte.nomEmploye + " " + uneAlerte.prenomEmploye} 
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
             {uneAlerte.libelleNiveau + " (" + uneAlerte.idNiveauAlerte + ")"}
               </Typography>
+              <Typography  color="text.secondary">
+              {uneAlerte.active == 0 ? (
+          
+          <p align="left">En cours</p>
+          ) : (
+          <>
+          <p align="left">Terminé</p>
+          </>
+          )}
+              </Typography>
+              
               
             <Typography variant="body2">
-                  <input type="checkbox" 
+                  <Checkbox type="checkbox" 
                   disabled={uneAlerte.active === 1} 
                   name="active" 
                   id={uneAlerte.idAlerte} 
@@ -140,7 +159,7 @@ const handleCheckboxChange = (event) => {
                     setActive(e.target.value); 
                     handleCheckboxChange(e)
                     }}>
-              </input>
+              </Checkbox>
             </Typography>       
             </CardContent>         
             <CardActions>
@@ -150,7 +169,6 @@ const handleCheckboxChange = (event) => {
               </Card>
                   
                   </div>   ))}
-                  <a href="/addAlerteUser" class="btnAlertAdd"><Button variant="contained" >Créer une alerte</Button></a>
             </>
           )}
    </div>

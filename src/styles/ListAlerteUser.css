@@ -2,36 +2,56 @@ body{
     background-color: #f2f2f3;
   }
   
-  .missions-user-board {
-      display: grid;
-      grid-template-columns: repeat(3, 20%);
-      grid-template-rows: repeat(20, 60%);
-      grid-column-gap: 15%;
-      grid-row-gap: 20%;
-      margin-left: 17%;
-      margin-right: 17%;
-      margin-top: 2%;
-      
-  }
-  
-  .center{
-    text-align: center;
-  }
-  
-  
-  @media screen and (max-width: 1000px){
-  
-  
-    .missions-user-board {
-      display: grid;
-      grid-template-columns: repeat(2, 45%);
-      grid-template-rows: repeat(20, 60%);
-      grid-column-gap: 10%;
-      grid-row-gap: 25%;
-      margin-left: 5%;
-      margin-right: 5%;
-      margin-top: 7%;
-  
-  }
-  }
+  .alertes-user-board {
+    display: grid;
+    grid-template-columns: repeat(3, 20%);
+    grid-template-rows: repeat(20, 20%);
+    grid-column-gap: 15%;
+    grid-row-gap: 20%;
+    margin-left: 17%;
+    margin-right: 17%;
+    margin-top: 2%;
+    
+}
 
+.center{
+  text-align: center;
+}
+
+
+@media screen and (max-width: 1000px){
+
+
+  .alertes-user-board {
+    display: grid;
+    grid-template-columns: repeat(2, 30%);
+    grid-template-rows: repeat(20, 60%);
+    grid-column-gap: 20%;
+    grid-row-gap: 20%;
+    margin-left: 8%;
+    margin-right: 1%;
+    margin-top: 7%;
+    height: 27em !important;
+}
+
+}
+
+@media (min-width: 1100px) and (max-width: 1300px){
+
+
+  .alertes-user-board {
+    display: grid;
+    grid-template-columns: repeat(3, 20%);
+    grid-template-rows: repeat(20, 20%);
+    grid-column-gap: 15%;
+    grid-row-gap: 25%;
+    margin-left: 6%;
+    margin-right: 6%;
+    margin-top: 2%;
+}
+
+}
+
+.btnAddAlerte{
+  margin-left: 3%;
+}
