@@ -65,7 +65,7 @@ app.get("/ListAlerteUser", (req, res) => {
 
 app.get("/ListMissionUser/:id", (req, res) => {
   const id = parseInt(req.params.id) // prend l'id dans la route
-  let sql = `SELECT idEmployeAttribuer, idMissionAttribuer, idEtatAttribuer, libelleEtat, DATE_FORMAT(dateAttribuer, "%H:%i") as date, commentaire, libelleMission FROM attribuer INNER JOIN missions ON idMissionAttribuer = idMission INNER JOIN etats ON idEtatAttribuer = idEtat WHERE idEmployeAttribuer =`+id+" ORDER BY idEtatAttribuer, date";
+  let sql = `SELECT idEmployeAttribuer, idMissionAttribuer, idEtatAttribuer, libelleEtat, DATE_FORMAT(dateAttribuer, "%H:%i") as date, dateAttribuer as dateJ, dateValidation as dateValide, commentaire, libelleMission, codeEnclosAttribuer FROM attribuer INNER JOIN missions ON idMissionAttribuer = idMission INNER JOIN etats ON idEtatAttribuer = idEtat WHERE idEmployeAttribuer =`+id+" ORDER BY idEtatAttribuer, date";
   db.query(sql,(err, results) =>{
       if(err) {throw err}
       console.log(results);
@@ -163,6 +163,7 @@ app.put("/ModifMissionCheckbox", (req, res) => {
   const check = parseInt(req.body.idEtatAttribuer);
   let commentaire = req.body.commentaire;
   const date = req.body.dateAttribuer;
+  const dateValidation = req.body.dateValidation
   let sql;
    if(req.body.idEtatAttribuer === null){
     sql = `UPDATE attribuer SET commentaire ='`+commentaire+`' WHERE idEmployeAttribuer = `+idEmploye+` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='`+date+`'`
@@ -173,7 +174,7 @@ app.put("/ModifMissionCheckbox", (req, res) => {
   })
     }
   else if(!commentaire){
-    sql = `UPDATE attribuer SET idEtatAttribuer =`+check+` WHERE idEmployeAttribuer = `+idEmploye+` AND idMissionAttribuer = `+idMission+` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='`+date+`'`
+    sql = `UPDATE attribuer SET idEtatAttribuer =`+check+`, dateValidation ='`+dateValidation+`' WHERE idEmployeAttribuer = `+idEmploye+` AND idMissionAttribuer = `+idMission+` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='`+date+`'`
     db.query(sql,(err, results) =>{
       if(err) {throw err}
       console.log(results);
@@ -181,7 +182,7 @@ app.put("/ModifMissionCheckbox", (req, res) => {
   })
   }
   else{
-    sql = `UPDATE attribuer SET idEtatAttribuer =`+check+`, commentaire ='`+commentaire+`' WHERE idEmployeAttribuer = `+idEmploye+` AND idMissionAttribuer = `+idMission+` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='`+date+`'`
+    sql = `UPDATE attribuer SET idEtatAttribuer =`+check+`, commentaire ='`+commentaire+`', dateValidation ='`+dateValidation+`' WHERE idEmployeAttribuer = `+idEmploye+` AND idMissionAttribuer = `+idMission+` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='`+date+`'`
     db.query(sql,(err, results) =>{
       if(err) {throw err}
       console.log(results);

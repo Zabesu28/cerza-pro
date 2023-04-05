@@ -13,8 +13,10 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Checkbox from '@mui/material/Checkbox';
 
 import axios from 'axios';
+import { TextField } from '@mui/material';
 const moment = require('moment');
 
 const ListMissionUser = () => {
@@ -101,9 +103,9 @@ const handlesubmit = (e) => {
       if(response.data.commentaire){
       alert("Le commentaire a bien été ajouté");
       }
-      // Réinitialiser les champs du formulaire
+      // Réinitialiser les champs du formulaire + change par id du user connecté
       e.target.reset();
-      // window.location.replace('http://localhost:3000/listMissionUser/'+2)
+      window.location.replace('http://localhost:3000/listMissionUser/'+2)
     })
     .catch((error) => {
       console.log(error);
@@ -120,31 +122,27 @@ console.log(idMission);
 
     return (
       
-      <div>
-        
+      <div>     
           <h1 class="center">Missions</h1>
           <div class="missions-user-board">
         
             {mission.map((uneMission) => (
-              
-              
-                
-                
+    
               <Card sx={{ minWidth: 300 }}>
               <form method="PUT" onSubmit={handlesubmit}>
                <CardContent>
             <Typography variant="h6" component="div">
-            {uneMission.libelleMission}
+            {uneMission.libelleMission + " - " + uneMission.codeEnclosAttribuer}
             </Typography>
             <Typography variant="" component="div">
-            {convertDate(uneMission.dateJ)}
+            { "Assigné " + convertDateSansMaj(uneMission.dateJ)}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {uneMission.libelleEtat} {uneMission.dateValide ? convertDateSansMaj(uneMission.dateValide) : ''}
               </Typography>
               
             <Typography variant="body2">           
-              <input 
+              <TextField 
               type="textarea" 
               name="commentaire" 
               value={uneMission.commentaire} 
@@ -153,9 +151,9 @@ console.log(idMission);
               onChange={e => {
                 setCommentaire(e.target.value); 
                 setDate(e.target.id);}}>
-                  </input> 
+              </TextField> 
 
-              <input 
+              <Checkbox 
               type="checkbox" 
               disabled={uneMission.idEtatAttribuer === 2} 
               name={uneMission.date} 
@@ -166,14 +164,13 @@ console.log(idMission);
                 setIdMission(e.target.id); 
                 setDate(e.target.name);     
                 setIsChecked(e.target.checked);
-                }}
-                
-                >
-              </input>
+                }}     
+                />
+              
             </Typography>       
             </CardContent>         
             <CardActions>
-                  <Button size="small" type="submit" disabled={!isChecked && uneMission.commentaire}>Soumettre</Button>
+                  <Button size="small" type="submit" disabled={(!isChecked && uneMission.commentaire) || !(uneMission.date == date)}>Soumettre</Button>
                 </CardActions>
                 </form> 
               </Card>  
