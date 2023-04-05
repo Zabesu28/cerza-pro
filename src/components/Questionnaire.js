@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Slider from '@mui/material/Slider';
-import '../styles/questionnaireSante.css'
+import '../styles/questionnaireSante.css';
 
 const Questionnaire = ({idAnimal}) => {
 
@@ -42,9 +42,9 @@ const Questionnaire = ({idAnimal}) => {
                   {questions.map((uneQuestion) => (
                         <div className='question'>
                               {uneQuestion.libelleQuestion}
-                              <Slider name={uneQuestion.idQuestion} onChange={handleChange} valueLabelDisplay="auto" defaultValue={1} step={1} marks min={1} max={5}/>
+                              <br/>
+                              <div className='reponse'>🙁<Slider className='reponse' name={uneQuestion.idQuestion} onChange={handleChange} valueLabelDisplay="auto" defaultValue={1} step={1} marks min={1} max={5}/>&nbsp;&nbsp;&nbsp;😀</div>
                         </div>
-                        
                   ))}
                   <button onClick={handleClick}>Valider</button>
             </div>

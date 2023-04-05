@@ -34,3 +34,11 @@
 .noDeco{
       text-decoration: none;
 }
+
+.imageSlider{
+      width: 100%;
+      max-height: 250px; 
+      object-fit: cover;
+      margin-top: 5%;
+      margin-bottom: 5%;
+}

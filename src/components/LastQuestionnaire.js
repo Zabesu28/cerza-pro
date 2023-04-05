@@ -32,7 +32,7 @@ const LastQuestionnaire = ({idAnimal}) => {
                         {questions.map((uneQuestion) => (
                               <div className='question'>
                                     {uneQuestion.libelleQuestion}
-                                    <Slider name={uneQuestion.idQuestion} valueLabelDisplay="auto" disabled defaultValue={uneQuestion.reponse} step={1} marks min={1} max={5}/>
+                                    <div className='reponse'>🙁<Slider name={uneQuestion.idQuestion} valueLabelDisplay="auto" disabled defaultValue={uneQuestion.reponse} step={1} marks min={1} max={5}/>&nbsp;&nbsp;&nbsp;😀</div>
                               </div>
                         ))}
                   </div>
