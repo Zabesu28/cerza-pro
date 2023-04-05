@@ -11,6 +11,18 @@ const CardMission = (props) => {
   const [modifForm, setModifForm] = useState(false);
   const [supprForm, setSupprForm] = useState(false);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/")
+      .then((res) => setLesFonctions(res.data));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/fonctions")
+      .then((res) => setLesFonctions(res.data));
+  }, []);
+
   if (
     (props.isModifMission !== "" &&
       props.isModifMission !== props.Mission.idMission &&

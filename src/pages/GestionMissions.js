@@ -15,18 +15,6 @@ const GestionMissions = () => {
     });
   }, []);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/fonctions")
-      .then((res) => setLesFonctions(res.data));
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/fonctions")
-      .then((res) => setLesFonctions(res.data));
-  }, []);
-
   return (
     <div>
       <Navbar />
