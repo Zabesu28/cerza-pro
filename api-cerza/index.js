@@ -93,6 +93,14 @@ app.get("/missions", (req, res) => {
   );
 });
 
+// Permet de récupérer tous les enclos
+app.get("/enclos", (req, res) => {
+  db.query("SELECT code, descriptifEnclos FROM enclos", function (err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+
 // - POST :
 // Permet de vérifier si une mission est attibuée, si c'est le cas, on retourne l'employé, la date d'atribution, le code de l'enclos, le commentaire, la date de validation et l'etat attribuer
 app.post("/missions/:id/isAttribuer", (req, res) => {
