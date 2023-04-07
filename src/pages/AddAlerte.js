@@ -1,6 +1,16 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+import Checkbox from '@mui/material/Checkbox';
+import MenuItem from '@mui/material/MenuItem';
 
 const AddAlerte = () => {
   
@@ -11,18 +21,12 @@ const AddAlerte = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
     const descriptionAlerte = e.target.elements.descriptionAlerte.value
-    const idEmploye = e.target.elements.idEmploye.value
     const idNiveau = e.target.elements.idNiveau.value
     let isValid = true;
 
   if (descriptionAlerte == "") {
     isValid = false;
     alert("La description de l'alerte est obligatoire");
-  }
-
-  if (idEmploye == "0") {
-    isValid = false;
-    alert("Vous devez sélectionner un employé");
   }
 
   if (idNiveau == "0") {
@@ -34,7 +38,7 @@ const AddAlerte = () => {
     // Envoyer la requête POST
     axios.post('http://localhost:4000/AddAlerte/', {
       descriptionAlerte,
-      idEmploye,
+      idEmploye: 1, // changer par l'id de l'admin co
       idNiveau
     })   
       alert("L'alerte a été ajoutée avec succès");
@@ -72,48 +76,39 @@ const AddAlerte = () => {
 
   return (
 
-     <form method="POST" onSubmit={handlesubmit}>
-  <label>
-    Description
-    <input type="textarea" name="descriptionAlerte" />
-  </label>
-  <label>
-    Employe:
-    <select name="idEmploye">
-  {employe.length === 0 ? (
-    <option value="0">Chargement...</option>
-  ) : (
-    <>
-      <option value="0">Sélectionner une valeur</option>
-      {employe.map((unEmploye) => (
-        <option value={unEmploye.idEmploye}>{unEmploye.nomEmploye} {unEmploye.prenomEmploye}</option>
-      ))}
-    </>
-  )}
-</select>
-
-
-  </label>
-  <label>
-    Niveau:
-    <select name="idNiveau">
-  {niveau.length === 0 ? (
-    <option value="0">Chargement...</option>
-  ) : (
-    <>
-      <option value="0">Sélectionner une valeur</option>
-      {(niveau.map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
-    </>
-  )}
-</select>
+    <div class="boxAlerteAdd">
+    <Card sx={{ minWidth: 300 }}>
+    <h2 class="center">Créer une alerte</h2>
+    <form method="POST" onSubmit={handlesubmit}>
+                   
+    <CardContent>
+             
+    <TextField type="textarea" 
+    name="descriptionAlerte"
+    label="Description"
+    >
+    </TextField>
  
-  </label>
-  <input type="submit" value="Ajouter"/>
-  <button><Link to="/gestionAlerte">Retour</Link></button>
-</form>
-
+    <TextField name="idNiveau" 
+            label="Niveau"
+            select
+            defaultValue={0}
+            style={{width : 200, marginTop :40}}
+            > 
+             {(niveau.map(unNiveau => <MenuItem value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</MenuItem>))}
+          </TextField>
+ 
+        
+            </CardContent>         
+            <CardActions>
+                  <Button size="small" type="submit" value="Ajouter">Soumettre</Button>
+                  <Button size="small"><Link to="/gestionAlerte">Retour</Link></Button>
+                </CardActions>
+                </form>
+                </Card>
+                </div>
+      
   ); 
 }
-
 
 export default AddAlerte;

@@ -1,6 +1,16 @@
 import React, { Component, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams, Link } from 'react-router-dom';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+import Checkbox from '@mui/material/Checkbox';
+import MenuItem from '@mui/material/MenuItem';
 
 
 
@@ -62,18 +72,13 @@ const ModifAlerte = () => {
 
   const handlesubmit = (e) => {
       e.preventDefault();
-      const empobj = { descriptionAlerte, idEmployeAlerte, idNiveauAlerte };
+      const empobj = { descriptionAlerte, idEmployeAlerte: 1, idNiveauAlerte };
 
     let isValid = true;
 
   if (descriptionAlerte == "") {
     isValid = false;  
     alert("La description de l'alerte est obligatoire");
-  }
-
-  if (idEmployeAlerte == "0") {
-    isValid = false;
-    alert("Vous devez sélectionner un employé");
   }
 
   if (idNiveauAlerte == "0") {
@@ -106,33 +111,80 @@ const ModifAlerte = () => {
   console.log(empobj);
   }
   return (
-    
+
+    <div class="boxAlerteModif">
+    <Card sx={{ minWidth: 300 }}>
+    <h2 class="center">Modifier l'alerte</h2>
     <form method="PUT" onSubmit={handlesubmit}>
-    <label>
-      Description
-      <input type="textarea" name="descriptionAlerte" value={descriptionAlerte} onChange={e => descriptionAlertechange(e.target.value)}/>
-    </label>
-    <select name="idEmployeAlerte" onChange={e => {
-      idEmployechange(e.target.value); 
-      // nomEmployechange(e.target.value); 
-      // prenomEmployechange(e.target.value);
-      }}> 
-  <option value={idEmployeAlerte} >{nomEmploye + " " + prenomEmploye +" (valeur de base)"}</option>
-  {(employes/*.filter(unEmploye => unEmploye.idEmploye != idEmployeAlerte)*/.map(leEmploye => <option value={leEmploye.idEmploye}>{leEmploye.nomEmploye + " " + leEmploye.prenomEmploye}</option>))}
-    </select>
+                   
+    <CardContent>
+             
+    <TextField 
+    label="Description"
+    type="textarea" 
+    name="descriptionAlerte" 
+    value={descriptionAlerte} 
+    onChange={e => 
+      descriptionAlertechange(e.target.value)
+    }
     
-    <select name="idNiveauAlerte" onChange={e => {
-      idNiveauchange(e.target.value);
-      // libelleNiveau(e.target.value);
-    }}> 
-  <option value={idNiveauAlerte}>{libelleNiveau +" (valeur de base)"}</option>
-  {(niveau/*.filter(unNiveau => unNiveau.idNiveau != idNiveauAlerte)*/.map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
-    </select>
-    <input type="submit" value="Modifier"/>
-    <button><Link to="/gestionAlerte">Retour</Link></button>
-  </form>
-  );
-};
+    >
+    </TextField>
+ 
+    <TextField 
+      onChange={e => {
+        idNiveauchange(e.target.value);
+        libelleNiveauchange(e.target.name);
+        }}
+        label="Niveau"
+        select
+        defaultValue={idNiveauAlerte}
+        name={libelleNiveau}
+        style={{width : 200, marginTop :40}}
+        > 
+        <MenuItem value={idNiveauAlerte}>{libelleNiveau +" (valeur de base)"}</MenuItem>
+             {(niveau.map(unNiveau => <MenuItem value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</MenuItem>))}
+          </TextField>
+ 
+        
+            </CardContent>         
+            <CardActions>
+                  <Button size="small" type="submit" value="Modifier">Modifier</Button>
+                  <Button size="small"><Link to="/gestionAlerte">Retour</Link></Button>
+                </CardActions>
+                </form>
+                </Card>
+                </div>
+      
+  ); 
+}
+    
+//     <form method="PUT" onSubmit={handlesubmit}>
+//     <label>
+//       Description
+//       <input type="textarea" name="descriptionAlerte" value={descriptionAlerte} onChange={e => descriptionAlertechange(e.target.value)}/>
+//     </label>
+//     <select name="idEmployeAlerte" onChange={e => {
+//       idEmployechange(e.target.value); 
+//       // nomEmployechange(e.target.value); 
+//       // prenomEmployechange(e.target.value);
+//       }}> 
+//   <option value={idEmployeAlerte} >{nomEmploye + " " + prenomEmploye +" (valeur de base)"}</option>
+//   {(employes/*.filter(unEmploye => unEmploye.idEmploye != idEmployeAlerte)*/.map(leEmploye => <option value={leEmploye.idEmploye}>{leEmploye.nomEmploye + " " + leEmploye.prenomEmploye}</option>))}
+//     </select>
+    
+//     <select name="idNiveauAlerte" onChange={e => {
+//       idNiveauchange(e.target.value);
+//       // libelleNiveau(e.target.value);
+//     }}> 
+//   <option value={idNiveauAlerte}>{libelleNiveau +" (valeur de base)"}</option>
+//   {(niveau/*.filter(unNiveau => unNiveau.idNiveau != idNiveauAlerte)*/.map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
+//     </select>
+//     <input type="submit" value="Modifier"/>
+//     <button><Link to="/gestionAlerte">Retour</Link></button>
+//   </form>
+//   );
+// };
 
 
 
