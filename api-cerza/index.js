@@ -198,6 +198,26 @@ app.post("/getIdUtilByIdentifiant", (req, res) => {
   );
 });
 
+// Permet de récupérer l'id (BDD) d'un utilisateur via son nom et son prénom
+app.post("/getIdUtilByNomPrenom", (req, res) => {
+  const data = {
+    nomEmploye: req.body.nom,
+    prenomEmploye: req.body.prenom,
+  };
+
+  db.query(
+    "SELECT idEmploye FROM employes WHERE nomEmploye = '" +
+      data.nomEmploye +
+      "' AND prenomEmploye = '" +
+      data.prenomEmploye +
+      "'",
+    function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
+});
+
 // Permet de vérifier la connexion au site de cerza
 app.post("/verifCnx", (req, res) => {
   const data = {

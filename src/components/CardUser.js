@@ -453,12 +453,12 @@ const CardUser = (props) => {
           {supprForm ? (
             <div className="UserCard-supprForm">
               <div className="UserCard-element-large">
-                <p>Voulez-vous supprimer cette utilisateur ?</p>
+                <p>Voulez-vous supprimer cet utilisateur ?</p>
               </div>
 
               <div className="UserCard-element">
                 <Button
-                  className="btn-modifier"
+                  className="btn-suppr"
                   variant="contained"
                   size="medium"
                   onClick={handleSubmitSuppr}
@@ -469,7 +469,7 @@ const CardUser = (props) => {
 
               <div className="UserCard-element">
                 <Button
-                  className="btn-modifier"
+                  className="btn-suppr"
                   variant="contained"
                   size="medium"
                   onClick={handleAnnulerBtn}
