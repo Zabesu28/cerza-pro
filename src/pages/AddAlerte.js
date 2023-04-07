@@ -11,6 +11,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
+import SendIcon from '@mui/icons-material/Send';
 
 const AddAlerte = () => {
   
@@ -101,7 +102,7 @@ const AddAlerte = () => {
         
             </CardContent>         
             <CardActions>
-                  <Button size="small" type="submit" value="Ajouter">Soumettre</Button>
+                  <Button endIcon={<SendIcon />} size="small" type="submit" value="Ajouter">Soumettre</Button>
                   <Button size="small"><Link to="/gestionAlerte">Retour</Link></Button>
                 </CardActions>
                 </form>
