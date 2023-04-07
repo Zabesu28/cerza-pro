@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import SendIcon from '@mui/icons-material/Send';
 
 const AddAlerteUser = () => {
   
@@ -94,7 +95,7 @@ const AddAlerteUser = () => {
         
             </CardContent>         
             <CardActions>
-                  <Button size="small" type="submit" value="Ajouter">Soumettre</Button>
+                  <Button size="small"  type="submit" value="Ajouter" endIcon={<SendIcon />}>Soumettre</Button>
                   <Button size="small"><Link to="/ListAlerte">Retour</Link></Button>
                 </CardActions>
                 </form>

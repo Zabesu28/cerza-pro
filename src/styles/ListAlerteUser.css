@@ -5,7 +5,7 @@ body{
   .alertes-user-board {
     display: grid;
     grid-template-columns: repeat(3, 20%);
-    grid-template-rows: repeat(20, 20%);
+    grid-template-rows: repeat(20, 4em);
     grid-column-gap: 15%;
     grid-row-gap: 20%;
     margin-left: 17%;
@@ -25,7 +25,7 @@ body{
   .alertes-user-board {
     display: grid;
     grid-template-columns: repeat(2, 30%);
-    grid-template-rows: repeat(20, 60%);
+    grid-template-rows: repeat(20, 14em);
     grid-column-gap: 20%;
     grid-row-gap: 20%;
     margin-left: 8%;
@@ -42,7 +42,7 @@ body{
   .alertes-user-board {
     display: grid;
     grid-template-columns: repeat(3, 20%);
-    grid-template-rows: repeat(20, 20%);
+    grid-template-rows: repeat(20, 3.3em);
     grid-column-gap: 15%;
     grid-row-gap: 25%;
     margin-left: 6%;

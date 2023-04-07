@@ -19,6 +19,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
+import SendIcon from '@mui/icons-material/Send';
 
 
 const ListAlerteUser = () => {
@@ -114,7 +115,7 @@ const handleCheckboxChange = (event) => {
             <MenuItem value={0}>Tout</MenuItem>
              {(niveau.map(unNiveau => <MenuItem value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</MenuItem>))}
           </TextField>
-          <a href="/addAlerteUser" class="btnAddAlerte"><Button variant="contained" >Créer une alerte</Button></a>
+          <a href="/addAlerteUser" class="btnAddAlerte"><Button color="success" variant="contained" >Créer une alerte</Button></a>
           <div class="alertes-user-board">
      
           {alerte.length === 0 ? (
@@ -163,7 +164,7 @@ const handleCheckboxChange = (event) => {
             </Typography>       
             </CardContent>         
             <CardActions>
-                  <Button size="small" type="submit" disabled={(!checkboxChecked || uneAlerte.active === 1 ) || !(uneAlerte.idAlerte == selectedId)}>Soumettre</Button>
+                  <Button size="small" type="submit" endIcon={<SendIcon />} disabled={(!checkboxChecked || uneAlerte.active === 1 ) || !(uneAlerte.idAlerte == selectedId)}>Soumettre</Button>
                 </CardActions>
                 </form> 
               </Card>
