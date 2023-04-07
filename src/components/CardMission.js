@@ -64,6 +64,14 @@ const CardMission = (props) => {
     setSupprForm(false);
   }
 
+  if (props.IsAjoutMission && modifForm) {
+    setModifForm(false);
+  }
+
+  if (props.IsAjoutMission && supprForm) {
+    setSupprForm(false);
+  }
+
   useEffect(() => {
     axios
       .post(
@@ -118,6 +126,7 @@ const CardMission = (props) => {
   const handleModifMission = (event) => {
     event.preventDefault();
 
+    props.setIsAjoutMission(false);
     setModifForm(true);
     props.setIdModifMission(props.Mission.idMission);
     props.setIdSupprMission("");
@@ -126,12 +135,13 @@ const CardMission = (props) => {
   const handleSupprMission = (event) => {
     event.preventDefault();
 
+    props.setIsAjoutMission(false);
     setSupprForm(true);
     props.setIdSupprMission(props.Mission.idMission);
     props.setIdModifMission("");
   };
 
-  const handleSubmitModif = (event) => {
+  const handleSubmitModif = async (event) => {
     event.preventDefault();
 
     let verifAttribution = false;
@@ -146,7 +156,7 @@ const CardMission = (props) => {
             props.Mission.idMission
         );
 
-        props.modifMission(titreMissionInput, props.Mission.idMission);
+        props.modifMission();
       } else if (
         utilisateurMissionInput !== "" &&
         utilisateurMissionInput !== "Default" &&
@@ -161,7 +171,7 @@ const CardMission = (props) => {
           }
         );
 
-        props.modifMission(titreMissionInput, props.Mission.idMission);
+        props.modifMission();
       } else if (
         utilisateurMissionInput === "" &&
         enclosMissionInput !== "Default" &&
@@ -176,7 +186,7 @@ const CardMission = (props) => {
           }
         );
 
-        props.modifMission(titreMissionInput, props.Mission.idMission);
+        props.modifMission();
       } else if (
         utilisateurMissionInput !== "" &&
         utilisateurMissionInput !== "Default" &&
@@ -192,7 +202,7 @@ const CardMission = (props) => {
           }
         );
 
-        props.modifMission(titreMissionInput, props.Mission.idMission);
+        props.modifMission();
       } else if (
         (utilisateurMissionInput === "" ||
           (utilisateurMissionInput !== "" &&
@@ -222,7 +232,7 @@ const CardMission = (props) => {
           codeEnclos: enclosMissionInput,
         });
 
-        props.modifMission(titreMissionInput, props.Mission.idMission);
+        props.modifMission();
       } else if (
         (utilisateurMissionInput === "" ||
           utilisateurMissionInput === "Default") &&
@@ -243,14 +253,14 @@ const CardMission = (props) => {
 
     if (!verifAttribution && titreMissionInput !== "") {
       if (regTitreMission.test(titreMissionInput)) {
-        axios.put(
+        await axios.put(
           "http://localhost:4000/modifMission/" + props.Mission.idMission,
           {
             libMission: titreMissionInput,
           }
         );
 
-        props.modifMission(titreMissionInput, props.Mission.idMission);
+        props.modifMission();
       } else {
         setTitreMissionInputError(true);
       }

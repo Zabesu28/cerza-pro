@@ -3,11 +3,13 @@ import "../styles/GestionMissions.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import CardMission from "../components/CardMission";
+import CardAjoutMission from "../components/CardAjoutMission";
 
 const GestionMissions = () => {
   const [lesMissions, setLesMissions] = useState([]);
   const [IdModifMission, setIdModifMission] = useState("");
   const [IdSupprMission, setIdSupprMission] = useState("");
+  const [IsAjoutMission, setIsAjoutMission] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:4000/missions").then((res) => {
@@ -25,31 +27,11 @@ const GestionMissions = () => {
     setLesMissions(updateLesMissions);
   };
 
-  const modifMission = (libMission, id) => {
-    const copieDesMissions = [...lesMissions];
-    const updateLesMissions = [];
-
-    console.log(libMission + " " + id);
-
-    for (let uneMission of copieDesMissions) {
-      if (uneMission.idMission !== id) {
-        updateLesMissions.push(uneMission);
-      } else {
-        if (libMission !== "") {
-          updateLesMissions.push({
-            idMission: id,
-            libelleMission: libMission,
-          });
-        } else {
-          updateLesMissions.push({
-            idMission: id,
-            libelleMission: uneMission.libelleMission,
-          });
-        }
-      }
-    }
-
-    setLesMissions(updateLesMissions);
+  const modifMission = () => {
+    setLesMissions([]);
+    axios.get("http://localhost:4000/missions").then((res) => {
+      setLesMissions(res.data);
+    });
   };
 
   return (
@@ -66,9 +48,17 @@ const GestionMissions = () => {
               setIdSupprMission={setIdSupprMission}
               supprMission={supprMission}
               modifMission={modifMission}
+              IsAjoutMission={IsAjoutMission}
+              setIsAjoutMission={setIsAjoutMission}
             />
           </div>
         ))}
+        <div className="MissionCard-Only">
+          <CardAjoutMission
+            IsAjoutMission={IsAjoutMission}
+            setIsAjoutMission={setIsAjoutMission}
+          />
+        </div>
       </div>
     </div>
   );
