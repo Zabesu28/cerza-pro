@@ -7,6 +7,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import axios from 'axios';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+import Checkbox from '@mui/material/Checkbox';
+import MenuItem from '@mui/material/MenuItem';
 
 const ListAlerte = () => {
   
@@ -68,15 +80,64 @@ const ListAlerte = () => {
     return (
         <div>
           <h1>Gestion des Alertes</h1>
-          <a href="/addAlerte"><button>Add</button></a>
-          <select name="idNiveauAlerte" onChange={e => 
-      idNiveauchange(e.target.value)
-    }> 
-    <option value={0}>Tout</option>
-  {(niveau.map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
-    </select><a href="/gestionAlerte" onClick={Clear}><button>Clear</button></a>
+          <a href="/addAlerte"><Button variant="contained" >Créer une alerte</Button></a>
+          <TextField name="idNiveauAlerte" onChange={e => 
+            idNiveauchange(e.target.value)
+            }
+
+            select
+            defaultValue={0}
+            style={{width : 200, paddingLeft: 60}}
+            > 
+            <MenuItem value={0}>Tout</MenuItem>
+             {(niveau.map(unNiveau => <MenuItem value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</MenuItem>))}
+          </TextField>
+          <a href="/gestionAlerte" onClick={Clear}><Button variant="contained" >Clear</Button></a>
+
+          <div class="alertes-board">
+     
+          {alerte.length === 0 ? (
+          
+          <p align="left">Chargement...</p>
+          ) : (
+          <>
+            {alerte.filter(laAlerte => laAlerte.idNiveauAlerte == idNiveauAlerte || idNiveauAlerte == 0).map((uneAlerte) => (
+              <div>
+              <Card sx={{ minWidth: 300 }}>
+               <CardContent>
+            <Typography variant="h6" component="div">
+            {uneAlerte.descriptionAlerte}
+            </Typography>
+            <Typography variant="" component="div">
+            {"Alerteur : " + uneAlerte.nomEmploye + " " + uneAlerte.prenomEmploye} 
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            {uneAlerte.libelleNiveau + " (" + uneAlerte.idNiveauAlerte + ")"}
+              </Typography>
+              <Typography  color="text.secondary">
+              {uneAlerte.active == 0 ? (
+          
+          <p align="left">En cours</p>
+          ) : (
+          <>
+          <p align="left">Terminé</p>
+          </>
+          )}
+              </Typography>
+                    
+            </CardContent>         
+            <CardActions>
     
-            <TableContainer component={Paper}>
+                </CardActions>
+              </Card>
+                  
+                  </div>   ))}
+            </>
+          )}
+          </div>
+          </div> )}
+            
+            {/* <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -116,7 +177,7 @@ const ListAlerte = () => {
       </Table>
       
     </TableContainer>
-   </div>)} 
+   </div>)}  */}
 
 
 
