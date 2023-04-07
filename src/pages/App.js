@@ -3,8 +3,9 @@ import Home from './Home';
 import React, { Component, useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from '../components/Navbar';
+import ListAlerteUser from './ListAlerteUser';
+import AddAlerteUser from './AddAlerteUser';
 import ListMissionUser from './ListMissionUser';
-import ListMissionCss from '../styles/ListMissionUser.css';
 
 function App() {
   const [showNav, setShowNav] = useState(false);
@@ -18,6 +19,9 @@ function App() {
       <Routes>
           <Route path="home" element={<Home/>} />
           <Route path="listMissionUser/:id" element={<ListMissionUser/>} />
+          <Route path="listAlerte" element={<ListAlerteUser/>} />
+          <Route path="addAlerteUser" element={<AddAlerteUser/>} />
+          
       </Routes>
     </BrowserRouter>
     </div>

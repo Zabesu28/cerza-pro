@@ -63,16 +63,6 @@ app.get("/ListAlerteUser", (req, res) => {
   })
 });
 
-app.get("/ListMissionUser/:id", (req, res) => {
-  const id = parseInt(req.params.id) // prend l'id dans la route
-  let sql = `SELECT idEmployeAttribuer, idMissionAttribuer, idEtatAttribuer, libelleEtat, DATE_FORMAT(dateAttribuer, "%H:%i") as date, dateAttribuer as dateJ, dateValidation as dateValide, commentaire, libelleMission, codeEnclosAttribuer FROM attribuer INNER JOIN missions ON idMissionAttribuer = idMission INNER JOIN etats ON idEtatAttribuer = idEtat WHERE idEmployeAttribuer =`+id+" ORDER BY idEtatAttribuer, date";
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      res.json({results});    
-  })
-});
-
 app.get("/ListEmployesCB", (req, res) => {
   let sql = "SELECT idEmploye, nomEmploye, prenomEmploye FROM employes";
   db.query(sql,(err, results) =>{
@@ -126,7 +116,6 @@ app.post("/AddAlerte", (req, res) => {
   })
 })
 
-
 // - PUT :
 
 app.put("/ModifAlerte/:id", (req, res) => {
@@ -156,58 +145,11 @@ app.put("/ModifAlerteCheckbox/:id", (req, res) => {
   })
 })
 
-app.put("/ModifMissionCheckbox", (req, res) => {
-  res.send(req.body);
-  const idEmploye = parseInt(req.body.idEmployeAttribuer)
-  const idMission = parseInt(req.body.idMissionAttribuer)
-  const check = parseInt(req.body.idEtatAttribuer);
-  let commentaire = req.body.commentaire;
-  const date = req.body.dateAttribuer;
-  const dateValidation = req.body.dateValidation
-  let sql;
-   if(req.body.idEtatAttribuer === null){
-    sql = `UPDATE attribuer SET commentaire ='`+commentaire+`' WHERE idEmployeAttribuer = `+idEmploye+` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='`+date+`'`
-    db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      
-  })
-    }
-  else if(!commentaire){
-    sql = `UPDATE attribuer SET idEtatAttribuer =`+check+`, dateValidation ='`+dateValidation+`' WHERE idEmployeAttribuer = `+idEmploye+` AND idMissionAttribuer = `+idMission+` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='`+date+`'`
-    db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      
-  })
-  }
-  else{
-    sql = `UPDATE attribuer SET idEtatAttribuer =`+check+`, commentaire ='`+commentaire+`', dateValidation ='`+dateValidation+`' WHERE idEmployeAttribuer = `+idEmploye+` AND idMissionAttribuer = `+idMission+` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='`+date+`'`
-    db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      
-  })
-  }
-  //tt tes données dans le check c'est pour ca elle sont pas la
-  console.log(req.body)
- 
-  
-})
-
 // - DELETE :
 
 app.delete("/DeleteAlerte/:id", (req, res) => {
   const id = parseInt(req.params.id)
   let sql = "DELETE FROM alerte WHERE idAlerte = "+id
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-  })
-})
-
-app.delete("/DeleteAlerteClear", (req, res) => {
-  let sql = "DELETE from alerte where DATEDIFF(NOW(), dateAlerte) > 0 AND active = 1"
   db.query(sql,(err, results) =>{
       if(err) {throw err}
       console.log(results);
