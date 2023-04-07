@@ -14,9 +14,9 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
-
 import axios from 'axios';
 import { TextField } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 const moment = require('moment');
 
 const ListMissionUser = () => {
@@ -127,7 +127,7 @@ console.log(idMission);
           <div class="missions-user-board">
         
             {mission.map((uneMission) => (
-    
+              <div> 
               <Card sx={{ minWidth: 300 }}>
               <form method="PUT" onSubmit={handlesubmit}>
                <CardContent>
@@ -170,10 +170,11 @@ console.log(idMission);
             </Typography>       
             </CardContent>         
             <CardActions>
-                  <Button size="small" type="submit" disabled={(!isChecked && uneMission.commentaire) || !(uneMission.date == date)}>Soumettre</Button>
+                  <Button size="small" type="submit" endIcon={<SendIcon />} disabled={(!isChecked && !commentaire) || !(uneMission.date == date) || uneMission.idEtatAttribuer === 2}>Soumettre</Button>
                 </CardActions>
                 </form> 
-              </Card>  
+              </Card>
+              </div>  
                 ))}  
                         
    </div>
