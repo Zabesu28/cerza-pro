@@ -18,6 +18,10 @@ body{
   text-align: center;
 }
 
+.btnAddAlerte{
+    margin: 0% 2%;
+}
+
 
 @media screen and (max-width: 1000px){
 
@@ -52,6 +56,3 @@ body{
 
 }
 
-.btnAddAlerte{
-  margin-left: 3%;
-}
