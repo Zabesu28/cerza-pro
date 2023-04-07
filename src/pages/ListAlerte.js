@@ -20,6 +20,8 @@ import Stack from '@mui/material/Stack';
 import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 
+
+
 const ListAlerte = () => {
   
   
@@ -37,13 +39,20 @@ const ListAlerte = () => {
         console.log(idAlerte);
         fetch('http://localhost:4000/DeleteAlerte/'+idAlerte, { method: 'DELETE' }) 
         alert("L'alerte a bien été supprimé"); 
+        window.location.href = 'http://localhost:4000/gestionAlerte'
     }
     const Update = (idAlerte) => {
       //1 copie
       console.log(idAlerte + "c'est la modif");
-      fetch('http://localhost:3000/modifAlerte/'+idAlerte)
-      
-  }
+      fetch('http://localhost:3000/modifAlerte/'+idAlerte)   
+     }
+
+     function convertDate(date){
+      const dater = new Date(date);
+              const options = { weekday: 'long', hour: 'numeric', minute: 'numeric' };
+              const formattedDate = dater.toLocaleDateString('fr-FR', options);    
+              return formattedDate
+     }
 
   useEffect(() => {
         fetch('http://localhost:4000/ListAlerte')
@@ -106,13 +115,16 @@ const ListAlerte = () => {
               <Card sx={{ minWidth: 300 }}>
                <CardContent>
             <Typography variant="h6" component="div">
-            {uneAlerte.descriptionAlerte}
+            { uneAlerte.idAlerte + " - " + uneAlerte.descriptionAlerte}
             </Typography>
             <Typography variant="" component="div">
             {"Alerteur : " + uneAlerte.nomEmploye + " " + uneAlerte.prenomEmploye} 
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
             {uneAlerte.libelleNiveau + " (" + uneAlerte.idNiveauAlerte + ")"}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            { "Créée le " + convertDate(uneAlerte.dateAlerte) }
               </Typography>
               <Typography  color="text.secondary">
               {uneAlerte.active == 0 ? (
@@ -127,6 +139,10 @@ const ListAlerte = () => {
                     
             </CardContent>         
             <CardActions>
+            <Link to={`/modifAlerte/${uneAlerte.idAlerte}`}><Button onClick={() => Update(uneAlerte.idAlerte)}>Modifier</Button></Link>
+                      
+                    <Button align="left" onClick={() => Delete(uneAlerte.idAlerte)}><a href="/gestionAlerte">X</a></Button>
+                  
     
                 </CardActions>
               </Card>
@@ -135,50 +151,6 @@ const ListAlerte = () => {
             </>
           )}
           </div>
-          </div> )}
-            
-            {/* <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">ID</TableCell>
-            <TableCell align="left">Description</TableCell>
-            <TableCell align="left">Active</TableCell>
-            <TableCell align="left">idEmploye</TableCell>
-            <TableCell align="left">idAlerte</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        {alerte.length === 0 ? (
-          
-          <TableCell align="left">Chargement...</TableCell>
-        ) : (
-          <>
-            {alerte.filter(laAlerte => laAlerte.idNiveauAlerte == idNiveauAlerte || idNiveauAlerte == 0).map((uneAlerte) => (
-                  <TableRow
-                    key={uneAlerte.idAlerte}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell align="left">{uneAlerte.idAlerte}</TableCell>
-                    <TableCell align="left">{uneAlerte.descriptionAlerte}</TableCell>
-                    <TableCell align="left">{uneAlerte.active}</TableCell>
-                    <TableCell align="left">{uneAlerte.idEmployeAlerte}</TableCell>
-                    <TableCell align="left">{uneAlerte.idNiveauAlerte}</TableCell>
-                    <TableCell align="left">
-                      <Link to={`/modifAlerte/${uneAlerte.idAlerte}`}><button onClick={() => Update(uneAlerte.idAlerte)}>Modifier</button></Link>
-                      </TableCell>
-                    <TableCell align="left"><a href="/gestionAlerte"><button onClick={() => Delete(uneAlerte.idAlerte)}>X</button></a></TableCell>
-                  </TableRow>
-                ))}
-            </>
-          )}
-                
-        </TableBody>
-      </Table>
-      
-    </TableContainer>
-   </div>)}  */}
-
-
+        </div> )}
 
 export default ListAlerte;
