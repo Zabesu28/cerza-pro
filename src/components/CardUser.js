@@ -260,36 +260,46 @@ const CardUser = (props) => {
         }
 
         if (!verifUtilExiste) {
-          axios.put(
-            "http://localhost:4000/modifUtil/" + props.User.idEmploye,
-            bodyModif
-          );
-
-          if (bodyModif.nom === "") {
-            bodyModif.nom = props.User.nomEmploye;
-          }
-
-          if (bodyModif.prenom === "") {
-            bodyModif.prenom = props.User.prenomEmploye;
-          }
-
-          if (bodyModif.identifiant === "") {
-            bodyModif.identifiant = props.User.login;
-          }
-
-          if (bodyModif.fonction === "") {
-            bodyModif.fonction = props.User.libelleFonction;
+          if (
+            JSON.parse(localStorage.getItem("userConnected")).idCnx ===
+              props.User.login &&
+            bodyModif.fonction !== ""
+          ) {
+            alert(
+              "Vous ne pouvez pas modifier le droit de votre propre compte !"
+            );
           } else {
-            await axios
-              .get("http://localhost:4000/fonctions/" + bodyModif.fonction)
-              .then(
-                (res) => (bodyModif.fonction = res.data[0].libelleFonction)
-              );
+            axios.put(
+              "http://localhost:4000/modifUtil/" + props.User.idEmploye,
+              bodyModif
+            );
+
+            if (bodyModif.nom === "") {
+              bodyModif.nom = props.User.nomEmploye;
+            }
+
+            if (bodyModif.prenom === "") {
+              bodyModif.prenom = props.User.prenomEmploye;
+            }
+
+            if (bodyModif.identifiant === "") {
+              bodyModif.identifiant = props.User.login;
+            }
+
+            if (bodyModif.fonction === "") {
+              bodyModif.fonction = props.User.libelleFonction;
+            } else {
+              await axios
+                .get("http://localhost:4000/fonctions/" + bodyModif.fonction)
+                .then(
+                  (res) => (bodyModif.fonction = res.data[0].libelleFonction)
+                );
+            }
+
+            props.Modif(bodyModif, props.User.idEmploye);
+
+            setModifForm(false);
           }
-
-          props.Modif(bodyModif, props.User.idEmploye);
-
-          setModifForm(false);
         } else {
           alert(
             "L'identifiant que vous avez saisi correspond déjà à un utilisateur existant, veuillez en saisir un autre !"
@@ -301,9 +311,15 @@ const CardUser = (props) => {
 
   const handleSubmitSuppr = (event) => {
     event.preventDefault();
-
-    axios.delete("http://localhost:4000/supprUtil/" + props.User.idEmploye);
-    props.Suppr(props.User.idEmploye);
+    if (
+      JSON.parse(localStorage.getItem("userConnected")).idCnx !==
+      props.User.login
+    ) {
+      axios.delete("http://localhost:4000/supprUtil/" + props.User.idEmploye);
+      props.Suppr(props.User.idEmploye);
+    } else {
+      alert("Vous ne pouvez pas supprimer votre propre compte !");
+    }
   };
 
   return (

@@ -48,6 +48,11 @@ function Navbar() {
     navigate("/gestionComptes");
   };
 
+  const handleGestionMissionsClick = (event) => {
+    event.preventDefault();
+    navigate("/gestionMissions");
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -170,6 +175,15 @@ function Navbar() {
                     <MenuItem onClick={handleGestionComptesClick}>
                       <Typography textAlign="center">
                         Gestion des comptes
+                      </Typography>
+                    </MenuItem>
+                  ) : null}
+
+                  {JSON.parse(localStorage.getItem("userConnected"))
+                    .droitCnx === "Administrateur" ? (
+                    <MenuItem onClick={handleGestionMissionsClick}>
+                      <Typography textAlign="center">
+                        Gestion des missions
                       </Typography>
                     </MenuItem>
                   ) : null}

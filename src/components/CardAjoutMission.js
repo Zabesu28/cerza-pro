@@ -114,15 +114,43 @@ const CardAjoutMission = (props) => {
     }
 
     if (titreMissionInput !== "" && regTitreMission.test(titreMissionInput)) {
-      let idMissionAjoute = 0;
+      if (
+        ((utilisateurMissionInput === "" ||
+          utilisateurMissionInput === "Default") &&
+          (enclosMissionInput === "" || enclosMissionInput === "Default")) ||
+        (utilisateurMissionInput !== "" &&
+          utilisateurMissionInput !== "Default" &&
+          enclosMissionInput !== "" &&
+          enclosMissionInput !== "Default")
+      ) {
+        let idMissionAjoute = 0;
 
-      await axios.post("http://localhost:4000/ajoutMission", {
-        libMission: titreMissionInput,
-      });
+        await axios.post("http://localhost:4000/ajoutMission", {
+          libMission: titreMissionInput,
+        });
 
-      await axios.get("http://localhost:4000/LastMissionIdAdd").then((res) => {
-        idMissionAjoute = res.data[0].idLastMission;
-      });
+        await axios
+          .get("http://localhost:4000/LastMissionIdAdd")
+          .then((res) => {
+            idMissionAjoute = res.data[0].idLastMission;
+          });
+
+        if (
+          utilisateurMissionInput !== "" &&
+          utilisateurMissionInput !== "Default" &&
+          enclosMissionInput !== "" &&
+          enclosMissionInput !== "Default"
+        ) {
+          await axios.post("http://localhost:4000/ajoutMission/attribuer", {
+            idEmploye: utilisateurMissionInput,
+            idMission: idMissionAjoute,
+            codeEnclos: enclosMissionInput,
+          });
+        }
+
+        props.ajoutMission(idMissionAjoute, titreMissionInput);
+        setAjoutForm(false);
+      }
     } else {
       alert(
         "Erreur lors de l'ajout de cette mission, veuillez vérifier que vous avez saisi toutes les données nécessaires et qu'elles sont correctes !"
@@ -238,7 +266,9 @@ const CardAjoutMission = (props) => {
               onClick={handleAjoutBtn}
             >
               <span className="ajoutLink-plus">+</span>
-              <span className="ajoutLink-text">Ajouter un nouveau compte</span>
+              <span className="ajoutLink-text">
+                Ajouter une nouvelle mission
+              </span>
             </Link>
           </div>
         </div>
