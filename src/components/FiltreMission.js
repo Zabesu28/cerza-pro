@@ -135,89 +135,105 @@ const FiltreMission = (props) => {
         autoComplete="off"
         onSubmit={handleSubmit}
       >
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
-          <DemoContainer components={["DatePicker"]}>
-            <DatePicker
-              label="Date d'attribution"
-              value={dateAttribue}
-              onChange={inputDateAttr}
-            />
-          </DemoContainer>
-        </LocalizationProvider>
+        <div className="filtre-grid">
+          <div className="filtre-grid-element">
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
+              <DemoContainer components={["DatePicker"]}>
+                <DatePicker
+                  label="Date d'attribution"
+                  value={dateAttribue}
+                  onChange={inputDateAttr}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
+          </div>
 
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
-          <DemoContainer components={["DatePicker"]}>
-            <DatePicker
-              label="Date de validation"
-              value={dateValide}
-              onChange={inputDateValid}
-            />
-          </DemoContainer>
-        </LocalizationProvider>
+          <div className="filtre-grid-element">
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
+              <DemoContainer components={["DatePicker"]}>
+                <DatePicker
+                  label="Date de validation"
+                  value={dateValide}
+                  onChange={inputDateValid}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
+          </div>
 
-        <TextField
-          id="outlined-basic-select"
-          select
-          variant="outlined"
-          onChange={inputEmploye}
-          value={employe}
-        >
-          <MenuItem value="Default">Coisir un employé</MenuItem>
-          {lesUtilisateurs.map((unEmploye) => (
-            <MenuItem key={unEmploye.idEmploye} value={unEmploye.idEmploye}>
-              {unEmploye.nomEmploye + " " + unEmploye.prenomEmploye}
-            </MenuItem>
-          ))}
-        </TextField>
+          <div className="filtre-grid-element">
+            <TextField
+              id="outlined-basic-select"
+              select
+              variant="outlined"
+              onChange={inputEmploye}
+              value={employe}
+            >
+              <MenuItem value="Default">Coisir un employé</MenuItem>
+              {lesUtilisateurs.map((unEmploye) => (
+                <MenuItem key={unEmploye.idEmploye} value={unEmploye.idEmploye}>
+                  {unEmploye.nomEmploye + " " + unEmploye.prenomEmploye}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
 
-        <TextField
-          id="outlined-basic-select"
-          select
-          variant="outlined"
-          onChange={inputEnclos}
-          value={enclos}
-        >
-          <MenuItem value="Default">Coisir un enclos</MenuItem>
-          {lesEnclos.map((unEnclos) => (
-            <MenuItem key={unEnclos.code} value={unEnclos.code}>
-              {unEnclos.code}
-            </MenuItem>
-          ))}
-        </TextField>
+          <div className="filtre-grid-element">
+            <TextField
+              id="outlined-basic-select"
+              select
+              variant="outlined"
+              onChange={inputEnclos}
+              value={enclos}
+            >
+              <MenuItem value="Default">Coisir un enclos</MenuItem>
+              {lesEnclos.map((unEnclos) => (
+                <MenuItem key={unEnclos.code} value={unEnclos.code}>
+                  {unEnclos.code}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
 
-        <TextField
-          id="outlined-basic-select"
-          select
-          variant="outlined"
-          onChange={inputEtat}
-          value={etat}
-        >
-          <MenuItem value="Default">Coisir un état</MenuItem>
-          <MenuItem value="nonAttribuee">Non attribuée</MenuItem>
-          {lesEtatsMission.map((unEtat) => (
-            <MenuItem key={unEtat.idEtat} value={unEtat.idEtat}>
-              {unEtat.libelleEtat}
-            </MenuItem>
-          ))}
-        </TextField>
+          <div className="filtre-grid-element">
+            <TextField
+              id="outlined-basic-select"
+              select
+              variant="outlined"
+              onChange={inputEtat}
+              value={etat}
+            >
+              <MenuItem value="Default">Coisir un état</MenuItem>
+              <MenuItem value="nonAttribuee">Non attribuée</MenuItem>
+              {lesEtatsMission.map((unEtat) => (
+                <MenuItem key={unEtat.idEtat} value={unEtat.idEtat}>
+                  {unEtat.libelleEtat}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
 
-        <Button
-          className="btn-filtre"
-          variant="contained"
-          size="medium"
-          type="submit"
-        >
-          Rechercher
-        </Button>
+          <div className="filtre-grid-element">
+            <Button
+              className="btn-filtre"
+              variant="contained"
+              size="medium"
+              type="submit"
+            >
+              Rechercher
+            </Button>
+          </div>
 
-        <Button
-          className="btn-filtre"
-          variant="contained"
-          size="medium"
-          onClick={handleAnnulerFiltre}
-        >
-          Annuler
-        </Button>
+          <div className="filtre-grid-element">
+            <Button
+              className="btn-filtre"
+              variant="contained"
+              size="medium"
+              onClick={handleAnnulerFiltre}
+            >
+              Annuler
+            </Button>
+          </div>
+        </div>
       </Box>
     </div>
   );

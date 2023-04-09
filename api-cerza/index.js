@@ -112,12 +112,25 @@ app.get("/LastMissionIdAdd", (req, res) => {
   );
 });
 
-// Permet de récupérer tous les enclos
+// Permet de récupérer tous les états possibles pour une mission
 app.get("/etatsMission", (req, res) => {
   db.query("SELECT idEtat, libelleEtat FROM etats", function (err, result) {
     if (err) throw err;
     res.json(result);
   });
+});
+
+// Permet de récupérer un état spécifique pour une mission
+app.get("/etatsMission/:id", (req, res) => {
+  const idEtat = parseInt(req.params.id);
+
+  db.query(
+    "SELECT idEtat, libelleEtat FROM etats WHERE idEtat = " + idEtat,
+    function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
 });
 
 // - POST :

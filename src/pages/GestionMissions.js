@@ -54,50 +54,139 @@ const GestionMissions = () => {
     setLesMissions(lesMissionsNonFiltrer);
   };
 
-  const trierMissions = (filtre) => {
+  const trierMissions = async (filtre) => {
     let trieDesMissions = [...lesMissionsNonFiltrer];
+    let missionsAttr = [];
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
 
-    console.log(trieDesMissions);
+    for (let uneMission of trieDesMissions) {
+      await axios
+        .post(
+          "http://localhost:4000/missions/" +
+            uneMission.idMission +
+            "/isAttribuer"
+        )
+        .then((res) => {
+          if (res.data.isAttribuer) {
+            let mission = {
+              idMission: uneMission.idMission,
+              libelleMission: uneMission.libelleMission,
+              isAttribuer: res.data.isAttribuer,
+              data: res.data.data,
+            };
+
+            if (mission.data[0].dateAttribuer !== null) {
+              mission.data[0].dateAttribuer =
+                mission.data[0].dateAttribuer.substring(
+                  0,
+                  mission.data[0].dateAttribuer.indexOf("à") - 1
+                );
+            }
+
+            if (mission.data[0].dateValidation !== null) {
+              mission.data[0].dateValidation =
+                mission.data[0].dateValidation.substring(
+                  0,
+                  mission.data[0].dateValidation.indexOf("à") - 1
+                );
+            }
+
+            missionsAttr.push(mission);
+          } else {
+            missionsAttr.push({
+              idMission: uneMission.idMission,
+              libelleMission: uneMission.libelleMission,
+              isAttribuer: res.data.isAttribuer,
+            });
+          }
+        });
+    }
 
     if (filtre.dateAttrFiltre !== null) {
+      const dateAttrFiltre = new Date(filtre.dateAttrFiltre).toLocaleDateString(
+        "fr-FR",
+        options
+      );
+
+      missionsAttr = missionsAttr.filter(
+        (uneMission) =>
+          uneMission.isAttribuer &&
+          uneMission.data[0].dateAttribuer === dateAttrFiltre
+      );
     }
 
     if (filtre.dateValidFiltre !== null) {
+      const dateValidFiltre = new Date(
+        filtre.dateValidFiltre
+      ).toLocaleDateString("fr-FR", options);
+
+      missionsAttr = missionsAttr.filter(
+        (uneMission) =>
+          uneMission.isAttribuer &&
+          uneMission.data[0].dateValidation === dateValidFiltre
+      );
     }
 
     if (filtre.employeFiltre !== "Default") {
+      let employeFiltre = {
+        nom: "",
+        prenom: "",
+      };
+
+      await axios
+        .get("http://localhost:4000/utilisateurs/" + filtre.employeFiltre)
+        .then((res) => {
+          employeFiltre.nom = res.data[0].nomEmploye;
+          employeFiltre.prenom = res.data[0].prenomEmploye;
+        });
+
+      missionsAttr = missionsAttr.filter(
+        (uneMission) =>
+          uneMission.isAttribuer &&
+          uneMission.data[0].Employe[0].nomEmploye === employeFiltre.nom &&
+          uneMission.data[0].Employe[0].prenomEmploye === employeFiltre.prenom
+      );
     }
 
     if (filtre.enclosFiltre !== "Default") {
+      missionsAttr = missionsAttr.filter(
+        (uneMission) =>
+          uneMission.isAttribuer &&
+          uneMission.data[0].codeEnclos === filtre.enclosFiltre
+      );
     }
 
     if (filtre.etatFiltre !== "Default") {
+      let etatLib = "";
+
+      if (filtre.etatFiltre !== "nonAttribuee") {
+        await axios
+          .get("http://localhost:4000/etatsMission/" + filtre.etatFiltre)
+          .then((res) => {
+            etatLib = res.data[0].libelleEtat;
+          });
+      } else {
+        etatLib = filtre.etatFiltre;
+      }
+
+      if (etatLib === "nonAttribuee") {
+        missionsAttr = missionsAttr.filter(
+          (uneMission) => !uneMission.isAttribuer
+        );
+      } else {
+        missionsAttr = missionsAttr.filter(
+          (uneMission) =>
+            uneMission.isAttribuer && uneMission.data[0].etat === etatLib
+        );
+      }
     }
-    // if (filtre.nomFiltre !== "") {
-    //   trieDesComptes = trieDesComptes.filter((unCompte) =>
-    //     unCompte.nomEmploye.toLowerCase().includes(filtre.nomFiltre)
-    //   );
-    // }
 
-    // if (filtre.prenomFiltre !== "") {
-    //   trieDesComptes = trieDesComptes.filter((unCompte) =>
-    //     unCompte.prenomEmploye.toLowerCase().includes(filtre.prenomFiltre)
-    //   );
-    // }
-
-    // if (filtre.identifiantFiltre !== "") {
-    //   trieDesComptes = trieDesComptes.filter((unCompte) =>
-    //     unCompte.login.toLowerCase().includes(filtre.identifiantFiltre)
-    //   );
-    // }
-
-    // if (filtre.fonctionFiltre !== "Default") {
-    //   trieDesComptes = trieDesComptes.filter(
-    //     (unCompte) => unCompte.libelleFonction === filtre.fonctionFiltre
-    //   );
-    // }
-
-    setLesMissions(trieDesMissions);
+    setLesMissions(missionsAttr);
   };
 
   if (
