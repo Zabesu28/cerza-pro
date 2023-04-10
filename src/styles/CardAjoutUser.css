@@ -1,0 +1,65 @@
+.AjoutUserCard {
+  width: 400px;
+  background-color: aqua;
+}
+
+.AjoutUserCard-ajoutForm {
+  width: 400px;
+  background-color: aqua;
+  display: grid;
+  grid-template: repeat(5, 1fr) 1fr / 1fr 1fr;
+}
+
+.AjoutUserCard-Title {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.AjoutUserCard-Title-Ajout {
+  text-align: right !important;
+  margin-right: 10px;
+}
+
+.btn-modifier,
+.btn-suppr {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.MuiFormControl-root {
+  margin-top: 12px !important;
+}
+
+.MuiLink-root {
+  flex-direction: column;
+}
+
+.ajoutLink-plus {
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.ajoutLink-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ajoutLink:hover > .ajoutLink-plus,
+.ajoutLink:hover > .ajoutLink-text {
+  color: rgb(39, 85, 178);
+}
+
+.ajoutLink:hover > .ajoutLink-text {
+  text-decoration: underline;
+}
+
+.ajoutLink:active > .ajoutLink-plus,
+.ajoutLink:active > .ajoutLink-text {
+  color: rgb(178, 39, 39) !important;
+}
+
+.ajoutLink:active > .ajoutLink-text {
+  text-decoration: underline;
+}

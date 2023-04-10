@@ -1,7 +1,11 @@
-import '../styles/App.css';
-import Home from './Home';
-import React, { Component, useState } from 'react';
+import "../styles/App.css";
+import Home from "./Home";
+import React, { Component, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AuthAdmin from "./AuthAdmin";
+import AuthUser from "./AuthUser";
+import GestionComptes from "./GestionComptes";
+import GestionMissions from "./GestionMissions";
 import Navbar from '../components/Navbar';
 import ListAlerte from './ListAlerte';
 import AddAlerte from './AddAlerte';
@@ -13,14 +17,16 @@ import ListMissionUser from './ListMissionUser';
 function App() {
   const [showNav, setShowNav] = useState(false);
 
-  
-
   return (
     <div>
-      <Navbar/>   
       <BrowserRouter>
-      <Routes>
-          <Route path="home" element={<Home/>} />
+        <Routes>
+          <Route path="" element={<Home />} />
+          <Route path="home" element={<Home />} />
+          <Route path="authAdmin" element={<AuthAdmin />} />
+          <Route path="authUser" element={<AuthUser />} />
+          <Route path="gestionComptes" element={<GestionComptes />} />
+          <Route path="gestionMissions" element={<GestionMissions />} />
           <Route path="listMissionUser/:id" element={<ListMissionUser/>} />
           <Route path="listAlerte" element={<ListAlerteUser/>} />
           <Route path="addAlerteUser" element={<AddAlerteUser/>} />
