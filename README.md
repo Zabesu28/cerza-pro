@@ -1,70 +1,98 @@
-# Getting Started with Create React App
+# Projet Cerza
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ce projet a pour but de créer un site interne pour le personnel du Zoo de Cerza en React. Ce site a pour objectif de faire gagner du temps dans les activités de toutes l'équipe du Zoo. Le site devra être utilisable sur ordinateur, tablette. Il y aura des utilisateurs ainsi que des administrateurs.
 
-## Available Scripts
+## Prérequis
 
-In the project directory, you can run:
+- [Visual Studio Code](https://code.visualstudio.com)
 
-### `npm start`
+- [Wamp server](https://www.wampserver.com)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [Gitkraken](https://www.gitkraken.com)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Auteurs
 
-### `npm test`
+Nous faisons partis de la société TKT ayant pour but d'aider les personnes dans le domaine du développement web / mobile. Nous travaillons pour le Zoo de Cerza.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Contributeurs
 
-### `npm run build`
+- [ZABETH Romain](https://github.com/Zabesu28) (Chef de projet)
+- [Nolle Damien](https://github.com/DNOLLE27) (Développeur)
+- [FENEROL Miguel](https://github.com/Migou27) (Développeur)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Guide et standardisation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Les components seront écrit avec une majuscule comme première lettre.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Exemple : ListAlerte
 
-### `npm run eject`
+## API
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Une API en nodeJs est utilisé pour les différentes rêquetes du site.
+- Les fonctions sont triées par méthodes (get, post, put, delete).
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Compilation 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Pour avoir tout les modules :
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```http
+npm i
+```
+Pour démarrer le projet grâce au terminal :
 
-## Learn More
+```http
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Pour démarrer l'api grâce au terminal :
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```http
+npm start
+```
+ou
 
-### Code Splitting
+```http
+nodemon
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+## Fonctionnalités 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Les utilisateurs pourront accéder aux pages suivantes :
 
-### Making a Progressive Web App
+- Une page de connexion
+- Une encyclopédie des animaux
+- Les missions de la journée
+    - Affichage
+    - Possiblilité de cocher une mission
+    - Laisser un commentaire
+- Des contrôles de santé 
+    - Questionnaire de santé des animaux
+- Liste des alertes
+    - Posiblité de valider une alerte 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Concernant les administrateurs, ils pourront accéder aux pages suivantes :
 
-### Advanced Configuration
+- Une page de connexion
+- Création de compte
+    - Admin
+    - User
+- Gestions des missions
+    - Affichage
+    - Ajout
+    - Modification
+    - Supression
+- Gestions des alertes
+    - Affichage
+    - Ajout
+    - Modification
+    - Supression
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Technologies
 
-### Deployment
+- [Material UI](https://mui.com)
+- [Nodemon](https://www.npmjs.com/package/nodemon)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Crédits
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Charte graphique inspiré du site internet de Cerza.
