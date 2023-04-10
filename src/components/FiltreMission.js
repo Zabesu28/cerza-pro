@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/FiltreUser.css";
+import "../styles/FiltreMission.css";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -135,8 +135,8 @@ const FiltreMission = (props) => {
         autoComplete="off"
         onSubmit={handleSubmit}
       >
-        <div className="filtre-grid">
-          <div className="filtre-grid-element">
+        <div className="filtre-grid-mission">
+          <div className="filtre-grid-mission-element">
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
               <DemoContainer components={["DatePicker"]}>
                 <DatePicker
@@ -148,7 +148,7 @@ const FiltreMission = (props) => {
             </LocalizationProvider>
           </div>
 
-          <div className="filtre-grid-element">
+          <div className="filtre-grid-mission-element">
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
               <DemoContainer components={["DatePicker"]}>
                 <DatePicker
@@ -160,7 +160,7 @@ const FiltreMission = (props) => {
             </LocalizationProvider>
           </div>
 
-          <div className="filtre-grid-element">
+          <div className="filtre-grid-mission-element">
             <TextField
               id="outlined-basic-select"
               select
@@ -177,7 +177,7 @@ const FiltreMission = (props) => {
             </TextField>
           </div>
 
-          <div className="filtre-grid-element">
+          <div className="filtre-grid-mission-element">
             <TextField
               id="outlined-basic-select"
               select
@@ -194,7 +194,7 @@ const FiltreMission = (props) => {
             </TextField>
           </div>
 
-          <div className="filtre-grid-element">
+          <div className="filtre-grid-mission-element">
             <TextField
               id="outlined-basic-select"
               select
@@ -212,7 +212,7 @@ const FiltreMission = (props) => {
             </TextField>
           </div>
 
-          <div className="filtre-grid-element">
+          <div className="filtre-grid-mission-element">
             <Button
               className="btn-filtre"
               variant="contained"
@@ -223,7 +223,7 @@ const FiltreMission = (props) => {
             </Button>
           </div>
 
-          <div className="filtre-grid-element">
+          <div className="filtre-grid-mission-element">
             <Button
               className="btn-filtre"
               variant="contained"

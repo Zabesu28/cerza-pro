@@ -1,9 +1,9 @@
-.filtre-grid {
+.filtre-grid-mission {
   display: grid;
   grid-template: 1fr / 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-.filtre-grid-element {
+.filtre-grid-mission-element {
   display: block !important;
   margin-left: auto !important;
   margin-right: auto !important;
