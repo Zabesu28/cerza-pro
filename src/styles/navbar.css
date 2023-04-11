@@ -1,0 +1,12 @@
+.navbar{
+      background-color: #6C2A02 !important;
+      position: sticky !important;
+      top: 0%;
+      z-index: 1000;
+}
+
+.lien{
+      text-decoration: none !important;
+      color: white !important;
+      font-family: arial !important;
+}

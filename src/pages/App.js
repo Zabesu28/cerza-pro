@@ -1,7 +1,5 @@
 import "../styles/App.css";
-import Home from "./Home";
 import React, { Component, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthAdmin from "./AuthAdmin";
 import AuthUser from "./AuthUser";
 import GestionComptes from "./GestionComptes";
@@ -13,6 +11,10 @@ import ModifAlerte from './ModifAlerte';
 import ListAlerteUser from './ListAlerteUser';
 import AddAlerteUser from './AddAlerteUser';
 import ListMissionUser from './ListMissionUser';
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import Encyclopedie from './Encyclopedie';
+import Description from './Description';
+import QuestionnaireSante from './QuestionnaireSante';
 
 function App() {
   const [showNav, setShowNav] = useState(false);
@@ -21,8 +23,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="" element={<Home />} />
-          <Route path="home" element={<Home />} />
+          <Route path="home" element={<Encyclopedie />} />
           <Route path="authAdmin" element={<AuthAdmin />} />
           <Route path="authUser" element={<AuthUser />} />
           <Route path="gestionComptes" element={<GestionComptes />} />
@@ -33,6 +34,9 @@ function App() {
           <Route path="gestionAlerte" element={<ListAlerte/>} />
           <Route path="addAlerte" element={<AddAlerte/>} />
           <Route path="modifAlerte/:id" element={<ModifAlerte/>} />
+          <Route path="" element={<Encyclopedie/>}></Route>
+          <Route path="/:espece" element={<Description/>}></Route>
+          <Route path="questionnaireSante" element={<QuestionnaireSante/>}></Route>
       </Routes>
     </BrowserRouter>
     </div>

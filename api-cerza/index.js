@@ -44,6 +44,13 @@ app.get("/utilisateurs", (req, res) => {
     }
   );
 });
+app.get('/getLesQuestions', (req, res) => {
+  db.query("select idQuestion, libelleQuestion from questionnaire",
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+})
 
 app.get("/ListAlerte", (req, res) => {
   let sql = "SELECT idAlerte, descriptionAlerte, active, dateAlerte, idEmployeAlerte, nomEmploye, prenomEmploye, idNiveauAlerte, libelleNiveau FROM alerte INNER JOIN Employes ON idEmployeAlerte = idEmploye INNER JOIN Niveau ON idNiveauAlerte = idNiveau ORDER by active, idAlerte ASC";
@@ -210,6 +217,68 @@ app.get("/etatsMission/:id", (req, res) => {
     }
   );
 });
+
+app.get('/getEspecesLibelle', (req, res) => {
+  db.query("select idEspece, libelleEspece from especes",
+  function (err, result) {
+        if (err) throw err;
+        res.status(200).json(result);
+  }) 
+});
+
+app.get('/getAnimaux/:idEspece', (req, res) => {
+  const idEspece = parseInt(req.params.idEspece);
+  db.query("select idAnimal, nomAnimal from animaux where idEspeceAnimal ="+idEspece,
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+});
+
+app.get('/getAnimal/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  db.query("select idAnimal, nomAnimal, dateNaissAnimal, sexeAnimal, libelleEspece, codeEnclosAnimal from animaux inner join especes on idEspeceAnimal = idespece where idAnimal ="+id,
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+})
+
+app.get('/getEspeces', (req, res) => {
+  db.query("select idEspece, libelleEspece, description, imageEspece from especes",
+  function (err, result) {
+        if (err) throw err;
+        res.status(200).json(result);
+  }) 
+});
+
+app.get('/getEspeces/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  db.query("select libelleEspece, regime, poidsMin, poidsMax, description from especes where idEspece = "+id,
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+});
+
+app.get('/getImages/:idEspece', (req, res) => {
+  const idEspece = parseInt(req.params.idEspece);
+  db.query("select idImage, lienImage from images where idEspeceImage = "+idEspece,
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+});
+
+
+app.get('/getDernierQuestionnaire/:idAnimal', (req, res) => {
+  const idAnimal = parseInt(req.params.idAnimal);
+  db.query("select libelleQuestion, idQuestionRepondre, reponse, dateRepondre FROM repondre INNER JOIN questionnaire ON idQuestion = idQuestionRepondre WHERE idAnimalRepondre = "+idAnimal+" and dateRepondre = (SELECT MAX(dateRepondre) FROM repondre WHERE idAnimalRepondre = "+idAnimal+") ORDER BY idQuestionRepondre",
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+})
 
 // - POST :
 // Permet de vérifier si une mission est attibuée, si c'est le cas, on retourne l'employé, la date d'atribution, le code de l'enclos, le commentaire, la date de validation et l'etat attribuer
@@ -527,6 +596,19 @@ app.post("/ajoutMission/attribuer", (req, res) => {
   });
 });
 
+app.post('/insertReponses', (req, res) => {
+  const data = {
+    idAnimal: req.body.idAnimal,
+    idQuestion: req.body.idQuestion,
+    date: req.body.date,
+    reponse: req.body.reponse,
+  };
+  db.query("Insert into repondre values('"+data.idAnimal+"', '"+data.idQuestion+"', '"+data.date+"','"+data.reponse+"')",
+  function (err, result) {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+})
 // - PUT :
 // Modifier les informations d'un utilisateur
 app.put("/modifUtil/:id", (req, res) => {

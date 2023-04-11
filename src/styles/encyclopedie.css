@@ -1,0 +1,121 @@
+.gridEspece{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 50px;
+      margin: 50px;
+}
+
+.center{
+      text-align: center;
+}
+
+body{
+      background-image: url("../../public/asset/img/background2.jpg");
+      background-attachment: fixed;
+}
+
+.searchBar{
+      margin-left: 35% !important;
+      width: 30%;
+      background-color: white;
+      border: 1px #6C2A02 solid !important;
+      border-radius: 10px !important;
+}
+
+.gridImage{
+      width: 90%;
+      height: 250px;
+      object-fit: contain;
+}
+
+.carte{
+      border: 1px solid gray;
+      border-radius: 20px;
+      box-shadow: gray 5px 3px 5px !important;
+      text-decoration: none;
+      transition: 0.5s !important;
+      scale: 1 !important;
+}
+
+.carte:hover{
+      transition: 0.5s !important;
+      scale: 1.075 !important;
+}
+
+.titre{
+      text-decoration: none;
+      font-size: 50px;
+}
+
+.noDeco{
+      text-decoration: none;
+}
+
+.imageSlider{
+      width: 100%;
+      max-height: 250px; 
+      object-fit: cover;
+      margin-top: 5%;
+      margin-bottom: 5%;
+}
+
+@media (min-width: 800px) and (max-width: 1200px) {
+      .gridEspece{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 50px;
+            margin: 50px;
+      }
+      
+      .gridImage{
+            width: 90%;
+            height: 250px;
+            object-fit: contain;
+      }
+      
+      .carte{
+            border: 1px solid gray;
+            border-radius: 20px;
+            box-shadow: gray 5px 3px 5px;
+            text-decoration: none;
+            transition: 0.5s !important;
+            scale: 1 !important;
+      }
+      
+      .carte:hover{
+            transition: 0.5s !important;
+            scale: 1.075 !important;
+      }
+      
+      .titre{
+            text-align: center;
+            text-decoration: none;
+            font-size: 50px;
+      }
+
+      .texte{
+            text-decoration: none;
+            font-size: 20px;
+            text-align: justify;
+            margin-left: 4%;
+            margin-right: 4%;
+      }
+      
+      .noDeco{
+            text-decoration: none;
+      }
+      
+      .imageSlider{
+            width: 100%;
+            max-height: 200px; 
+            object-fit: cover;
+            margin-top: 5%;
+            margin-bottom: 5%;
+      }
+
+      .searchBar{
+            margin-left: 25% !important;
+            width: 50%;
+      }
+      
+}
