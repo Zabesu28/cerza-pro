@@ -1,31 +1,20 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import Stack from '@mui/material/Stack';
-import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
-
-
-
-
 
 const ModifAlerte = () => {
   // state variables
   const [descriptionAlerte, descriptionAlertechange] = useState('');
   const [idEmployeAlerte, idEmployechange] = useState(0);
-  const [nomEmploye, nomEmployechange] = useState('');
-  const [prenomEmploye, prenomEmployechange] = useState('');
   const [idNiveauAlerte, idNiveauchange] = useState(0);
   const [libelleNiveau, libelleNiveauchange] = useState('');
   const { id } = useParams();
-  const navigate = useNavigate();
   const [employes, setEmployes] = useState([]);
   const [niveau, setNiveau] = useState([]);
 
@@ -36,8 +25,6 @@ const ModifAlerte = () => {
           console.log(res.results);
           descriptionAlertechange(res.results[0].descriptionAlerte);
           idEmployechange(res.results[0].idEmployeAlerte);
-          nomEmployechange(res.results[0].nomEmploye);
-          prenomEmployechange(res.results[0].prenomEmploye);
           idNiveauchange(res.results[0].idNiveauAlerte);
           libelleNiveauchange(res.results[0].libelleNiveau);
       }).catch((err) => {
@@ -110,6 +97,12 @@ const ModifAlerte = () => {
   }
   console.log(empobj);
   }
+
+  if (
+    localStorage.getItem("userConnected") !== null &&
+    JSON.parse(localStorage.getItem("userConnected")).droitCnx ===
+      "Administrateur"
+  ){
   return (
 
     <div class="boxAlerteModif">
@@ -154,38 +147,20 @@ const ModifAlerte = () => {
                 </CardActions>
                 </form>
                 </Card>
-                </div>
-      
+                </div>    
   ); 
+} else {
+  if (
+    localStorage.getItem("userConnected") !== null &&
+    JSON.parse(localStorage.getItem("userConnected")).droitCnx !==
+      "Administrateur"
+  ) {
+    window.location.replace("/home");
+  } else {
+    window.location.replace("/authAdmin");
+  }
+
 }
-    
-//     <form method="PUT" onSubmit={handlesubmit}>
-//     <label>
-//       Description
-//       <input type="textarea" name="descriptionAlerte" value={descriptionAlerte} onChange={e => descriptionAlertechange(e.target.value)}/>
-//     </label>
-//     <select name="idEmployeAlerte" onChange={e => {
-//       idEmployechange(e.target.value); 
-//       // nomEmployechange(e.target.value); 
-//       // prenomEmployechange(e.target.value);
-//       }}> 
-//   <option value={idEmployeAlerte} >{nomEmploye + " " + prenomEmploye +" (valeur de base)"}</option>
-//   {(employes/*.filter(unEmploye => unEmploye.idEmploye != idEmployeAlerte)*/.map(leEmploye => <option value={leEmploye.idEmploye}>{leEmploye.nomEmploye + " " + leEmploye.prenomEmploye}</option>))}
-//     </select>
-    
-//     <select name="idNiveauAlerte" onChange={e => {
-//       idNiveauchange(e.target.value);
-//       // libelleNiveau(e.target.value);
-//     }}> 
-//   <option value={idNiveauAlerte}>{libelleNiveau +" (valeur de base)"}</option>
-//   {(niveau/*.filter(unNiveau => unNiveau.idNiveau != idNiveauAlerte)*/.map(unNiveau => <option value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</option>))}
-//     </select>
-//     <input type="submit" value="Modifier"/>
-//     <button><Link to="/gestionAlerte">Retour</Link></button>
-//   </form>
-//   );
-// };
-
-
+}
 
 export default ModifAlerte;

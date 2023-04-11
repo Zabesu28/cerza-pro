@@ -1,32 +1,16 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import axios from 'axios';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import Stack from '@mui/material/Stack';
-import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton';
 
-
-
 const ListAlerte = () => {
-  
   
     const [idNiveauAlerte, idNiveauchange] = useState(0);
     const [alerte, setAlerte] = useState([]);
@@ -89,6 +73,11 @@ const ListAlerte = () => {
 []
 );
 
+if (
+  localStorage.getItem("userConnected") !== null &&
+  JSON.parse(localStorage.getItem("userConnected")).droitCnx ===
+    "Administrateur"
+){
     return (
         <div>
           <h1 class="center">Gestion des Alertes</h1>
@@ -111,7 +100,7 @@ const ListAlerte = () => {
      
           {alerte.length === 0 ? (
           
-          <p align="left">Chargement...</p>
+          <p align="center">Aucune alerte actuellement</p>
           ) : (
           <>
             {alerte.filter(laAlerte => laAlerte.idNiveauAlerte == idNiveauAlerte || idNiveauAlerte == 0).map((uneAlerte) => (
@@ -139,21 +128,32 @@ const ListAlerte = () => {
           <p align="left">Terminé</p>
           </>
           )}
-              </Typography>
-                    
+            </Typography>                 
             </CardContent>         
             <CardActions>
             <Link to={`/modifAlerte/${uneAlerte.idAlerte}`}><Button onClick={() => Update(uneAlerte.idAlerte)}>Modifier</Button></Link>         
-                    <Button align="left" onClick={() => Delete(uneAlerte.idAlerte)}><a href="/gestionAlerte"><IconButton aria-label="delete" color="error">
-        <DeleteIcon />
-      </IconButton></a></Button>
-                </CardActions>
-              </Card>
-                  
-                  </div>   ))}
-            </>
-          )}
-          </div>
-        </div> )}
+                    <Button align="left" onClick={() => Delete(uneAlerte.idAlerte)}><a href="/gestionAlerte"><IconButton aria-label="delete" color="error"><DeleteIcon /></IconButton></a></Button>
+            </CardActions>
+          </Card>      
+        </div>   
+      ))}
+    </>
+    )}        
+  </div>
+</div> 
+)
+} else {
+  if (
+    localStorage.getItem("userConnected") !== null &&
+    JSON.parse(localStorage.getItem("userConnected")).droitCnx !==
+      "Administrateur"
+  ) {
+    window.location.replace("/home");
+  } else {
+    window.location.replace("/authAdmin");
+  }
+
+}
+}
 
 export default ListAlerte;

@@ -27,7 +27,7 @@ function App() {
           <Route path="authUser" element={<AuthUser />} />
           <Route path="gestionComptes" element={<GestionComptes />} />
           <Route path="gestionMissions" element={<GestionMissions />} />
-          <Route path="listMissionUser/:id" element={<ListMissionUser/>} />
+          <Route path="listMissionUser" element={<ListMissionUser/>} />
           <Route path="listAlerte" element={<ListAlerteUser/>} />
           <Route path="addAlerteUser" element={<AddAlerteUser/>} />
           <Route path="gestionAlerte" element={<ListAlerte/>} />

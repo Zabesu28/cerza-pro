@@ -1,13 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
+import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -15,8 +6,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import Stack from '@mui/material/Stack';
 import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import SendIcon from '@mui/icons-material/Send';
@@ -100,6 +89,9 @@ const handleCheckboxChange = (event) => {
   setActive(event.target.value);
   setCheckboxChecked(event.target.checked);
 }
+if (
+  localStorage.getItem("userConnected") !== null
+){
     return (
         <div>
           <h1 class="center">Liste des Alertes</h1>
@@ -173,6 +165,10 @@ const handleCheckboxChange = (event) => {
             </>
           )}
    </div>
-   </div>)} 
+   </div>)
+   } else {
+    window.location.replace("/authAdmin");
+  }
+}
 
 export default ListAlerteUser

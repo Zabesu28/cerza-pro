@@ -1,13 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
+import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -24,10 +15,10 @@ const ListMissionUser = () => {
     const [mission, setMission] = useState([]);
     const [idMission, setIdMission] = useState(null);
     const [selectedId, setSelectedId] = useState(null);
-    const [checkboxChecked, setCheckboxChecked] = useState(false);
     const [commentaire, setCommentaire] = useState(null);
     const [date, setDate] = useState(null);
     const [isChecked, setIsChecked] = useState(null);
+    const [idUser, setIdUser] = useState(0);
 
  function convertDate(date){
   const dater = new Date(date);
@@ -49,24 +40,30 @@ const ListMissionUser = () => {
  }   
     
 
-  useEffect(() => {
-        // mettre l'id de l'utilisateur connecté
-        fetch('http://localhost:4000/ListMissionUser/'+2)
-        .then((response) => {
-          return response.json()
-        })
-        .then((result) => {   
-            setMission(result.results)
-            console.log(result.results);
-            console.log(mission);
-          console.log(result.results.length);
-        })
-      }
-      
+ useEffect(() => {
+  axios
+    .post("http://localhost:4000/getIdUtilByIdentifiant", {
+      identifiant: JSON.parse(localStorage.getItem("userConnected")).idCnx,
+    })
+    .then((res) => {
+      setIdUser(parseInt(res.data[0].idEmploye));
+    });
+}, []);
 
-  , 
-[]
-);
+useEffect(() => {
+  if (idUser) {
+    fetch("http://localhost:4000/ListMissionUser/" + idUser)
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        setMission(result.results);
+        console.log(result.results);
+        console.log(mission);
+        console.log(result.results.length);
+      });
+  }
+}, [idUser]);
 
 
 const handlesubmit = (e) => {
@@ -88,7 +85,7 @@ const handlesubmit = (e) => {
       data: {
         idEtatAttribuer: selectedId,
         idMissionAttribuer: idMission,
-        idEmployeAttribuer: 2,
+        idEmployeAttribuer: idUser,
         commentaire: commentaire,
         dateAttribuer: date,
         dateValidation: dateValid
@@ -105,7 +102,7 @@ const handlesubmit = (e) => {
       }
       // Réinitialiser les champs du formulaire + change par id du user connecté
       e.target.reset();
-      window.location.replace('http://localhost:3000/listMissionUser/'+2)
+      window.location.replace('http://localhost:3000/listMissionUser')
     })
     .catch((error) => {
       console.log(error);
@@ -120,12 +117,20 @@ console.log(selectedId);
 console.log(idMission);
 }
 
+if (
+  localStorage.getItem("userConnected") !== null
+){
     return (
       
       <div>     
-          <h1 class="center">Missions</h1>
+          <h1 class="center">Missions du jour</h1>
           <div class="missions-user-board">
         
+          {mission.length === 0 ? (
+          
+          <p align="center">Aucune mission n'est attribué</p>
+          ) : (
+          <>
             {mission.map((uneMission) => (
               <div> 
               <Card sx={{ minWidth: 300 }}>
@@ -170,14 +175,19 @@ console.log(idMission);
             </Typography>       
             </CardContent>         
             <CardActions>
-                  <Button size="small" type="submit" endIcon={<SendIcon />} disabled={(!isChecked && !commentaire) || !(uneMission.date == date) || uneMission.idEtatAttribuer === 2}>Soumettre</Button>
+                  <Button size="small" type="submit" endIcon={<SendIcon />} disabled={(!isChecked && !commentaire) || !(uneMission.date == date)}>Soumettre</Button>
                 </CardActions>
                 </form> 
               </Card>
               </div>  
                 ))}  
-                        
+            </>
+          )}            
    </div>
-   </div>)} 
+</div>)
+} else {
+  window.location.replace("/authAdmin");
+}} 
+
 
 export default ListMissionUser
