@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Slider from '@mui/material/Slider';
 import '../styles/questionnaireSante.css';
+import Button from '@mui/material/Button';
 
 const Questionnaire = ({idAnimal}) => {
 
@@ -22,7 +23,7 @@ const Questionnaire = ({idAnimal}) => {
                   }).then(i = i + 1)
                   
             ))
-            alert("Les réponses ont bien été enregistrées !")
+            alert("Les réponses ont bien été enregistrées !");
       }
 
       const handleChange = (event) => {
@@ -46,7 +47,7 @@ const Questionnaire = ({idAnimal}) => {
                               <div className='reponse'>🙁<Slider className='reponse' name={uneQuestion.idQuestion} onChange={handleChange} valueLabelDisplay="auto" defaultValue={1} step={1} marks min={1} max={5}/>&nbsp;&nbsp;&nbsp;😀</div>
                         </div>
                   ))}
-                  <button onClick={handleClick}>Valider</button>
+                  <Button className='button' variant="outlined" onClick={handleClick}>Valider</Button>
             </div>
       );
 };

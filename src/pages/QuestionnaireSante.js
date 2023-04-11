@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Questionnaire from '../components/Questionnaire';
 import Navbar from '../components/Navbar';
 import LastQuestionnaire from '../components/LastQuestionnaire';
+import { Refresh } from '@mui/icons-material';
 
 const QuestionnaireSante = () => {
 
@@ -12,7 +13,7 @@ const QuestionnaireSante = () => {
 
       const [animaux, setAnimaux] = useState([]);
 
-      const [infoAnimal, setQuest] = useState([]);
+      const [infoAnimal, setAnimal] = useState([]);
 
       useEffect(() => {
             axios.get("http://localhost:4000/getEspecesLibelle").then((response) => {
@@ -22,7 +23,7 @@ const QuestionnaireSante = () => {
                   setAnimaux(response.data);
             });
             axios.get("http://localhost:4000/getAnimal/1").then((response) => {
-                  setQuest(response.data);
+                  setAnimal(response.data);
             })
       }, []);
 
@@ -36,8 +37,18 @@ const QuestionnaireSante = () => {
       const handleChangeAnimal = (event) => {
             event.preventDefault();
             axios.get("http://localhost:4000/getAnimal/"+event.target.value).then((response) => {
-                  setQuest(response.data);
+                  setAnimal(response.data);
             })
+      }
+
+      function convertirDate(date){
+            const dater = new Date(date);
+            const options = { year: 'numeric', day: 'numeric', month: 'long' };
+            const formattedDate = dater.toLocaleDateString('fr-FR', options);
+                    
+            const LaDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+                    
+            return LaDate
       }
 
       return (
@@ -45,9 +56,9 @@ const QuestionnaireSante = () => {
                   <Navbar></Navbar>
                   <TextField
                         id="cbEspeces"
+                        className='cb'
                         select
                         label="Espèce de l'animal"
-                        style={{width : 200}}
                         defaultValue={1}
                         onChange={handleChangeEspece}
                   >
@@ -59,9 +70,9 @@ const QuestionnaireSante = () => {
                   </TextField>
                   <TextField
                         id="cbAnimaux"
+                        className='cb'
                         select
-                        label="Animaux"
-                        style={{width : 200}}
+                        label="Animal"
                         defaultValue={1}
                         onChange={handleChangeAnimal}
                   >
@@ -73,10 +84,12 @@ const QuestionnaireSante = () => {
                   </TextField>
                   {infoAnimal.map((unAnimal) => (
                         <div key={unAnimal.idEspece}>
-                              <p>NOM : {unAnimal.nomAnimal}</p>
-                              <p>DATE DE NAISSANCE : {unAnimal.dateNaissAnimal.substring(0,10)}</p>
-                              <p>SEXE : {unAnimal.sexeAnimal == 0 ? <label>Femelle</label> : <label>Mâle</label>}</p>
-                              <p>ENCLOS : {unAnimal.codeEnclosAnimal}</p>
+                              <div className='infoAnimal'>
+                                    <p>NOM : {unAnimal.nomAnimal}</p>
+                                    <p>DATE DE NAISSANCE : {convertirDate(unAnimal.dateNaissAnimal)}</p>
+                                    <p>SEXE : {unAnimal.sexeAnimal === 0 ? <label>Femelle</label> : <label>Mâle</label>}</p>
+                                    <p>ENCLOS : {unAnimal.codeEnclosAnimal}</p>
+                              </div>
                               <div class="questionnaires">
                                     <LastQuestionnaire key={"A"+unAnimal.idAnimal} idAnimal={unAnimal.idAnimal}></LastQuestionnaire>
                                     <Questionnaire key={"B"+unAnimal.idAnimal} idAnimal={unAnimal.idAnimal}></Questionnaire>
@@ -84,7 +97,6 @@ const QuestionnaireSante = () => {
                               
                         </div>
                   ))}
-                  
             </div>
       );
 };

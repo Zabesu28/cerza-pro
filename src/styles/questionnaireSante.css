@@ -21,3 +21,31 @@
       display: grid;
       grid-template-columns: 10% 80% 10%;
 }
+
+.cb{
+      margin: 2% !important;
+      width: 13em;
+}
+
+.infoAnimal{
+      right: 5% !important;
+}
+
+.button{
+      color: black !important;
+      margin-left: 80% !important;
+}
+
+@media (min-width: 800px) and (max-width: 1200px) {
+      .questionnaires{
+            margin-left: 10%;
+            display: grid;
+            grid-template-columns: repeat(1, 90%);
+            grid-gap: 10%;
+      }
+
+      .cb{
+            margin-left: 13% !important;
+            width: 13em !important;
+      }
+}

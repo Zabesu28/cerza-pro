@@ -14,12 +14,14 @@ const Description = () => {
 
       const [images, setImages] = useState([]);
 
+      const nbSlide = window.innerWidth < 1200 ? 2 : 3;
+
       const settings = {
             dots: true,
             autoplay: true,
             infinite: true,
             speed: 500,
-            slidesToShow: 3,
+            slidesToShow: nbSlide,
             slidesToScroll: 1
       };
 
@@ -44,10 +46,10 @@ const Description = () => {
                   </Slider>
                   {data.map((espece) => (
                         <div key={espece.idEspece}>
-                              <h1>{espece.libelleEspece}</h1>
-                              <p>{espece.description}</p>
-                              <p>Régime alimentaire : {espece.regime}</p>
-                              <p>Poids : entre {espece.poidsMin} et {espece.poidsMax} kg</p>
+                              <h1 className='titre'>{espece.libelleEspece}</h1>
+                              <p className='texte'>{espece.description}</p>
+                              <p className='texte'>Régime alimentaire : {espece.regime}</p>
+                              <p className='texte'>Poids : entre {espece.poidsMin} et {espece.poidsMax} kg</p>
                         </div>
                   ))}
             </div>
