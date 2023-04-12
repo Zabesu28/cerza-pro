@@ -1,12 +1,35 @@
-.navbar{
-      background-color: #6C2A02 !important;
-      position: sticky !important;
-      top: 0%;
-      z-index: 1000;
+.navbar {
+  background-color: #6c2a02 !important;
+  position: sticky !important;
+  top: 0%;
+  z-index: 1000;
 }
 
-.lien{
-      text-decoration: none !important;
-      color: white !important;
-      font-family: arial !important;
+.lien {
+  text-decoration: none !important;
+  color: white !important;
+  font-family: arial !important;
+}
+
+.profil-navbar {
+  background-color: rgb(189, 189, 189) !important;
+  color: rgb(255, 255, 255) !important;
+  height: 40px !important;
+  width: 40px !important;
+}
+
+.navbarLogo {
+  max-height: 100px;
+  max-width: 100px;
+  margin-right: 30px;
+}
+
+.BoxBtnProfilCnx {
+  margin-left: auto;
+}
+
+.btnCnx {
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(61, 47, 37) !important;
+  border: solid 2px rgb(61, 47, 37) !important;
 }
