@@ -25,8 +25,11 @@ const ListAlerte = () => {
     const Delete = (idAlerte) => {
         //1 copie
         console.log(idAlerte);
+        const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer cette alerte ?");
+        if (confirmation) {
         fetch('http://localhost:4000/DeleteAlerte/'+idAlerte, { method: 'DELETE' }) 
-        alert("L'alerte a bien été supprimé"); 
+        alert("L'alerte a bien été supprimé");
+        } 
     }
 
     const Update = (idAlerte) => {
