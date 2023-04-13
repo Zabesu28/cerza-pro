@@ -11,11 +11,17 @@ const AuthAdmin = () => {
     return (
       <div>
         <Navbar />
-        <h1>Page de connexion (administrateur)</h1>
-        <FormAuth typeForm="0" />
+        <div className="authAdminForm-Flex">
+          <div className="authAdminForm-Flex-Element">
+            <h1 className="authAdminForm-Titre">
+              Page de connexion (administrateur)
+            </h1>
+            <FormAuth typeForm="0" />
 
-        <div className="Auth-link">
-          <NavLink to="/AuthUser">Vous êtes un utilisateur ?</NavLink>
+            <div className="Auth-link">
+              <NavLink to="/AuthUser">Vous êtes un utilisateur ?</NavLink>
+            </div>
+          </div>
         </div>
       </div>
     );

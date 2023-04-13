@@ -125,6 +125,7 @@ const FormAuth = (typeForm) => {
                 id="identifiant"
                 label="Identifiant"
                 variant="outlined"
+                className="inputLoginform"
                 onChange={inputIdentifiant}
                 required
                 error={idInputError}
@@ -138,6 +139,7 @@ const FormAuth = (typeForm) => {
                 label="Mot de passe"
                 variant="outlined"
                 onChange={inputMdp}
+                className="inputMdpform"
                 required
                 error={mdpInputError}
                 type={showPassword ? "text" : "password"}
@@ -161,7 +163,7 @@ const FormAuth = (typeForm) => {
 
             <div className="FormAuth-grid-element">
               <Button
-                className="btn-form"
+                className="btn-AuthForm"
                 variant="contained"
                 size="medium"
                 type="submit"
