@@ -41,6 +41,11 @@ function Navbar() {
     navigate("/gestionMissions");
   };
 
+  const handleGestionAlertesClick = (event) => {
+    event.preventDefault();
+    navigate("/gestionAlerte");
+  };
+
   return (
     <AppBar position="static" className="navbar">
       <Container maxWidth="xl">
@@ -59,8 +64,13 @@ function Navbar() {
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink className="lien" to="/">
+            <NavLink className="lien" to="/listMissionUser">
               MISSIONS
+            </NavLink>
+          </MenuItem>
+          <MenuItem>
+            <NavLink className="lien" to="/listAlerte">
+              ALERTES
             </NavLink>
           </MenuItem>
           <MenuItem>
@@ -68,6 +78,7 @@ function Navbar() {
               QUESTIONNAIRE SANTE
             </NavLink>
           </MenuItem>
+          
 
           <Box className="BoxBtnProfilCnx" sx={{ flexGrow: 0 }}>
             {localStorage.getItem("userConnected") !== null ? (
@@ -113,6 +124,15 @@ function Navbar() {
                     <MenuItem onClick={handleGestionMissionsClick}>
                       <Typography textAlign="center">
                         Gestion des missions
+                      </Typography>
+                    </MenuItem>
+                  ) : null}
+
+                  {JSON.parse(localStorage.getItem("userConnected"))
+                    .droitCnx === "Administrateur" ? (
+                    <MenuItem onClick={handleGestionAlertesClick}>
+                      <Typography textAlign="center">
+                        Gestion des alertes
                       </Typography>
                     </MenuItem>
                   ) : null}

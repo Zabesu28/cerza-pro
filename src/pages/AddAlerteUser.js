@@ -104,7 +104,7 @@ const AddAlerteUser = () => {
         
             </CardContent>         
             <CardActions>
-                  <Button size="small"  type="submit" value="Ajouter" endIcon={<SendIcon />}>Soumettre</Button>
+                  <Button size="small" color='success'  type="submit" value="Ajouter" endIcon={<SendIcon />}>Soumettre</Button>
                   <Button size="small"><Link to="/ListAlerte">Retour</Link></Button>
                 </CardActions>
                 </form>

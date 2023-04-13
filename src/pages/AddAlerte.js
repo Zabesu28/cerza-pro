@@ -120,7 +120,7 @@ const AddAlerte = () => {
         
             </CardContent>         
             <CardActions>
-                  <Button endIcon={<SendIcon />} size="small" type="submit" value="Ajouter">Soumettre</Button>
+                  <Button endIcon={<SendIcon />} color='success' size="small" type="submit" value="Ajouter">Soumettre</Button>
                   <Button size="small"><Link to="/gestionAlerte">Retour</Link></Button>
                 </CardActions>
                 </form>
