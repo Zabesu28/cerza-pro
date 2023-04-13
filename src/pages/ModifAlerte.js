@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import Navbar from "../components/Navbar";
 
 const ModifAlerte = () => {
   // state variables
@@ -104,7 +105,8 @@ const ModifAlerte = () => {
       "Administrateur"
   ){
   return (
-
+    <div>
+    <Navbar />
     <div class="boxAlerteModif">
     <Card sx={{ minWidth: 300 }}>
     <h2 class="center">Modifier l'alerte</h2>
@@ -142,12 +144,13 @@ const ModifAlerte = () => {
         
             </CardContent>         
             <CardActions>
-                  <Button size="small" type="submit" value="Modifier">Modifier</Button>
+                  <Button size="small" type="submit" color="success" value="Modifier">Modifier</Button>
                   <Button size="small"><Link to="/gestionAlerte">Retour</Link></Button>
                 </CardActions>
                 </form>
                 </Card>
-                </div>    
+                </div>  
+                </div>  
   ); 
 } else {
   if (
