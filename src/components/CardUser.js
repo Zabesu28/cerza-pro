@@ -342,6 +342,7 @@ const CardUser = (props) => {
               <TextField
                 id="standard-basic"
                 variant="standard"
+                className="formUser-Form"
                 placeholder={props.User.nomEmploye}
                 style={{ width: 100 }}
                 onChange={inputNom}
@@ -359,6 +360,7 @@ const CardUser = (props) => {
               <TextField
                 id="standard-basic"
                 variant="standard"
+                className="formUser-Form"
                 placeholder={props.User.prenomEmploye}
                 style={{ width: 100 }}
                 onChange={inputPrenom}
@@ -376,6 +378,7 @@ const CardUser = (props) => {
               <TextField
                 id="standard-basic"
                 variant="standard"
+                className="formUser-Form"
                 placeholder={props.User.login}
                 style={{ width: 100 }}
                 onChange={inputIdentifiant}
@@ -393,6 +396,7 @@ const CardUser = (props) => {
               <TextField
                 id="standard-basic"
                 variant="standard"
+                className="formUser-Form"
                 placeholder="********"
                 type={showPassword ? "text" : "password"}
                 InputProps={{
@@ -427,6 +431,7 @@ const CardUser = (props) => {
                 select
                 defaultValue={idFonctDefault}
                 variant="standard"
+                className="formUser-Form"
                 style={{ width: 100 }}
                 onChange={inputFonction}
               >
@@ -443,7 +448,7 @@ const CardUser = (props) => {
 
             <div className="UserCard-element">
               <Button
-                className="btn-modifier"
+                className="btn-valid"
                 variant="contained"
                 size="medium"
                 type="submit"
@@ -454,7 +459,7 @@ const CardUser = (props) => {
 
             <div className="UserCard-element">
               <Button
-                className="btn-modifier"
+                className="btn-annul"
                 variant="contained"
                 size="medium"
                 onClick={handleAnnulerBtn}
@@ -474,7 +479,7 @@ const CardUser = (props) => {
 
               <div className="UserCard-element">
                 <Button
-                  className="btn-suppr"
+                  className="btn-oui"
                   variant="contained"
                   size="medium"
                   onClick={handleSubmitSuppr}
@@ -485,7 +490,7 @@ const CardUser = (props) => {
 
               <div className="UserCard-element">
                 <Button
-                  className="btn-suppr"
+                  className="btn-non"
                   variant="contained"
                   size="medium"
                   onClick={handleAnnulerBtn}

@@ -1,8 +1,13 @@
 .UserCard {
-  width: 400px;
-  background-color: aqua;
+  margin-top: 6%;
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
   display: grid;
   grid-template: 5fr 1fr / 1fr 1fr;
+  height: 255px !important;
 }
 
 .UserCard-element-large {
@@ -10,15 +15,23 @@
 }
 
 .UserCard-modifForm {
-  width: 400px;
-  background-color: aqua;
+  margin-top: 6%;
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
   display: grid;
   grid-template: repeat(5, 1fr) 1fr / 1fr 1fr;
 }
 
 .UserCard-supprForm {
-  width: 400px;
-  background-color: aqua;
+  margin-top: 6%;
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
   display: grid;
   grid-template: 1fr 1fr / 1fr 1fr;
 }
@@ -38,12 +51,34 @@ p {
 }
 
 .btn-modifier,
-.btn-suppr {
+.btn-suppr,
+.btn-oui,
+.btn-non,
+.btn-valid,
+.btn-annul {
   display: block !important;
   margin-left: auto !important;
   margin-right: auto !important;
 }
 
-/* .MuiFormControl-root {
+.btn-modifier,
+.btn-oui,
+.btn-valid {
+  background-color: rgb(0, 255, 0) !important;
+  color: rgb(61, 47, 37) !important;
+  border: solid 2px rgb(61, 47, 37) !important;
+  margin-bottom: 12px !important;
+}
+
+.btn-suppr,
+.btn-non,
+.btn-annul {
+  background-color: rgb(255, 0, 0) !important;
+  color: rgb(61, 47, 37) !important;
+  border: solid 2px rgb(61, 47, 37) !important;
+  margin-bottom: 12px !important;
+}
+
+.formUser-Form {
   margin-top: 12px !important;
-} */
+}

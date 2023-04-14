@@ -239,6 +239,7 @@ const CardAjoutUser = (props) => {
                   id="standard-basic"
                   variant="standard"
                   placeholder="Nom *"
+                  className="AddUser-Form"
                   style={{ width: 100 }}
                   onChange={inputNom}
                   error={nomInputError}
@@ -257,6 +258,7 @@ const CardAjoutUser = (props) => {
                   variant="standard"
                   placeholder="Prénom *"
                   style={{ width: 100 }}
+                  className="AddUser-Form"
                   onChange={inputPrenom}
                   error={prenomInputError}
                 />
@@ -274,6 +276,7 @@ const CardAjoutUser = (props) => {
                   variant="standard"
                   placeholder="Identifiant *"
                   style={{ width: 100 }}
+                  className="AddUser-Form"
                   onChange={inputIdentifiant}
                   error={idInputError}
                 />
@@ -290,6 +293,7 @@ const CardAjoutUser = (props) => {
                   id="standard-basic"
                   variant="standard"
                   placeholder="******** *"
+                  className="AddUser-Form"
                   type={showPassword ? "text" : "password"}
                   InputProps={{
                     endAdornment: (
@@ -323,6 +327,7 @@ const CardAjoutUser = (props) => {
                   select
                   defaultValue="default"
                   variant="standard"
+                  className="AddUser-Form"
                   style={{ width: 100 }}
                   onChange={inputFonction}
                   error={fonctionInputError}
@@ -342,7 +347,7 @@ const CardAjoutUser = (props) => {
 
               <div className="AjoutUserCard-element">
                 <Button
-                  className="btn-modifier"
+                  className="btn-ajout"
                   variant="contained"
                   size="medium"
                   type="submit"
@@ -353,7 +358,7 @@ const CardAjoutUser = (props) => {
 
               <div className="AjoutUserCard-element">
                 <Button
-                  className="btn-modifier"
+                  className="btn-annulerAjout"
                   variant="contained"
                   size="medium"
                   onClick={handleAnnulerBtn}
@@ -365,7 +370,7 @@ const CardAjoutUser = (props) => {
           </Box>
         </div>
       ) : (
-        <div className="AjoutUserCard">
+        <div className="AjoutUserCard-link">
           <div className="ajoutLink-box">
             <Link
               className="ajoutLink"
