@@ -42,13 +42,18 @@ const ListMissionUser = () => {
     
 
  useEffect(() => {
-  axios
+  if(!JSON.parse(localStorage.getItem("userConnected"))){
+
+  }else{
+    axios
     .post("http://localhost:4000/getIdUtilByIdentifiant", {
       identifiant: JSON.parse(localStorage.getItem("userConnected")).idCnx,
     })
     .then((res) => {
       setIdUser(parseInt(res.data[0].idEmploye));
     });
+  }
+  
 }, []);
 
 useEffect(() => {
