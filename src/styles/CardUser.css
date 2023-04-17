@@ -1,5 +1,4 @@
 .UserCard {
-  margin-top: 6%;
   background-color: rgba(255, 255, 255, 0.96);
   border: 2px solid black;
   border-radius: 20px;
@@ -15,7 +14,6 @@
 }
 
 .UserCard-modifForm {
-  margin-top: 6%;
   background-color: rgba(255, 255, 255, 0.96);
   border: 2px solid black;
   border-radius: 20px;
@@ -26,7 +24,6 @@
 }
 
 .UserCard-supprForm {
-  margin-top: 6%;
   background-color: rgba(255, 255, 255, 0.96);
   border: 2px solid black;
   border-radius: 20px;
@@ -64,21 +61,30 @@ p {
 .btn-modifier,
 .btn-oui,
 .btn-valid {
-  background-color: rgb(0, 255, 0) !important;
-  color: rgb(61, 47, 37) !important;
-  border: solid 2px rgb(61, 47, 37) !important;
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(0, 255, 0) !important;
+  border: solid 2px rgb(0, 255, 0) !important;
   margin-bottom: 12px !important;
 }
 
 .btn-suppr,
 .btn-non,
 .btn-annul {
-  background-color: rgb(255, 0, 0) !important;
-  color: rgb(61, 47, 37) !important;
-  border: solid 2px rgb(61, 47, 37) !important;
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(255, 0, 0) !important;
+  border: solid 2px rgb(255, 0, 0) !important;
   margin-bottom: 12px !important;
+}
+
+.btn-non,
+.btn-oui {
+  margin-top: 10px !important;
 }
 
 .formUser-Form {
   margin-top: 12px !important;
+}
+
+.UserCard-titreSuppr {
+  margin-bottom: 35px;
 }

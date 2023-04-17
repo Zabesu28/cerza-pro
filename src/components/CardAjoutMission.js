@@ -167,11 +167,11 @@ const CardAjoutMission = (props) => {
           autoComplete="off"
           onSubmit={handleSubmitAjout}
         >
-          <div className="MissionCard-modifForm">
+          <div className="MissionCard-ajoutForm">
             <div className="MissionCard-element-large">
               <TextField
                 id="standard-basic"
-                className="MissionCard-modifForm-InputLarge"
+                className="MissionCard-ajoutForm-InputLarge"
                 variant="standard"
                 placeholder="Titre *"
                 onChange={titreInput}
@@ -181,14 +181,14 @@ const CardAjoutMission = (props) => {
             </div>
 
             <div className="MissionCard-element">
-              <p className="MissionCard-Title-Modif">Utilisateur :</p>
+              <p className="MissionCard-Title-Ajout">Utilisateur :</p>
             </div>
 
             <div className="MissionCard-element">
               <TextField
                 id="standard-basic-select"
                 select
-                className="MissionCard-modifForm-Input"
+                className="MissionCard-ajoutForm-Input"
                 onChange={utilisateurInput}
                 defaultValue="Default"
                 variant="standard"
@@ -210,14 +210,14 @@ const CardAjoutMission = (props) => {
             </div>
 
             <div className="MissionCard-element">
-              <p className="MissionCard-Title-Modif">Enclos :</p>
+              <p className="MissionCard-Title-Ajout">Enclos :</p>
             </div>
 
             <div className="MissionCard-element">
               <TextField
                 id="standard-basic-select"
                 select
-                className="MissionCard-modifForm-Input"
+                className="MissionCard-ajoutForm-Input"
                 onChange={enclosInput}
                 defaultValue="Default"
                 variant="standard"
@@ -235,7 +235,7 @@ const CardAjoutMission = (props) => {
 
             <div className="MissionCard-element">
               <Button
-                className="btn-suppr"
+                className="btn-missionAjout-valid"
                 variant="contained"
                 size="medium"
                 type="submit"
@@ -246,7 +246,7 @@ const CardAjoutMission = (props) => {
 
             <div className="MissionCard-element">
               <Button
-                className="btn-suppr"
+                className="btn-missionAjout-annul"
                 variant="contained"
                 size="medium"
                 onClick={handleAnnulerBtn}
@@ -257,16 +257,16 @@ const CardAjoutMission = (props) => {
           </div>
         </Box>
       ) : (
-        <div className="AjoutUserCard">
-          <div className="ajoutLink-box">
+        <div className="AjoutMissionCard-link">
+          <div className="ajoutLink-mission-box">
             <Link
-              className="ajoutLink"
+              className="ajoutLink-mission"
               underline="none"
               component="button"
               onClick={handleAjoutBtn}
             >
-              <span className="ajoutLink-plus">+</span>
-              <span className="ajoutLink-text">
+              <span className="ajoutLink-mission-plus">+</span>
+              <span className="ajoutLink-mission-text">
                 Ajouter une nouvelle mission
               </span>
             </Link>

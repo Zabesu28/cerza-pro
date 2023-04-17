@@ -1,5 +1,4 @@
 .AjoutUserCard {
-  margin-top: 6%;
   background-color: rgba(255, 255, 255, 0.96);
   border: 2px solid black;
   border-radius: 20px;
@@ -8,7 +7,6 @@
 }
 
 .AjoutUserCard-link {
-  margin-top: 6%;
   background-color: rgba(255, 255, 255, 0.96);
   border: 2px solid black;
   border-radius: 20px;
@@ -40,16 +38,16 @@
 }
 
 .btn-ajout {
-  background-color: rgb(0, 255, 0) !important;
-  color: rgb(61, 47, 37) !important;
-  border: solid 2px rgb(61, 47, 37) !important;
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(0, 255, 0) !important;
+  border: solid 2px rgb(0, 255, 0) !important;
   margin-bottom: 12px !important;
 }
 
 .btn-annulerAjout {
-  background-color: rgb(255, 0, 0) !important;
-  color: rgb(61, 47, 37) !important;
-  border: solid 2px rgb(61, 47, 37) !important;
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(255, 0, 0) !important;
+  border: solid 2px rgb(255, 0, 0) !important;
   margin-bottom: 12px !important;
 }
 
@@ -59,6 +57,7 @@
 
 .ajoutLink {
   flex-direction: column;
+  margin-top: -45px !important;
 }
 
 .ajoutLink-plus {
@@ -70,6 +69,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
 .ajoutLink:hover > .ajoutLink-plus,

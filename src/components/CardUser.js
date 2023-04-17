@@ -474,7 +474,9 @@ const CardUser = (props) => {
           {supprForm ? (
             <div className="UserCard-supprForm">
               <div className="UserCard-element-large">
-                <p>Voulez-vous supprimer cet utilisateur ?</p>
+                <p className="UserCard-titreSuppr">
+                  Voulez-vous supprimer cet utilisateur ?
+                </p>
               </div>
 
               <div className="UserCard-element">
