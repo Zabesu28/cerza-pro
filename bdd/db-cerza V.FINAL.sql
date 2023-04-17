@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le : mar. 11 avr. 2023 à 11:03
+-- Hôte : localhost
+-- Généré le : lun. 17 avr. 2023 à 19:07
 -- Version du serveur : 8.0.27
--- Version de PHP : 7.4.26
+-- Version de PHP : 8.1.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,26 +27,23 @@ SET time_zone = "+00:00";
 -- Structure de la table `alerte`
 --
 
-DROP TABLE IF EXISTS `alerte`;
-CREATE TABLE IF NOT EXISTS `alerte` (
-  `idAlerte` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `alerte` (
+  `idAlerte` int NOT NULL,
   `descriptionAlerte` text NOT NULL,
   `active` tinyint(1) NOT NULL,
   `dateAlerte` datetime NOT NULL,
   `idEmployeAlerte` int NOT NULL,
-  `idNiveauAlerte` int NOT NULL,
-  PRIMARY KEY (`idAlerte`),
-  KEY `fk11` (`idEmployeAlerte`),
-  KEY `fk13` (`idNiveauAlerte`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `idNiveauAlerte` int NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `alerte`
 --
 
 INSERT INTO `alerte` (`idAlerte`, `descriptionAlerte`, `active`, `dateAlerte`, `idEmployeAlerte`, `idNiveauAlerte`) VALUES
-(1, 'FFFfrdd', 0, '2023-04-11 10:38:45', 1, 2),
-(3, 'Marche stp', 1, '2023-04-11 12:49:56', 1, 3);
+(1, 'FFFfrdd', 0, '2023-04-11 10:38:45', 3, 2),
+(5, 'oui', 1, '2023-04-17 20:56:22', 1, 3),
+(4, 'hjgjhg', 1, '2023-04-17 15:57:22', 6, 2);
 
 -- --------------------------------------------------------
 
@@ -54,18 +51,14 @@ INSERT INTO `alerte` (`idAlerte`, `descriptionAlerte`, `active`, `dateAlerte`, `
 -- Structure de la table `animaux`
 --
 
-DROP TABLE IF EXISTS `animaux`;
-CREATE TABLE IF NOT EXISTS `animaux` (
-  `idAnimal` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `animaux` (
+  `idAnimal` int NOT NULL,
   `nomAnimal` varchar(50) NOT NULL,
   `dateNaissAnimal` date NOT NULL,
   `sexeAnimal` tinyint NOT NULL,
   `idEspeceAnimal` int NOT NULL,
-  `codeEnclosAnimal` varchar(10) NOT NULL,
-  PRIMARY KEY (`idAnimal`),
-  KEY `fk1` (`idEspeceAnimal`),
-  KEY `fk2` (`codeEnclosAnimal`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+  `codeEnclosAnimal` varchar(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `animaux`
@@ -94,19 +87,14 @@ INSERT INTO `animaux` (`idAnimal`, `nomAnimal`, `dateNaissAnimal`, `sexeAnimal`,
 -- Structure de la table `attribuer`
 --
 
-DROP TABLE IF EXISTS `attribuer`;
-CREATE TABLE IF NOT EXISTS `attribuer` (
+CREATE TABLE `attribuer` (
   `idEmployeAttribuer` int NOT NULL,
   `idMissionAttribuer` int NOT NULL,
   `dateAttribuer` datetime NOT NULL,
   `codeEnclosAttribuer` varchar(10) NOT NULL,
   `commentaire` text,
   `dateValidation` datetime DEFAULT NULL,
-  `idEtatAttribuer` int NOT NULL,
-  PRIMARY KEY (`idEmployeAttribuer`,`idMissionAttribuer`,`dateAttribuer`,`codeEnclosAttribuer`),
-  KEY `fk15` (`idMissionAttribuer`),
-  KEY `fk42` (`idEtatAttribuer`),
-  KEY `fk100` (`codeEnclosAttribuer`)
+  `idEtatAttribuer` int NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -114,22 +102,9 @@ CREATE TABLE IF NOT EXISTS `attribuer` (
 --
 
 INSERT INTO `attribuer` (`idEmployeAttribuer`, `idMissionAttribuer`, `dateAttribuer`, `codeEnclosAttribuer`, `commentaire`, `dateValidation`, `idEtatAttribuer`) VALUES
-(2, 1, '2023-04-11 10:53:20', 'D4F', 'FFF', '2023-04-11 12:53:56', 2);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `effectuer`
---
-
-DROP TABLE IF EXISTS `effectuer`;
-CREATE TABLE IF NOT EXISTS `effectuer` (
-  `idEnclosEffectuer` int NOT NULL,
-  `idMissionEffectuer` int NOT NULL,
-  `dateEffectuer` datetime NOT NULL,
-  PRIMARY KEY (`idEnclosEffectuer`,`idMissionEffectuer`,`dateEffectuer`),
-  KEY `fk8` (`idMissionEffectuer`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+(1, 1, '2023-04-11 10:53:20', 'E1', 'FFF', '2023-04-11 12:53:56', 2),
+(3, 2, '2023-04-11 10:53:20', 'E2', 'dhfhd', '2023-04-11 12:53:56', 2),
+(1, 3, '2023-04-17 20:50:56', 'E1', 'sss', '2023-04-17 21:05:48', 2);
 
 -- --------------------------------------------------------
 
@@ -137,29 +112,24 @@ CREATE TABLE IF NOT EXISTS `effectuer` (
 -- Structure de la table `employes`
 --
 
-DROP TABLE IF EXISTS `employes`;
-CREATE TABLE IF NOT EXISTS `employes` (
-  `idEmploye` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `employes` (
+  `idEmploye` int NOT NULL,
   `nomEmploye` varchar(100) NOT NULL,
   `prenomEmploye` varchar(100) NOT NULL,
   `login` varchar(100) NOT NULL,
   `mdp` varchar(255) NOT NULL,
-  `idFonctionEmploye` int NOT NULL,
-  PRIMARY KEY (`idEmploye`),
-  KEY `fk9` (`idFonctionEmploye`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `idFonctionEmploye` int NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `employes`
 --
 
 INSERT INTO `employes` (`idEmploye`, `nomEmploye`, `prenomEmploye`, `login`, `mdp`, `idFonctionEmploye`) VALUES
-(1, 'ZABETH', 'Romain', 'zabethr', 'pass', 1),
-(2, 'NOLLE', 'Damien', 'nolled', 'pass', 4),
-(3, 'FENEROL', 'Miguel', 'fenerolm', 'pass', 2),
-(4, 'POQUET', 'Hugo', 'poqueth', 'pass', 3),
-(5, 'MICHELET', 'Max', 'micheletm', 'pass', 3),
-(6, 'SKWERES', 'Oliwer', 'skwereso', 'pass', 3);
+(1, 'ZABETH', 'Romain', 'zabethr', '7546df0d5385f6a05d11c5a0388a5736466f31d5ab210fe486f377bd648459a5', 1),
+(3, 'FENEROL', 'Miguel', 'fenerolm', '7546df0d5385f6a05d11c5a0388a5736466f31d5ab210fe486f377bd648459a5', 2),
+(5, 'MICHELET', 'Max', 'micheletm', '7546df0d5385f6a05d11c5a0388a5736466f31d5ab210fe486f377bd648459a5', 3),
+(6, 'SKWERES', 'Oliwer', 'skwereso', '7546df0d5385f6a05d11c5a0388a5736466f31d5ab210fe486f377bd648459a5', 3);
 
 -- --------------------------------------------------------
 
@@ -167,11 +137,9 @@ INSERT INTO `employes` (`idEmploye`, `nomEmploye`, `prenomEmploye`, `login`, `md
 -- Structure de la table `enclos`
 --
 
-DROP TABLE IF EXISTS `enclos`;
-CREATE TABLE IF NOT EXISTS `enclos` (
+CREATE TABLE `enclos` (
   `code` varchar(10) NOT NULL,
-  `descriptifEnclos` text,
-  PRIMARY KEY (`code`)
+  `descriptifEnclos` text
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -194,17 +162,15 @@ INSERT INTO `enclos` (`code`, `descriptifEnclos`) VALUES
 -- Structure de la table `especes`
 --
 
-DROP TABLE IF EXISTS `especes`;
-CREATE TABLE IF NOT EXISTS `especes` (
-  `idEspece` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `especes` (
+  `idEspece` int NOT NULL,
   `libelleEspece` varchar(50) NOT NULL,
   `regime` varchar(50) NOT NULL,
   `poidsMin` float NOT NULL,
   `poidsMax` float NOT NULL,
   `description` text,
-  `imageEspece` text,
-  PRIMARY KEY (`idEspece`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `imageEspece` text
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `especes`
@@ -224,12 +190,10 @@ INSERT INTO `especes` (`idEspece`, `libelleEspece`, `regime`, `poidsMin`, `poids
 -- Structure de la table `etats`
 --
 
-DROP TABLE IF EXISTS `etats`;
-CREATE TABLE IF NOT EXISTS `etats` (
-  `idEtat` int NOT NULL AUTO_INCREMENT,
-  `libelleEtat` varchar(100) NOT NULL,
-  PRIMARY KEY (`idEtat`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+CREATE TABLE `etats` (
+  `idEtat` int NOT NULL,
+  `libelleEtat` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `etats`
@@ -245,12 +209,10 @@ INSERT INTO `etats` (`idEtat`, `libelleEtat`) VALUES
 -- Structure de la table `fonctions`
 --
 
-DROP TABLE IF EXISTS `fonctions`;
-CREATE TABLE IF NOT EXISTS `fonctions` (
-  `idFonction` int NOT NULL AUTO_INCREMENT,
-  `libelleFonction` varchar(100) NOT NULL,
-  PRIMARY KEY (`idFonction`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+CREATE TABLE `fonctions` (
+  `idFonction` int NOT NULL,
+  `libelleFonction` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `fonctions`
@@ -268,23 +230,41 @@ INSERT INTO `fonctions` (`idFonction`, `libelleFonction`) VALUES
 -- Structure de la table `images`
 --
 
-DROP TABLE IF EXISTS `images`;
-CREATE TABLE IF NOT EXISTS `images` (
-  `idImage` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `images` (
+  `idImage` int NOT NULL,
   `lienImage` text NOT NULL,
-  `idEspeceImage` int NOT NULL,
-  PRIMARY KEY (`idImage`),
-  KEY `fk43` (`idEspeceImage`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `idEspeceImage` int NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `images`
 --
 
 INSERT INTO `images` (`idImage`, `lienImage`, `idEspeceImage`) VALUES
-(1, 'http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcTcYNRR3fWU52JVGfcrjg2deAvhRwcMF9q-rgcRd-ClV-Ps-s8h040e7CySA74Lg1h2', 2),
-(2, 'https://minecraft.fr/wp-content/uploads/2021/06/axolotl-minecraft-bleu.png', 2),
-(3, 'https://static.wikia.nocookie.net/minecraft_fr_gamepedia/images/7/72/Cyan_Axolotl_JE1.png/revision/latest?cb=20201217102733', 2);
+(10, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvbkdyKxXnvS3Rl55_rEgZH2At0qxEudM62YECbQEbJ53-kMD82X85n_uwYnH22c0ZdjY&usqp=CAU', 2),
+(7, 'https://i.f1g.fr/media/cms/3000x2001_crop/2022/09/29/6b1c9952afaa2619b915b2bc74d1f0155e819b577588dd9dd7c4d8824c279c87.jpg', 2),
+(8, 'https://lemagdesanimaux.ouest-france.fr/images/dossiers/2020-09/axolotl-070026.jpg', 2),
+(9, 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEir-nmL5TDJ4UJQ5Z-T_cQO0JJYzsthRG8jdzSDH7L4nAz2meCKDf5RvUMZu9bt5dXiNr0jOXtdiUf9QzhVjYTWdOXFEeaPdiIj-_wTdjjfvUGAdbobGNt4hYmLway8XAwPWl-H_KJBt0e6s90iQI4SuQTNAPM1GQumqjabBnQlScLaCwS8ZrOswAqp/s980/Axolotl.webp', 2),
+(11, 'https://cdn.futura-sciences.com/sources/Dasypus_Armadillo.jpg', 1),
+(12, 'https://www.jaitoutcompris.com/img/encyclo/tatou-pb.jpg', 1),
+(13, 'https://www.slate.fr/sites/default/files/styles/1060x523/public/tatou.jpg', 1),
+(14, 'https://img.20mn.fr/VJg36V4ZSN-D8rQXfIlL4A/1200x768_photo-non-datee-tatu-bola-tatou-boule-mammifere-voie-disparition', 1),
+(15, 'https://www.parcanimalierlabarben.com/wp-content/uploads/2014/09/Emeu-fiche.jpg', 3),
+(16, 'https://ici.exploratv.ca/upload/site/post/picture/1375/5fff633dea1fb.1680115984.jpg', 3),
+(17, 'https://lemagdesanimaux.ouest-france.fr/images/dossiers/2021-07/emeu-australie-084039.jpg', 3),
+(18, 'https://www.jaitoutcompris.com/img/encyclo/emeu.jpg', 3),
+(19, 'https://upload.wikimedia.org/wikipedia/commons/6/62/Rollulus_rouloul_-Tropical_House_at_Slimbridge%2C_England_-male-8a.jpg', 4),
+(20, 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Crested_Wood_Partridge_%28Rollulus_rouloul%29%2C_male_and_female.jpg/640px-Crested_Wood_Partridge_%28Rollulus_rouloul%29%2C_male_and_female.jpg', 4),
+(21, 'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/542898981/', 4),
+(22, 'https://www.oiseaux-birds.com/galliformes/phasianides/rouloul-couronne/rouloul-couronne-nb2.jpg', 4),
+(23, 'https://www.cerza.com/wp-content/uploads/2021/03/Gourami.jpg', 5),
+(24, 'https://www.lafermeauxcrocodiles.com/wp-content/uploads/2019/05/gouramigeant.jpg', 5),
+(25, 'https://www.cerza.com/wp-content/uploads/2021/03/Gourami-2.jpg', 5),
+(27, 'https://www.zoo-mulhouse.com/wp-content/uploads/2018/04/tamarn-lion-a-tete-doree-2.jpg', 6),
+(26, 'https://www.cerza.com/wp-content/uploads/2021/03/Gourami-1.jpg', 5),
+(28, 'https://www.thoiry.net/wp-content/uploads/2022/04/tamarin-lion-03-copy.jpg', 6),
+(29, 'https://www.zoo-mulhouse.com/wp-content/uploads/2018/04/tamarn-lion-a-tete-doree-1.jpg', 6),
+(30, 'https://prmeng.rosselcdn.net/sites/default/files/dpistyles_v2/prm_16_9_856w/2022/02/17/node_279840/38883020/public/2022/02/17/B9729996900Z.1_20220217153957_000%2BG20JU1GP8.1-0.jpg?itok=LYM0KbxJ1645110037', 6);
 
 -- --------------------------------------------------------
 
@@ -292,12 +272,10 @@ INSERT INTO `images` (`idImage`, `lienImage`, `idEspeceImage`) VALUES
 -- Structure de la table `missions`
 --
 
-DROP TABLE IF EXISTS `missions`;
-CREATE TABLE IF NOT EXISTS `missions` (
-  `idMission` int NOT NULL AUTO_INCREMENT,
-  `libelleMission` varchar(100) NOT NULL,
-  PRIMARY KEY (`idMission`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+CREATE TABLE `missions` (
+  `idMission` int NOT NULL,
+  `libelleMission` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `missions`
@@ -314,12 +292,10 @@ INSERT INTO `missions` (`idMission`, `libelleMission`) VALUES
 -- Structure de la table `niveau`
 --
 
-DROP TABLE IF EXISTS `niveau`;
-CREATE TABLE IF NOT EXISTS `niveau` (
-  `idNiveau` int NOT NULL AUTO_INCREMENT,
-  `libelleNiveau` varchar(100) NOT NULL,
-  PRIMARY KEY (`idNiveau`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+CREATE TABLE `niveau` (
+  `idNiveau` int NOT NULL,
+  `libelleNiveau` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `niveau`
@@ -337,12 +313,10 @@ INSERT INTO `niveau` (`idNiveau`, `libelleNiveau`) VALUES
 -- Structure de la table `questionnaire`
 --
 
-DROP TABLE IF EXISTS `questionnaire`;
-CREATE TABLE IF NOT EXISTS `questionnaire` (
-  `idQuestion` int NOT NULL AUTO_INCREMENT,
-  `libelleQuestion` varchar(255) NOT NULL,
-  PRIMARY KEY (`idQuestion`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+CREATE TABLE `questionnaire` (
+  `idQuestion` int NOT NULL,
+  `libelleQuestion` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `questionnaire`
@@ -360,14 +334,11 @@ INSERT INTO `questionnaire` (`idQuestion`, `libelleQuestion`) VALUES
 -- Structure de la table `repondre`
 --
 
-DROP TABLE IF EXISTS `repondre`;
-CREATE TABLE IF NOT EXISTS `repondre` (
+CREATE TABLE `repondre` (
   `idAnimalRepondre` int NOT NULL,
   `idQuestionRepondre` int NOT NULL,
   `dateRepondre` datetime NOT NULL,
-  `reponse` int NOT NULL,
-  PRIMARY KEY (`idAnimalRepondre`,`idQuestionRepondre`,`dateRepondre`),
-  KEY `fk70` (`idQuestionRepondre`)
+  `reponse` int NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -390,17 +361,20 @@ INSERT INTO `repondre` (`idAnimalRepondre`, `idQuestionRepondre`, `dateRepondre`
 -- Structure de la table `soigner`
 --
 
-DROP TABLE IF EXISTS `soigner`;
-CREATE TABLE IF NOT EXISTS `soigner` (
+CREATE TABLE `soigner` (
   `idAnimalSoigner` int NOT NULL,
   `idSoinSoigner` int NOT NULL,
   `dateSoigner` datetime NOT NULL,
   `traitement` text NOT NULL,
-  `idEmployeSoigner` int NOT NULL,
-  PRIMARY KEY (`idAnimalSoigner`,`idSoinSoigner`,`dateSoigner`),
-  KEY `fk4` (`idSoinSoigner`),
-  KEY `fk15` (`idEmployeSoigner`)
+  `idEmployeSoigner` int NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `soigner`
+--
+
+INSERT INTO `soigner` (`idAnimalSoigner`, `idSoinSoigner`, `dateSoigner`, `traitement`, `idEmployeSoigner`) VALUES
+(1, 1, '2023-04-17 15:54:51', 'hfdgfhg', 5);
 
 -- --------------------------------------------------------
 
@@ -408,12 +382,10 @@ CREATE TABLE IF NOT EXISTS `soigner` (
 -- Structure de la table `soins`
 --
 
-DROP TABLE IF EXISTS `soins`;
-CREATE TABLE IF NOT EXISTS `soins` (
-  `idSoin` int NOT NULL AUTO_INCREMENT,
-  `libelleSoin` varchar(100) NOT NULL,
-  PRIMARY KEY (`idSoin`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+CREATE TABLE `soins` (
+  `idSoin` int NOT NULL,
+  `libelleSoin` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `soins`
@@ -423,6 +395,183 @@ INSERT INTO `soins` (`idSoin`, `libelleSoin`) VALUES
 (1, 'Traitement de plaies'),
 (2, 'Vaccination'),
 (3, 'Nutrition');
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `alerte`
+--
+ALTER TABLE `alerte`
+  ADD PRIMARY KEY (`idAlerte`),
+  ADD KEY `fk11` (`idEmployeAlerte`),
+  ADD KEY `fk13` (`idNiveauAlerte`);
+
+--
+-- Index pour la table `animaux`
+--
+ALTER TABLE `animaux`
+  ADD PRIMARY KEY (`idAnimal`),
+  ADD KEY `fk1` (`idEspeceAnimal`),
+  ADD KEY `fk2` (`codeEnclosAnimal`);
+
+--
+-- Index pour la table `attribuer`
+--
+ALTER TABLE `attribuer`
+  ADD PRIMARY KEY (`idMissionAttribuer`,`dateAttribuer`,`codeEnclosAttribuer`),
+  ADD KEY `fk15` (`idMissionAttribuer`),
+  ADD KEY `fk42` (`idEtatAttribuer`),
+  ADD KEY `fk100` (`codeEnclosAttribuer`),
+  ADD KEY `fk200` (`idEmployeAttribuer`);
+
+--
+-- Index pour la table `employes`
+--
+ALTER TABLE `employes`
+  ADD PRIMARY KEY (`idEmploye`),
+  ADD KEY `fk9` (`idFonctionEmploye`);
+
+--
+-- Index pour la table `enclos`
+--
+ALTER TABLE `enclos`
+  ADD PRIMARY KEY (`code`);
+
+--
+-- Index pour la table `especes`
+--
+ALTER TABLE `especes`
+  ADD PRIMARY KEY (`idEspece`);
+
+--
+-- Index pour la table `etats`
+--
+ALTER TABLE `etats`
+  ADD PRIMARY KEY (`idEtat`);
+
+--
+-- Index pour la table `fonctions`
+--
+ALTER TABLE `fonctions`
+  ADD PRIMARY KEY (`idFonction`);
+
+--
+-- Index pour la table `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`idImage`),
+  ADD KEY `fk43` (`idEspeceImage`);
+
+--
+-- Index pour la table `missions`
+--
+ALTER TABLE `missions`
+  ADD PRIMARY KEY (`idMission`);
+
+--
+-- Index pour la table `niveau`
+--
+ALTER TABLE `niveau`
+  ADD PRIMARY KEY (`idNiveau`);
+
+--
+-- Index pour la table `questionnaire`
+--
+ALTER TABLE `questionnaire`
+  ADD PRIMARY KEY (`idQuestion`);
+
+--
+-- Index pour la table `repondre`
+--
+ALTER TABLE `repondre`
+  ADD PRIMARY KEY (`idAnimalRepondre`,`idQuestionRepondre`,`dateRepondre`),
+  ADD KEY `fk70` (`idQuestionRepondre`);
+
+--
+-- Index pour la table `soigner`
+--
+ALTER TABLE `soigner`
+  ADD PRIMARY KEY (`idAnimalSoigner`,`idSoinSoigner`,`dateSoigner`),
+  ADD KEY `fk4` (`idSoinSoigner`),
+  ADD KEY `fk15` (`idEmployeSoigner`);
+
+--
+-- Index pour la table `soins`
+--
+ALTER TABLE `soins`
+  ADD PRIMARY KEY (`idSoin`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `alerte`
+--
+ALTER TABLE `alerte`
+  MODIFY `idAlerte` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT pour la table `animaux`
+--
+ALTER TABLE `animaux`
+  MODIFY `idAnimal` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT pour la table `employes`
+--
+ALTER TABLE `employes`
+  MODIFY `idEmploye` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT pour la table `especes`
+--
+ALTER TABLE `especes`
+  MODIFY `idEspece` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT pour la table `etats`
+--
+ALTER TABLE `etats`
+  MODIFY `idEtat` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `fonctions`
+--
+ALTER TABLE `fonctions`
+  MODIFY `idFonction` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `images`
+--
+ALTER TABLE `images`
+  MODIFY `idImage` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT pour la table `missions`
+--
+ALTER TABLE `missions`
+  MODIFY `idMission` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `niveau`
+--
+ALTER TABLE `niveau`
+  MODIFY `idNiveau` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `questionnaire`
+--
+ALTER TABLE `questionnaire`
+  MODIFY `idQuestion` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `soins`
+--
+ALTER TABLE `soins`
+  MODIFY `idSoin` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
