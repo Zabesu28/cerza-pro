@@ -1,0 +1,91 @@
+.AjoutUserCard {
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
+}
+
+.AjoutUserCard-link {
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
+  height: 255px;
+}
+
+.AjoutUserCard-ajoutForm {
+  display: grid;
+  grid-template: repeat(5, 1fr) 1fr / 1fr 1fr;
+}
+
+.AjoutUserCard-Title {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.AjoutUserCard-Title-Ajout {
+  text-align: right !important;
+  margin-right: 10px;
+}
+
+.btn-ajout,
+.btn-annulerAjout {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.btn-ajout {
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(0, 255, 0) !important;
+  border: solid 2px rgb(0, 255, 0) !important;
+  margin-bottom: 12px !important;
+}
+
+.btn-annulerAjout {
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(255, 0, 0) !important;
+  border: solid 2px rgb(255, 0, 0) !important;
+  margin-bottom: 12px !important;
+}
+
+.AddUser-Form {
+  margin-top: 12px !important;
+}
+
+.ajoutLink {
+  flex-direction: column;
+  margin-top: -45px !important;
+}
+
+.ajoutLink-plus {
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.ajoutLink-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.ajoutLink:hover > .ajoutLink-plus,
+.ajoutLink:hover > .ajoutLink-text {
+  color: rgb(39, 85, 178);
+}
+
+.ajoutLink:hover > .ajoutLink-text {
+  text-decoration: underline;
+}
+
+.ajoutLink:active > .ajoutLink-plus,
+.ajoutLink:active > .ajoutLink-text {
+  color: rgb(178, 39, 39) !important;
+}
+
+.ajoutLink:active > .ajoutLink-text {
+  text-decoration: underline;
+}

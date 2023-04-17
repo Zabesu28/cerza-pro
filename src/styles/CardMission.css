@@ -1,0 +1,111 @@
+.MissionCard {
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
+  display: grid;
+  grid-template: 5fr 1fr / 1fr 1fr;
+  height: 100% !important;
+}
+
+.MissionCard-modifForm {
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
+  display: grid;
+  grid-template: repeat(3, 1fr) 1fr / 1fr 1fr;
+}
+
+.MissionCard-supprForm {
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
+  display: grid;
+  grid-template: 1fr 1fr / 1fr 1fr;
+}
+
+.MissionCard-element-large {
+  grid-column: 1 / span 2;
+}
+
+p {
+  text-align: center;
+}
+
+.MissionCard-Title {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.MissionCard-Title-Modif {
+  text-align: right;
+  margin-right: 5px;
+  margin-top: 25px;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.MissionCard-modifForm-Input {
+  margin-left: 5px !important;
+}
+
+.MissionCard-modifForm-InputLarge {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.MissionCard-modifForm-InputLarge,
+.MissionCard-modifForm-Input {
+  margin-top: 20px !important;
+}
+
+.btn-mission-modifier,
+.btn-mission-suppr,
+.btn-mission-oui,
+.btn-mission-non,
+.btn-mission-valid,
+.btn-mission-annul {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.btn-mission-modifier,
+.btn-mission-oui,
+.btn-mission-valid {
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(0, 255, 0) !important;
+  border: solid 2px rgb(0, 255, 0) !important;
+  margin-bottom: 12px !important;
+}
+
+.btn-mission-suppr,
+.btn-mission-non,
+.btn-mission-annul {
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(255, 0, 0) !important;
+  border: solid 2px rgb(255, 0, 0) !important;
+  margin-bottom: 12px !important;
+}
+
+.btn-mission-modifier,
+.btn-mission-suppr,
+.btn-mission-valid,
+.btn-mission-annul {
+  margin-top: 5px !important;
+}
+
+.MissionCard-titreSuppr {
+  margin-bottom: 35px;
+}
+
+.btn-mission-non,
+.btn-mission-oui {
+  margin-top: 10px !important;
+}

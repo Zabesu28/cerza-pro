@@ -1,0 +1,55 @@
+.question{
+      width: 80%;
+      margin-left: 10%;
+      display: grid;
+      grid-template-columns: 1fr;
+}
+
+.questionnaire{
+      border: 2px black solid;
+      border-radius: 20px;
+      background-color: white;
+}
+
+.questionnaires{
+      margin-left: 5%;
+      display: grid;
+      grid-template-columns: repeat(2, 40%);
+      grid-gap: 10%;
+}
+
+.reponse{
+      display: grid;
+      grid-template-columns: 10% 80% 10%;
+}
+
+.cb{
+      margin: 2% !important;
+      width: 13em;
+      background-color: white !important;
+}
+
+.infoAnimal{
+      right: 5% !important;
+      font-size: large;
+      font-weight: bold;
+}
+
+.button{
+      color: black !important;
+      margin-left: 80% !important;
+}
+
+@media (min-width: 800px) and (max-width: 1200px) {
+      .questionnaires{
+            margin-left: 10%;
+            display: grid;
+            grid-template-columns: repeat(1, 90%);
+            grid-gap: 10%;
+      }
+
+      .cb{
+            margin-left: 13% !important;
+            width: 13em !important;
+      }
+}

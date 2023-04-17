@@ -1,0 +1,101 @@
+.MissionCard-ajoutForm {
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
+  height: 255px;
+  display: grid;
+  grid-template: repeat(3, 1fr) 1fr / 1fr 1fr;
+}
+
+.AjoutMissionCard-link {
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
+  height: 255px;
+}
+
+.MissionCard-element-large {
+  grid-column: 1 / span 2;
+}
+
+.MissionCard-ajoutForm-Input {
+  margin-left: 5px !important;
+}
+
+.MissionCard-ajoutForm-InputLarge {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.MissionCard-Title-Ajout {
+  text-decoration: underline;
+  font-weight: bold;
+  text-align: right !important;
+  margin-right: 10px;
+}
+
+.MissionCard-ajoutForm-InputLarge,
+.MissionCard-ajoutForm-Input {
+  margin-top: 12px !important;
+}
+
+.btn-missionAjout-valid,
+.btn-missionAjout-annul {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.btn-missionAjout-valid {
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(0, 255, 0) !important;
+  border: solid 2px rgb(0, 255, 0) !important;
+  margin-bottom: 12px !important;
+}
+
+.btn-missionAjout-annul {
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(255, 0, 0) !important;
+  border: solid 2px rgb(255, 0, 0) !important;
+  margin-bottom: 12px !important;
+}
+
+.ajoutLink-mission {
+  flex-direction: column;
+  margin-top: -45px !important;
+}
+
+.ajoutLink-mission-plus {
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.ajoutLink-mission-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.ajoutLink-mission:hover > .ajoutLink-mission-plus,
+.ajoutLink-mission:hover > .ajoutLink-mission-text {
+  color: rgb(39, 85, 178);
+}
+
+.ajoutLink-mission:hover > .ajoutLink-mission-text {
+  text-decoration: underline;
+}
+
+.ajoutLink-mission:active > .ajoutLink-mission-plus,
+.ajoutLink-mission:active > .ajoutLink-mission-text {
+  color: rgb(178, 39, 39) !important;
+}
+
+.ajoutLink-mission:active > .ajoutLink-mission-text {
+  text-decoration: underline;
+}

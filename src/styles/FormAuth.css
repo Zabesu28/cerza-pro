@@ -1,0 +1,29 @@
+.FormAuth-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.FormAuth-grid {
+  display: grid;
+  grid-template: 1fr 1fr 1fr/1fr;
+  grid-gap: 20px;
+}
+
+.btn-AuthForm {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 25px !important;
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(61, 47, 37) !important;
+  border: solid 2px rgb(61, 47, 37) !important;
+}
+
+.inputLoginform {
+  margin-bottom: 10px !important;
+}
+
+.inputMdpform {
+  margin-top: 10px !important;
+}
