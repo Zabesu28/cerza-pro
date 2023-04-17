@@ -23,7 +23,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="home" element={<Encyclopedie />} />
+          <Route path="" element={<Encyclopedie />} />
           <Route path="authAdmin" element={<AuthAdmin />} />
           <Route path="authUser" element={<AuthUser />} />
           <Route path="gestionComptes" element={<GestionComptes />} />

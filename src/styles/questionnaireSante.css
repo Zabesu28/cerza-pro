@@ -8,6 +8,7 @@
 .questionnaire{
       border: 2px black solid;
       border-radius: 20px;
+      background-color: white;
 }
 
 .questionnaires{
@@ -25,10 +26,13 @@
 .cb{
       margin: 2% !important;
       width: 13em;
+      background-color: white !important;
 }
 
 .infoAnimal{
       right: 5% !important;
+      font-size: large;
+      font-weight: bold;
 }
 
 .button{
