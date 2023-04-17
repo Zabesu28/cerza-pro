@@ -136,36 +136,43 @@ const FiltreMission = (props) => {
         onSubmit={handleSubmit}
       >
         <div className="filtre-grid-mission">
-          <div className="filtre-grid-mission-element">
+          <div className="filtre-grid-mission-element-large">
+            <h1 className="FiltreMission-titre">Filtre :</h1>
+          </div>
+
+          <div className="filtre-grid-mission-element-large">
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
               <DemoContainer components={["DatePicker"]}>
                 <DatePicker
                   label="Date d'attribution"
                   value={dateAttribue}
+                  className="filtreMission-input"
                   onChange={inputDateAttr}
                 />
               </DemoContainer>
             </LocalizationProvider>
           </div>
 
-          <div className="filtre-grid-mission-element">
+          <div className="filtre-grid-mission-element-large">
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
               <DemoContainer components={["DatePicker"]}>
                 <DatePicker
                   label="Date de validation"
                   value={dateValide}
+                  className="filtreMission-input"
                   onChange={inputDateValid}
                 />
               </DemoContainer>
             </LocalizationProvider>
           </div>
 
-          <div className="filtre-grid-mission-element">
+          <div className="filtre-grid-mission-element-large">
             <TextField
               id="outlined-basic-select"
               select
               variant="outlined"
               onChange={inputEmploye}
+              className="filtreMission-select"
               value={employe}
             >
               <MenuItem value="Default">Coisir un employé</MenuItem>
@@ -177,12 +184,13 @@ const FiltreMission = (props) => {
             </TextField>
           </div>
 
-          <div className="filtre-grid-mission-element">
+          <div className="filtre-grid-mission-element-large">
             <TextField
               id="outlined-basic-select"
               select
               variant="outlined"
               onChange={inputEnclos}
+              className="filtreMission-select"
               value={enclos}
             >
               <MenuItem value="Default">Coisir un enclos</MenuItem>
@@ -194,12 +202,13 @@ const FiltreMission = (props) => {
             </TextField>
           </div>
 
-          <div className="filtre-grid-mission-element">
+          <div className="filtre-grid-mission-element-large">
             <TextField
               id="outlined-basic-select"
               select
               variant="outlined"
               onChange={inputEtat}
+              className="filtreMission-select"
               value={etat}
             >
               <MenuItem value="Default">Coisir un état</MenuItem>
@@ -214,7 +223,7 @@ const FiltreMission = (props) => {
 
           <div className="filtre-grid-mission-element">
             <Button
-              className="btn-filtre"
+              className="btn-filtreMission-Rech"
               variant="contained"
               size="medium"
               type="submit"
@@ -225,7 +234,7 @@ const FiltreMission = (props) => {
 
           <div className="filtre-grid-mission-element">
             <Button
-              className="btn-filtre"
+              className="btn-filtreMission-Annul"
               variant="contained"
               size="medium"
               onClick={handleAnnulerFiltre}

@@ -1,11 +1,21 @@
 .AjoutUserCard {
-  width: 400px;
-  background-color: aqua;
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
+}
+
+.AjoutUserCard-link {
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgb(55, 55, 55);
+  width: 325px;
+  height: 255px;
 }
 
 .AjoutUserCard-ajoutForm {
-  width: 400px;
-  background-color: aqua;
   display: grid;
   grid-template: repeat(5, 1fr) 1fr / 1fr 1fr;
 }
@@ -20,20 +30,35 @@
   margin-right: 10px;
 }
 
-.btn-modifier,
-.btn-suppr {
+.btn-ajout,
+.btn-annulerAjout {
   display: block !important;
   margin-left: auto !important;
   margin-right: auto !important;
 }
 
-/* .MuiFormControl-root {
+.btn-ajout {
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(0, 255, 0) !important;
+  border: solid 2px rgb(0, 255, 0) !important;
+  margin-bottom: 12px !important;
+}
+
+.btn-annulerAjout {
+  background-color: rgb(168, 59, 47) !important;
+  color: rgb(255, 0, 0) !important;
+  border: solid 2px rgb(255, 0, 0) !important;
+  margin-bottom: 12px !important;
+}
+
+.AddUser-Form {
   margin-top: 12px !important;
 }
 
-.MuiLink-root {
+.ajoutLink {
   flex-direction: column;
-} */
+  margin-top: -45px !important;
+}
 
 .ajoutLink-plus {
   font-size: 100px;
@@ -44,6 +69,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
 .ajoutLink:hover > .ajoutLink-plus,

@@ -71,42 +71,50 @@ const FiltreUser = (props) => {
         onSubmit={handleSubmit}
       >
         <div className="filtre-grid">
-          <div className="filtre-grid-element">
+          <div className="filtre-grid-element-large">
+            <h1 className="FiltreUser-titre">Filtre :</h1>
+          </div>
+
+          <div className="filtre-grid-element-large">
             <TextField
               id="nom"
               label="Nom"
               variant="outlined"
+              className="filtreUser-input"
               onChange={inputNom}
               value={nom}
             />
           </div>
 
-          <div className="filtre-grid-element">
+          <div className="filtre-grid-element-large">
             <TextField
               id="prenom"
               label="Prénom"
               variant="outlined"
+              className="filtreUser-input"
               onChange={inputPrenom}
               value={prenom}
             />
           </div>
 
-          <div className="filtre-grid-element">
+          <div className="filtre-grid-element-large">
             <TextField
               id="identifiant"
               label="Identifiant"
               variant="outlined"
+              className="filtreUser-input"
               onChange={inputIdentifiant}
               value={identifiant}
             />
           </div>
 
-          <div>
+          <div className="filtre-grid-element-large">
             <TextField
               id="standard-basic-select"
               select
               defaultValue={fonction}
               value={fonction}
+              className="filtreUser-input"
               variant="outlined"
               onChange={inputFonction}
             >
@@ -124,7 +132,7 @@ const FiltreUser = (props) => {
 
           <div className="filtre-grid-element">
             <Button
-              className="btn-filtre"
+              className="btn-filtreUser-Rech"
               variant="contained"
               size="medium"
               type="submit"
@@ -135,7 +143,7 @@ const FiltreUser = (props) => {
 
           <div className="filtre-grid-element">
             <Button
-              className="btn-filtre"
+              className="btn-filtreUser-Annul"
               variant="contained"
               size="medium"
               onClick={handleAnnulerFiltre}

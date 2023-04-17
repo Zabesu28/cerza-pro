@@ -389,7 +389,7 @@ const CardMission = (props) => {
 
             <div className="MissionCard-element">
               <Button
-                className="btn-suppr"
+                className="btn-mission-valid"
                 variant="contained"
                 size="medium"
                 type="submit"
@@ -400,7 +400,7 @@ const CardMission = (props) => {
 
             <div className="MissionCard-element">
               <Button
-                className="btn-suppr"
+                className="btn-mission-annul"
                 variant="contained"
                 size="medium"
                 onClick={handleAnnulerBtn}
@@ -415,12 +415,14 @@ const CardMission = (props) => {
           {supprForm ? (
             <div className="MissionCard-supprForm">
               <div className="UserCard-element-large">
-                <p>Voulez-vous supprimer cette mission ?</p>
+                <p className="MissionCard-titreSuppr">
+                  Voulez-vous supprimer cette mission ?
+                </p>
               </div>
 
               <div className="MissionCard-element">
                 <Button
-                  className="btn-modifier"
+                  className="btn-mission-oui"
                   variant="contained"
                   size="medium"
                   onClick={handleSubmitSuppr}
@@ -431,7 +433,7 @@ const CardMission = (props) => {
 
               <div className="MissionCard-element">
                 <Button
-                  className="btn-modifier"
+                  className="btn-mission-non"
                   variant="contained"
                   size="medium"
                   onClick={handleAnnulerBtn}
@@ -492,7 +494,7 @@ const CardMission = (props) => {
 
                 <div className="MissionCard-element">
                   <Button
-                    className="btn-modifier"
+                    className="btn-mission-modifier"
                     variant="contained"
                     size="medium"
                     onClick={handleModifMission}
@@ -503,7 +505,7 @@ const CardMission = (props) => {
 
                 <div className="MissionCard-element">
                   <Button
-                    className="btn-suppr"
+                    className="btn-mission-suppr"
                     variant="contained"
                     size="medium"
                     onClick={handleSupprMission}

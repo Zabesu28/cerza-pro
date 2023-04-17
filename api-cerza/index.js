@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./connect_bdd.js");
 const { createHash } = require("crypto");
-const moment = require('moment');
+const moment = require("moment");
 
 // Déclaration des variables qui contiendront le serveur Express et le port du serveur.
 const app = express();
@@ -44,41 +44,52 @@ app.get("/utilisateurs", (req, res) => {
     }
   );
 });
-app.get('/getLesQuestions', (req, res) => {
-  db.query("select idQuestion, libelleQuestion from questionnaire",
-  function (err, result) {
-    if (err) throw err;
-    res.status(200).json(result);
-  })
-})
-
-app.get("/ListAlerte", (req, res) => {
-  let sql = "SELECT idAlerte, descriptionAlerte, active, dateAlerte, idEmployeAlerte, nomEmploye, prenomEmploye, idNiveauAlerte, libelleNiveau FROM alerte INNER JOIN Employes ON idEmployeAlerte = idEmploye INNER JOIN Niveau ON idNiveauAlerte = idNiveau ORDER by active, idAlerte ASC";
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      res.json({results});    
-  })
+app.get("/getLesQuestions", (req, res) => {
+  db.query(
+    "select idQuestion, libelleQuestion from questionnaire",
+    function (err, result) {
+      if (err) throw err;
+      res.status(200).json(result);
+    }
+  );
 });
 
-app.get('/ListAlerte/:id', (req, res) => {
+app.get("/ListAlerte", (req, res) => {
+  let sql =
+    "SELECT idAlerte, descriptionAlerte, active, dateAlerte, idEmployeAlerte, nomEmploye, prenomEmploye, idNiveauAlerte, libelleNiveau FROM alerte INNER JOIN Employes ON idEmployeAlerte = idEmploye INNER JOIN Niveau ON idNiveauAlerte = idNiveau ORDER by active, idAlerte ASC";
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+    res.json({ results });
+  });
+});
 
-  const id = parseInt(req.params.id) // prend l'id dans la route
-  let sql = "SELECT idAlerte, descriptionAlerte, active, dateAlerte, idEmployeAlerte, idNiveauAlerte, nomEmploye, prenomEmploye, libelleNiveau FROM alerte INNER JOIN Employes ON idEmployeAlerte = idEmploye INNER JOIN Niveau ON idNiveauAlerte = idNiveau WHERE idAlerte ="+id
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      res.json({results});
-  })
+app.get("/ListAlerte/:id", (req, res) => {
+  const id = parseInt(req.params.id); // prend l'id dans la route
+  let sql =
+    "SELECT idAlerte, descriptionAlerte, active, dateAlerte, idEmployeAlerte, idNiveauAlerte, nomEmploye, prenomEmploye, libelleNiveau FROM alerte INNER JOIN Employes ON idEmployeAlerte = idEmploye INNER JOIN Niveau ON idNiveauAlerte = idNiveau WHERE idAlerte =" +
+    id;
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+    res.json({ results });
+  });
 });
 
 app.get("/ListAlerteUser", (req, res) => {
-  let sql = "SELECT idAlerte, descriptionAlerte, active, dateAlerte, idEmployeAlerte, nomEmploye, prenomEmploye, idNiveauAlerte, libelleNiveau FROM alerte INNER JOIN Employes ON idEmployeAlerte = idEmploye INNER JOIN Niveau ON idNiveauAlerte = idNiveau ORDER by active, idAlerte ASC";
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      res.json({results});    
-  })
+  let sql =
+    "SELECT idAlerte, descriptionAlerte, active, dateAlerte, idEmployeAlerte, nomEmploye, prenomEmploye, idNiveauAlerte, libelleNiveau FROM alerte INNER JOIN Employes ON idEmployeAlerte = idEmploye INNER JOIN Niveau ON idNiveauAlerte = idNiveau ORDER by active, idAlerte ASC";
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+    res.json({ results });
+  });
 });
 
 app.get("/ListMissionUser/:id", (req, res) => {
@@ -93,40 +104,54 @@ app.get("/ListMissionUser/:id", (req, res) => {
 
 app.get("/ListEmployesCB", (req, res) => {
   let sql = "SELECT idEmploye, nomEmploye, prenomEmploye FROM employes";
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      res.json({results});    
-  })
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+    res.json({ results });
+  });
 });
 
 app.get("/ListEmployesCBModif/:id", (req, res) => {
-  const id = parseInt(req.params.id) // prend l'id dans la route
-  let sql = "SELECT idEmploye, nomEmploye, prenomEmploye FROM employes WHERE idEmploye NOT IN(SELECT idEmploye FROM employes WHERE idEmploye ="+id+")";
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      res.json({results});    
-  })
+  const id = parseInt(req.params.id); // prend l'id dans la route
+  let sql =
+    "SELECT idEmploye, nomEmploye, prenomEmploye FROM employes WHERE idEmploye NOT IN(SELECT idEmploye FROM employes WHERE idEmploye =" +
+    id +
+    ")";
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+    res.json({ results });
+  });
 });
 
 app.get("/ListNiveauCBModif/:id", (req, res) => {
-  const id = parseInt(req.params.id) // prend l'id dans la route
-  let sql = "SELECT idNiveau, libelleNiveau FROM niveau WHERE idNiveau NOT IN(SELECT idNiveau FROM niveau WHERE idNiveau ="+id+")";
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      res.json({results});    
-  })
+  const id = parseInt(req.params.id); // prend l'id dans la route
+  let sql =
+    "SELECT idNiveau, libelleNiveau FROM niveau WHERE idNiveau NOT IN(SELECT idNiveau FROM niveau WHERE idNiveau =" +
+    id +
+    ")";
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+    res.json({ results });
+  });
 });
 
 app.get("/ListNiveau", (req, res) => {
   let sql = "SELECT idNiveau, libelleNiveau FROM niveau";
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      res.json({results});    
-  })
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+    res.json({ results });
+  });
 });
 
 // Permet de récupérer le compte d'un utilisateur spécifique
@@ -218,67 +243,112 @@ app.get("/etatsMission/:id", (req, res) => {
   );
 });
 
-app.get('/getEspecesLibelle', (req, res) => {
-  db.query("select idEspece, libelleEspece from especes",
-  function (err, result) {
-        if (err) throw err;
-        res.status(200).json(result);
-  }) 
+// Permet de vérifier si un employe est attribué à une mission, à une alerte ou à un soin
+app.get("/verifEmployeAttr/:id", (req, res) => {
+  const idEmploye = parseInt(req.params.id);
+
+  db.query(
+    "SELECT idEmployeAttribuer, idEmployeAlerte, idEmployeSoigner FROM employes LEFT JOIN attribuer ON idEmploye = idEmployeAttribuer LEFT JOIN alerte ON idEmploye = idEmployeAlerte LEFT JOIN soigner ON idEmploye = idEmployeSoigner WHERE idEmploye = " +
+      idEmploye +
+      " GROUP BY idEmploye",
+
+    function (err, result) {
+      if (err) throw err;
+
+      if (
+        typeof result[0] !== "undefined" &&
+        (result[0].idEmployeAttribuer === idEmploye ||
+          result[0].idEmployeAlerte === idEmploye ||
+          result[0].idEmployeSoigner === idEmploye)
+      ) {
+        res.json({ idEmploye: idEmploye, isAttribuer: "true" });
+      } else {
+        res.json({ idEmploye: idEmploye, isAttribuer: "false" });
+      }
+    }
+  );
 });
 
-app.get('/getAnimaux/:idEspece', (req, res) => {
+app.get("/getEspecesLibelle", (req, res) => {
+  db.query(
+    "select idEspece, libelleEspece from especes",
+    function (err, result) {
+      if (err) throw err;
+      res.status(200).json(result);
+    }
+  );
+});
+
+app.get("/getAnimaux/:idEspece", (req, res) => {
   const idEspece = parseInt(req.params.idEspece);
-  db.query("select idAnimal, nomAnimal from animaux where idEspeceAnimal ="+idEspece,
-  function (err, result) {
-    if (err) throw err;
-    res.status(200).json(result);
-  })
+  db.query(
+    "select idAnimal, nomAnimal from animaux where idEspeceAnimal =" + idEspece,
+    function (err, result) {
+      if (err) throw err;
+      res.status(200).json(result);
+    }
+  );
 });
 
-app.get('/getAnimal/:id', (req, res) => {
+app.get("/getAnimal/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  db.query("select idAnimal, nomAnimal, dateNaissAnimal, sexeAnimal, libelleEspece, codeEnclosAnimal from animaux inner join especes on idEspeceAnimal = idespece where idAnimal ="+id,
-  function (err, result) {
-    if (err) throw err;
-    res.status(200).json(result);
-  })
-})
-
-app.get('/getEspeces', (req, res) => {
-  db.query("select idEspece, libelleEspece, description, imageEspece from especes",
-  function (err, result) {
-        if (err) throw err;
-        res.status(200).json(result);
-  }) 
+  db.query(
+    "select idAnimal, nomAnimal, dateNaissAnimal, sexeAnimal, libelleEspece, codeEnclosAnimal from animaux inner join especes on idEspeceAnimal = idespece where idAnimal =" +
+      id,
+    function (err, result) {
+      if (err) throw err;
+      res.status(200).json(result);
+    }
+  );
 });
 
-app.get('/getEspeces/:id', (req, res) => {
+app.get("/getEspeces", (req, res) => {
+  db.query(
+    "select idEspece, libelleEspece, description, imageEspece from especes",
+    function (err, result) {
+      if (err) throw err;
+      res.status(200).json(result);
+    }
+  );
+});
+
+app.get("/getEspeces/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  db.query("select libelleEspece, regime, poidsMin, poidsMax, description from especes where idEspece = "+id,
-  function (err, result) {
-    if (err) throw err;
-    res.status(200).json(result);
-  })
+  db.query(
+    "select libelleEspece, regime, poidsMin, poidsMax, description from especes where idEspece = " +
+      id,
+    function (err, result) {
+      if (err) throw err;
+      res.status(200).json(result);
+    }
+  );
 });
 
-app.get('/getImages/:idEspece', (req, res) => {
+app.get("/getImages/:idEspece", (req, res) => {
   const idEspece = parseInt(req.params.idEspece);
-  db.query("select idImage, lienImage from images where idEspeceImage = "+idEspece,
-  function (err, result) {
-    if (err) throw err;
-    res.status(200).json(result);
-  })
+  db.query(
+    "select idImage, lienImage from images where idEspeceImage = " + idEspece,
+    function (err, result) {
+      if (err) throw err;
+      res.status(200).json(result);
+    }
+  );
 });
 
-
-app.get('/getDernierQuestionnaire/:idAnimal', (req, res) => {
+app.get("/getDernierQuestionnaire/:idAnimal", (req, res) => {
   const idAnimal = parseInt(req.params.idAnimal);
-  db.query("select libelleQuestion, idQuestionRepondre, reponse, dateRepondre FROM repondre INNER JOIN questionnaire ON idQuestion = idQuestionRepondre WHERE idAnimalRepondre = "+idAnimal+" and dateRepondre = (SELECT MAX(dateRepondre) FROM repondre WHERE idAnimalRepondre = "+idAnimal+") ORDER BY idQuestionRepondre",
-  function (err, result) {
-    if (err) throw err;
-    res.status(200).json(result);
-  })
-})
+  db.query(
+    "select libelleQuestion, idQuestionRepondre, reponse, dateRepondre FROM repondre INNER JOIN questionnaire ON idQuestion = idQuestionRepondre WHERE idAnimalRepondre = " +
+      idAnimal +
+      " and dateRepondre = (SELECT MAX(dateRepondre) FROM repondre WHERE idAnimalRepondre = " +
+      idAnimal +
+      ") ORDER BY idQuestionRepondre",
+    function (err, result) {
+      if (err) throw err;
+      res.status(200).json(result);
+    }
+  );
+});
 
 // - POST :
 // Permet de vérifier si une mission est attibuée, si c'est le cas, on retourne l'employé, la date d'atribution, le code de l'enclos, le commentaire, la date de validation et l'etat attribuer
@@ -346,18 +416,30 @@ app.post("/missions/:id/isAttribuer", (req, res) => {
 });
 
 app.post("/AddAlerte", (req, res) => {
-  const descriptionAlerte =  req.body.descriptionAlerte;
-  const active =  0;
-  const dateAlerte = moment(Date()).format('YYYY-MM-DD HH:mm:ss');
+  const descriptionAlerte = req.body.descriptionAlerte;
+  const active = 0;
+  const dateAlerte = moment(Date()).format("YYYY-MM-DD HH:mm:ss");
   const idEmployeAlerte = req.body.idEmploye;
   const idNiveauAlerte = req.body.idNiveau;
-  let sql = "INSERT INTO alerte (descriptionAlerte, active, idEmployeAlerte, idNiveauAlerte, dateAlerte) VALUES ('" + descriptionAlerte + "','" + active + "','" + idEmployeAlerte + "','" + idNiveauAlerte + "','" + dateAlerte + "')"
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-  })
-})
-
+  let sql =
+    "INSERT INTO alerte (descriptionAlerte, active, idEmployeAlerte, idNiveauAlerte, dateAlerte) VALUES ('" +
+    descriptionAlerte +
+    "','" +
+    active +
+    "','" +
+    idEmployeAlerte +
+    "','" +
+    idNiveauAlerte +
+    "','" +
+    dateAlerte +
+    "')";
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+  });
+});
 
 // Permet de récupérer l'id d'une fonction via son libellé
 app.post("/getIdFonctionByLibelle", (req, res) => {
@@ -585,7 +667,7 @@ app.post("/ajoutMission/attribuer", (req, res) => {
   };
 
   const query =
-    "insert into attribuer (idEmployeAttribuer, idMissionAttribuer, dateAttribuer, codeEnclosAttribuer, commentaire, dateValidation, idEtatAttribuer) values (?,?,CONCAT(CURDATE(), ' ', CURTIME()),?,'',NULL,(SELECT idEtat FROM etats WHERE libelleEtat = 'En cours'))";
+    "insert into attribuer (idEmployeAttribuer, idMissionAttribuer, dateAttribuer, codeEnclosAttribuer, commentaire, dateValidation, idEtatAttribuer) values (?,?,CONCAT(CURDATE(), ' ', CURTIME()),?,NULL,NULL,(SELECT idEtat FROM etats WHERE libelleEtat = 'En cours'))";
 
   db.query(query, Object.values(data), (error) => {
     if (error) {
@@ -596,19 +678,29 @@ app.post("/ajoutMission/attribuer", (req, res) => {
   });
 });
 
-app.post('/insertReponses', (req, res) => {
+app.post("/insertReponses", (req, res) => {
   const data = {
     idAnimal: req.body.idAnimal,
     idQuestion: req.body.idQuestion,
     date: req.body.date,
     reponse: req.body.reponse,
   };
-  db.query("Insert into repondre values('"+data.idAnimal+"', '"+data.idQuestion+"', '"+data.date+"','"+data.reponse+"')",
-  function (err, result) {
-    if (err) throw err;
-    res.status(200).json(result);
-  })
-})
+  db.query(
+    "Insert into repondre values('" +
+      data.idAnimal +
+      "', '" +
+      data.idQuestion +
+      "', '" +
+      data.date +
+      "','" +
+      data.reponse +
+      "')",
+    function (err, result) {
+      if (err) throw err;
+      res.status(200).json(result);
+    }
+  );
+});
 // - PUT :
 // Modifier les informations d'un utilisateur
 app.put("/modifUtil/:id", (req, res) => {
@@ -713,69 +805,109 @@ app.put("/modifUtil/:id", (req, res) => {
 
 app.put("/ModifAlerte/:id", (req, res) => {
   res.send(req.body);
-  const id = parseInt(req.params.id)
-  const descriptionAlerte =  req.body.descriptionAlerte;
+  const id = parseInt(req.params.id);
+  const descriptionAlerte = req.body.descriptionAlerte;
   const idEmployeAlerte = parseInt(req.body.idEmployeAlerte);
   const idNiveauAlerte = parseInt(req.body.idNiveauAlerte);
-  let sql = "UPDATE alerte SET descriptionAlerte ='"+descriptionAlerte+"', idEmployeAlerte ="+idEmployeAlerte+", idNiveauAlerte="+idNiveauAlerte+" WHERE idAlerte ="+id 
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      
-  })
-})
+  let sql =
+    "UPDATE alerte SET descriptionAlerte ='" +
+    descriptionAlerte +
+    "', idEmployeAlerte =" +
+    idEmployeAlerte +
+    ", idNiveauAlerte=" +
+    idNiveauAlerte +
+    " WHERE idAlerte =" +
+    id;
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+  });
+});
 
 app.put("/ModifAlerteCheckbox/:id", (req, res) => {
   res.send(req.body);
-  const id = parseInt(req.params.id)
+  const id = parseInt(req.params.id);
   const check = parseInt(req.body.active);
-  console.log(req.body)
-  let sql = "UPDATE alerte SET active ="+check+" WHERE idAlerte = "+id 
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-      
-  })
-})
+  console.log(req.body);
+  let sql = "UPDATE alerte SET active =" + check + " WHERE idAlerte = " + id;
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+  });
+});
 
 app.put("/ModifMissionCheckbox", (req, res) => {
   res.send(req.body);
-  const idEmploye = parseInt(req.body.idEmployeAttribuer)
-  const idMission = parseInt(req.body.idMissionAttribuer)
+  const idEmploye = parseInt(req.body.idEmployeAttribuer);
+  const idMission = parseInt(req.body.idMissionAttribuer);
   const check = parseInt(req.body.idEtatAttribuer);
   let commentaire = req.body.commentaire;
   const date = req.body.dateAttribuer;
-  const dateValidation = req.body.dateValidation
+  const dateValidation = req.body.dateValidation;
   let sql;
-   if(req.body.idEtatAttribuer === null){
-    sql = `UPDATE attribuer SET commentaire ='`+commentaire+`' WHERE idEmployeAttribuer = `+idEmploye+` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='`+date+`'`
-    db.query(sql,(err, results) =>{
-      if(err) {throw err}
+  if (req.body.idEtatAttribuer === null) {
+    sql =
+      `UPDATE attribuer SET commentaire ='` +
+      commentaire +
+      `' WHERE idEmployeAttribuer = ` +
+      idEmploye +
+      ` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='` +
+      date +
+      `'`;
+    db.query(sql, (err, results) => {
+      if (err) {
+        throw err;
+      }
       console.log(results);
-      
-  })
-    }
-  else if(!commentaire){
-    sql = `UPDATE attribuer SET idEtatAttribuer =`+check+`, dateValidation ='`+dateValidation+`' WHERE idEmployeAttribuer = `+idEmploye+` AND idMissionAttribuer = `+idMission+` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='`+date+`'`
-    db.query(sql,(err, results) =>{
-      if(err) {throw err}
+    });
+  } else if (!commentaire) {
+    sql =
+      `UPDATE attribuer SET idEtatAttribuer =` +
+      check +
+      `, dateValidation ='` +
+      dateValidation +
+      `' WHERE idEmployeAttribuer = ` +
+      idEmploye +
+      ` AND idMissionAttribuer = ` +
+      idMission +
+      ` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='` +
+      date +
+      `'`;
+    db.query(sql, (err, results) => {
+      if (err) {
+        throw err;
+      }
       console.log(results);
-      
-  })
-  }
-  else{
-    sql = `UPDATE attribuer SET idEtatAttribuer =`+check+`, commentaire ='`+commentaire+`', dateValidation ='`+dateValidation+`' WHERE idEmployeAttribuer = `+idEmploye+` AND idMissionAttribuer = `+idMission+` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='`+date+`'`
-    db.query(sql,(err, results) =>{
-      if(err) {throw err}
+    });
+  } else {
+    sql =
+      `UPDATE attribuer SET idEtatAttribuer =` +
+      check +
+      `, commentaire ='` +
+      commentaire +
+      `', dateValidation ='` +
+      dateValidation +
+      `' WHERE idEmployeAttribuer = ` +
+      idEmploye +
+      ` AND idMissionAttribuer = ` +
+      idMission +
+      ` AND DATE_FORMAT(dateAttribuer, "%H:%i") ='` +
+      date +
+      `'`;
+    db.query(sql, (err, results) => {
+      if (err) {
+        throw err;
+      }
       console.log(results);
-      
-  })
+    });
   }
   //tt tes données dans le check c'est pour ca elle sont pas la
-  console.log(req.body)
- 
-  
-})
+  console.log(req.body);
+});
 
 // Modifier une mission
 app.put("/modifMission/:id", (req, res) => {
@@ -868,7 +1000,7 @@ app.put("/modifMission/attribuer/:id", (req, res) => {
     });
   } else {
     db.query(
-      "UPDATE attribuer SET dateAttribuer = CONCAT(CURDATE(), ' ', CURTIME()), commentaire = '', dateValidation = NULL, idEtatAttribuer = (SELECT idEtat FROM etats WHERE libelleEtat = 'En cours') WHERE idMissionAttribuer = " +
+      "UPDATE attribuer SET dateAttribuer = CONCAT(CURDATE(), ' ', CURTIME()), commentaire = NULL, dateValidation = NULL, idEtatAttribuer = (SELECT idEtat FROM etats WHERE libelleEtat = 'En cours') WHERE idMissionAttribuer = " +
         idModif,
       function (err, result) {
         if (err) throw err;
@@ -897,22 +1029,26 @@ app.delete("/supprUtil/:id", (req, res) => {
 });
 
 app.delete("/DeleteAlerte/:id", (req, res) => {
-  const id = parseInt(req.params.id)
-  let sql = "DELETE FROM alerte WHERE idAlerte = "+id
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-  })
-})
+  const id = parseInt(req.params.id);
+  let sql = "DELETE FROM alerte WHERE idAlerte = " + id;
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+  });
+});
 
 app.delete("/DeleteAlerteClear", (req, res) => {
-  let sql = "DELETE from alerte where DATEDIFF(NOW(), dateAlerte) > 0 AND active = 1"
-  db.query(sql,(err, results) =>{
-      if(err) {throw err}
-      console.log(results);
-  })
-})
-
+  let sql =
+    "DELETE from alerte where DATEDIFF(NOW(), dateAlerte) > 0 AND active = 1";
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results);
+  });
+});
 
 // Supprimer une mission
 app.delete("/supprMission/:id", (req, res) => {

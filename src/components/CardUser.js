@@ -29,6 +29,8 @@ const CardUser = (props) => {
   const [nomInputError, setNomInputError] = useState(false);
   const [prenomInputError, setPrenomInputError] = useState(false);
 
+  const [employeIsAttribuer, setEmployeIsAttribuer] = useState(false);
+
   let regNomPrenom = new RegExp(/^[a-zA-Z]{3,}$/);
   let regIdentifiant = new RegExp(/^[a-zA-Z0-9]{4,}$/);
   let regMDP = new RegExp(
@@ -80,6 +82,16 @@ const CardUser = (props) => {
         libFonction: props.User.libelleFonction,
       })
       .then((res) => SetIdFonctDefault(parseInt(res.data[0].idFonction)));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/verifEmployeAttr/" + props.User.idEmploye)
+      .then((res) => {
+        if (res.data.isAttribuer) {
+          setEmployeIsAttribuer(res.data.isAttribuer);
+        }
+      });
   }, []);
 
   const handleModifBtn = (event) => {
@@ -315,8 +327,14 @@ const CardUser = (props) => {
       JSON.parse(localStorage.getItem("userConnected")).idCnx !==
       props.User.login
     ) {
-      axios.delete("http://localhost:4000/supprUtil/" + props.User.idEmploye);
-      props.Suppr(props.User.idEmploye);
+      if (!employeIsAttribuer) {
+        axios.delete("http://localhost:4000/supprUtil/" + props.User.idEmploye);
+        props.Suppr(props.User.idEmploye);
+      } else {
+        alert(
+          "Vous ne pouvez pas supprimer ce compte, veuillez vérifier qu'il n'est pas lié à une mission, à une alerte ou à un soin !"
+        );
+      }
     } else {
       alert("Vous ne pouvez pas supprimer votre propre compte !");
     }
@@ -342,6 +360,7 @@ const CardUser = (props) => {
               <TextField
                 id="standard-basic"
                 variant="standard"
+                className="formUser-Form"
                 placeholder={props.User.nomEmploye}
                 style={{ width: 100 }}
                 onChange={inputNom}
@@ -359,6 +378,7 @@ const CardUser = (props) => {
               <TextField
                 id="standard-basic"
                 variant="standard"
+                className="formUser-Form"
                 placeholder={props.User.prenomEmploye}
                 style={{ width: 100 }}
                 onChange={inputPrenom}
@@ -376,6 +396,7 @@ const CardUser = (props) => {
               <TextField
                 id="standard-basic"
                 variant="standard"
+                className="formUser-Form"
                 placeholder={props.User.login}
                 style={{ width: 100 }}
                 onChange={inputIdentifiant}
@@ -393,6 +414,7 @@ const CardUser = (props) => {
               <TextField
                 id="standard-basic"
                 variant="standard"
+                className="formUser-Form"
                 placeholder="********"
                 type={showPassword ? "text" : "password"}
                 InputProps={{
@@ -427,6 +449,7 @@ const CardUser = (props) => {
                 select
                 defaultValue={idFonctDefault}
                 variant="standard"
+                className="formUser-Form"
                 style={{ width: 100 }}
                 onChange={inputFonction}
               >
@@ -443,7 +466,7 @@ const CardUser = (props) => {
 
             <div className="UserCard-element">
               <Button
-                className="btn-modifier"
+                className="btn-valid"
                 variant="contained"
                 size="medium"
                 type="submit"
@@ -454,7 +477,7 @@ const CardUser = (props) => {
 
             <div className="UserCard-element">
               <Button
-                className="btn-modifier"
+                className="btn-annul"
                 variant="contained"
                 size="medium"
                 onClick={handleAnnulerBtn}
@@ -469,12 +492,14 @@ const CardUser = (props) => {
           {supprForm ? (
             <div className="UserCard-supprForm">
               <div className="UserCard-element-large">
-                <p>Voulez-vous supprimer cet utilisateur ?</p>
+                <p className="UserCard-titreSuppr">
+                  Voulez-vous supprimer cet utilisateur ?
+                </p>
               </div>
 
               <div className="UserCard-element">
                 <Button
-                  className="btn-suppr"
+                  className="btn-oui"
                   variant="contained"
                   size="medium"
                   onClick={handleSubmitSuppr}
@@ -485,7 +510,7 @@ const CardUser = (props) => {
 
               <div className="UserCard-element">
                 <Button
-                  className="btn-suppr"
+                  className="btn-non"
                   variant="contained"
                   size="medium"
                   onClick={handleAnnulerBtn}
