@@ -94,6 +94,13 @@ p {
   margin-bottom: 12px !important;
 }
 
+.btn-mission-modifier,
+.btn-mission-suppr,
+.btn-mission-valid,
+.btn-mission-annul {
+  margin-top: 5px !important;
+}
+
 .MissionCard-titreSuppr {
   margin-bottom: 35px;
 }

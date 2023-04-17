@@ -29,6 +29,8 @@ const CardUser = (props) => {
   const [nomInputError, setNomInputError] = useState(false);
   const [prenomInputError, setPrenomInputError] = useState(false);
 
+  const [employeIsAttribuer, setEmployeIsAttribuer] = useState(false);
+
   let regNomPrenom = new RegExp(/^[a-zA-Z]{3,}$/);
   let regIdentifiant = new RegExp(/^[a-zA-Z0-9]{4,}$/);
   let regMDP = new RegExp(
@@ -80,6 +82,16 @@ const CardUser = (props) => {
         libFonction: props.User.libelleFonction,
       })
       .then((res) => SetIdFonctDefault(parseInt(res.data[0].idFonction)));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/verifEmployeAttr/" + props.User.idEmploye)
+      .then((res) => {
+        if (res.data.isAttribuer) {
+          setEmployeIsAttribuer(res.data.isAttribuer);
+        }
+      });
   }, []);
 
   const handleModifBtn = (event) => {
@@ -315,8 +327,14 @@ const CardUser = (props) => {
       JSON.parse(localStorage.getItem("userConnected")).idCnx !==
       props.User.login
     ) {
-      axios.delete("http://localhost:4000/supprUtil/" + props.User.idEmploye);
-      props.Suppr(props.User.idEmploye);
+      if (!employeIsAttribuer) {
+        axios.delete("http://localhost:4000/supprUtil/" + props.User.idEmploye);
+        props.Suppr(props.User.idEmploye);
+      } else {
+        alert(
+          "Vous ne pouvez pas supprimer ce compte, veuillez vérifier qu'il n'est pas lié à une mission, à une alerte ou à un soin !"
+        );
+      }
     } else {
       alert("Vous ne pouvez pas supprimer votre propre compte !");
     }

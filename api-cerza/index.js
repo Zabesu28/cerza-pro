@@ -248,6 +248,32 @@ app.get("/etatsMission/:id", (req, res) => {
   );
 });
 
+// Permet de vérifier si un employe est attribué à une mission, à une alerte ou à un soin
+app.get("/verifEmployeAttr/:id", (req, res) => {
+  const idEmploye = parseInt(req.params.id);
+
+  db.query(
+    "SELECT idEmployeAttribuer, idEmployeAlerte, idEmployeSoigner FROM employes LEFT JOIN attribuer ON idEmploye = idEmployeAttribuer LEFT JOIN alerte ON idEmploye = idEmployeAlerte LEFT JOIN soigner ON idEmploye = idEmployeSoigner WHERE idEmploye = " +
+      idEmploye +
+      " GROUP BY idEmploye",
+
+    function (err, result) {
+      if (err) throw err;
+
+      if (
+        typeof result[0] !== "undefined" &&
+        (result[0].idEmployeAttribuer === idEmploye ||
+          result[0].idEmployeAlerte === idEmploye ||
+          result[0].idEmployeSoigner === idEmploye)
+      ) {
+        res.json({ idEmploye: idEmploye, isAttribuer: "true" });
+      } else {
+        res.json({ idEmploye: idEmploye, isAttribuer: "false" });
+      }
+    }
+  );
+});
+
 app.get("/getEspecesLibelle", (req, res) => {
   db.query(
     "select idEspece, libelleEspece from especes",
