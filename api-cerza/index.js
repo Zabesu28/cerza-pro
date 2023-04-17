@@ -83,7 +83,7 @@ app.get("/ListAlerteUser", (req, res) => {
 
 app.get("/ListMissionUser/:id", (req, res) => {
   const id = parseInt(req.params.id) // prend l'id dans la route
-  let sql = `SELECT idEmployeAttribuer, idMissionAttribuer, idEtatAttribuer, libelleEtat, DATE_FORMAT(dateAttribuer, "%H:%i") as date, dateAttribuer as dateJ, dateValidation as dateValide, commentaire, libelleMission, codeEnclosAttribuer FROM attribuer INNER JOIN missions ON idMissionAttribuer = idMission INNER JOIN etats ON idEtatAttribuer = idEtat WHERE idEmployeAttribuer =`+id+" ORDER BY idEtatAttribuer, date";
+  let sql = `SELECT idEmployeAttribuer, idMissionAttribuer, idEtatAttribuer, libelleEtat, DATE_FORMAT(dateAttribuer, "%H:%i") as date, dateAttribuer as dateJ, dateValidation as dateValide, commentaire, libelleMission, codeEnclosAttribuer FROM attribuer INNER JOIN missions ON idMissionAttribuer = idMission INNER JOIN etats ON idEtatAttribuer = idEtat WHERE idEmployeAttribuer =`+id+" AND dateAttribuer >= NOW() - INTERVAL 24 HOUR ORDER BY idEtatAttribuer, date";
   db.query(sql,(err, results) =>{
       if(err) {throw err}
       console.log(results);

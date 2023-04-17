@@ -27,13 +27,13 @@
   margin-right: auto !important;
 }
 
-.MuiFormControl-root {
+/* .MuiFormControl-root {
   margin-top: 12px !important;
 }
 
 .MuiLink-root {
   flex-direction: column;
-}
+} */
 
 .ajoutLink-plus {
   font-size: 100px;

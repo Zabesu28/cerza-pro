@@ -8,6 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import axios from 'axios';
 import { TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import Navbar from "../components/Navbar";
 const moment = require('moment');
 
 const ListMissionUser = () => {
@@ -123,6 +124,7 @@ if (
     return (
       
       <div>     
+        <Navbar />
           <h1 class="center">Missions du jour</h1>
           <div class="missions-user-board">
         
@@ -133,6 +135,7 @@ if (
           <>
             {mission.map((uneMission) => (
               <div> 
+
               <Card sx={{ minWidth: 300 }}>
               <form method="PUT" onSubmit={handlesubmit}>
                <CardContent>
@@ -142,7 +145,7 @@ if (
             <Typography variant="" component="div">
             { "Assigné " + convertDateSansMaj(uneMission.dateJ)}
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            <Typography sx={{ mb: 1.5 }} color="text.secondary" component="div">
               {uneMission.libelleEtat} {uneMission.dateValide ? convertDateSansMaj(uneMission.dateValide) : ''}
               </Typography>
               
@@ -164,6 +167,7 @@ if (
               name={uneMission.date} 
               id={uneMission.idMissionAttribuer} 
               value={isChecked ? 1 : 2}
+              color='success'
               onChange={e => {
                 setSelectedId(e.target.value); 
                 setIdMission(e.target.id); 
@@ -175,7 +179,7 @@ if (
             </Typography>       
             </CardContent>         
             <CardActions>
-                  <Button size="small" type="submit" endIcon={<SendIcon />} disabled={(!isChecked && !commentaire) || !(uneMission.date == date)}>Soumettre</Button>
+                  <Button size="small" type="submit" color='success' endIcon={<SendIcon />} disabled={(!isChecked && !commentaire) || !(uneMission.date == date)}>Soumettre</Button>
                 </CardActions>
                 </form> 
               </Card>

@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
+import Navbar from "../components/Navbar";
 
 const ListAlerte = () => {
   
@@ -24,8 +25,11 @@ const ListAlerte = () => {
     const Delete = (idAlerte) => {
         //1 copie
         console.log(idAlerte);
+        const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer cette alerte ?");
+        if (confirmation) {
         fetch('http://localhost:4000/DeleteAlerte/'+idAlerte, { method: 'DELETE' }) 
-        alert("L'alerte a bien été supprimé"); 
+        alert("L'alerte a bien été supprimé");
+        } 
     }
 
     const Update = (idAlerte) => {
@@ -80,14 +84,15 @@ if (
 ){
     return (
         <div>
+          <Navbar />
           <h1 class="center">Gestion des Alertes</h1>
           <TextField name="idNiveauAlerte" onChange={e => 
             idNiveauchange(e.target.value)
             }
-
+            label="Niveau"
             select
             defaultValue={0}
-            style={{width : 200, paddingLeft: 60}}
+            style={{width : 200, marginLeft: 60, backgroundColor: "brown"}}
             > 
             <MenuItem value={0}>Tout</MenuItem>
              {(niveau.map(unNiveau => <MenuItem value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</MenuItem>))}
@@ -113,26 +118,26 @@ if (
             <Typography variant="" component="div">
             {"Alerteur : " + uneAlerte.nomEmploye + " " + uneAlerte.prenomEmploye} 
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            <Typography sx={{ mb: 1.5 }} color="text.secondary" variant="" component="div">
             {uneAlerte.libelleNiveau + " (" + uneAlerte.idNiveauAlerte + ")"}
               </Typography>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              <Typography sx={{ mb: 1.5 }} color="text.secondary" variant="" component="div">
             { "Créée le " + convertDate(uneAlerte.dateAlerte) }
               </Typography>
-              <Typography  color="text.secondary">
+              <Typography  color="text.secondary" variant="" component="div">
               {uneAlerte.active == 0 ? (
           
-          <p align="left">En cours</p>
+          <div align="left">En cours</div>
           ) : (
           <>
-          <p align="left">Terminé</p>
+          <div align="left">Terminé</div>
           </>
           )}
             </Typography>                 
             </CardContent>         
             <CardActions>
             <Link to={`/modifAlerte/${uneAlerte.idAlerte}`}><Button onClick={() => Update(uneAlerte.idAlerte)}>Modifier</Button></Link>         
-                    <Button align="left" onClick={() => Delete(uneAlerte.idAlerte)}><a href="/gestionAlerte"><IconButton aria-label="delete" color="error"><DeleteIcon /></IconButton></a></Button>
+            <a href="/gestionAlerte"><Button align="left" onClick={() => Delete(uneAlerte.idAlerte)}><IconButton aria-label="delete" color="error"><DeleteIcon /></IconButton></Button></a>
             </CardActions>
           </Card>      
         </div>   

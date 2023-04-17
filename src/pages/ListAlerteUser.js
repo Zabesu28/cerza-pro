@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import SendIcon from '@mui/icons-material/Send';
+import Navbar from "../components/Navbar";
 
 
 const ListAlerteUser = () => {
@@ -94,15 +95,16 @@ if (
 ){
     return (
         <div>
+          <Navbar />
           <h1 class="center">Liste des Alertes</h1>
           
           <TextField name="idNiveauAlerte" onChange={e => 
             idNiveauchange(e.target.value)
             }
-
+            label="Niveau"
             select
             defaultValue={0}
-            style={{width : 200, paddingLeft: 60}}
+            style={{width : 200, marginLeft: 60, backgroundColor: "brown"}}
             > 
             <MenuItem value={0}>Tout</MenuItem>
              {(niveau.map(unNiveau => <MenuItem value={unNiveau.idNiveau}>{unNiveau.libelleNiveau}</MenuItem>))}
@@ -112,7 +114,7 @@ if (
      
           {alerte.length === 0 ? (
           
-          <p align="left">Chargement...</p>
+          <p align="left">Aucune alerte en cours</p>
           ) : (
           <>
             {alerte.filter(laAlerte => laAlerte.idNiveauAlerte == idNiveauAlerte || idNiveauAlerte == 0).map((uneAlerte) => (
@@ -126,16 +128,16 @@ if (
             <Typography variant="" component="div">
             {"Alerteur : " + uneAlerte.nomEmploye + " " + uneAlerte.prenomEmploye} 
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            <Typography sx={{ mb: 1.5 }} color="text.secondary" variant="" component="div">
             {uneAlerte.libelleNiveau + " (" + uneAlerte.idNiveauAlerte + ")"}
               </Typography>
-              <Typography  color="text.secondary">
+              <Typography color="text.secondary" variant="" component="div">
               {uneAlerte.active == 0 ? (
           
-          <p align="left">En cours</p>
+          <div align="left">En cours</div>
           ) : (
           <>
-          <p align="left">Terminé</p>
+          <div align="left">Terminé</div>
           </>
           )}
               </Typography>
@@ -147,6 +149,7 @@ if (
                   name="active" 
                   id={uneAlerte.idAlerte} 
                   value={1} 
+                  color='success'
                   onChange={e => {
                     setSelectedId(e.target.id); 
                     setActive(e.target.value); 
@@ -156,7 +159,7 @@ if (
             </Typography>       
             </CardContent>         
             <CardActions>
-                  <Button size="small" type="submit" endIcon={<SendIcon />} disabled={(!checkboxChecked || uneAlerte.active === 1 ) || !(uneAlerte.idAlerte == selectedId)}>Soumettre</Button>
+                  <Button size="small" type="submit" color='success' endIcon={<SendIcon />} disabled={(!checkboxChecked || uneAlerte.active === 1 ) || !(uneAlerte.idAlerte == selectedId)}>Soumettre</Button>
                 </CardActions>
                 </form> 
               </Card>

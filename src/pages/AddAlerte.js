@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import SendIcon from '@mui/icons-material/Send';
+import Navbar from "../components/Navbar";
 
 const AddAlerte = () => {
   
@@ -94,7 +95,8 @@ const AddAlerte = () => {
       "Administrateur"
   ){
   return (
-
+    <div>
+    <Navbar />
     <div class="boxAlerteAdd">
     <Card sx={{ minWidth: 300 }}>
     <h2 class="center">Créer une alerte</h2>
@@ -120,13 +122,13 @@ const AddAlerte = () => {
         
             </CardContent>         
             <CardActions>
-                  <Button endIcon={<SendIcon />} size="small" type="submit" value="Ajouter">Soumettre</Button>
+                  <Button endIcon={<SendIcon />} color='success' size="small" type="submit" value="Ajouter">Soumettre</Button>
                   <Button size="small"><Link to="/gestionAlerte">Retour</Link></Button>
                 </CardActions>
                 </form>
                 </Card>
                 </div>
-      
+                </div>
   ); 
 } else {
   if (

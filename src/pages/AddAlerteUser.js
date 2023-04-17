@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import SendIcon from '@mui/icons-material/Send';
+import Navbar from "../components/Navbar";
 
 const AddAlerteUser = () => {
   
@@ -78,6 +79,8 @@ const AddAlerteUser = () => {
     localStorage.getItem("userConnected") !== null
   ){
   return (
+    <div>
+    <Navbar />
     <div class="boxAlerteUserAdd">
     <Card sx={{ minWidth: 300 }}>
       <h2 class="center">Créer une alerte</h2>
@@ -104,12 +107,13 @@ const AddAlerteUser = () => {
         
             </CardContent>         
             <CardActions>
-                  <Button size="small"  type="submit" value="Ajouter" endIcon={<SendIcon />}>Soumettre</Button>
+                  <Button size="small" color='success'  type="submit" value="Ajouter" endIcon={<SendIcon />}>Soumettre</Button>
                   <Button size="small"><Link to="/ListAlerte">Retour</Link></Button>
                 </CardActions>
                 </form>
                 </Card>
                 </div>
+                </div>  
   ); 
 } else {
   
