@@ -59,6 +59,13 @@ body{
       margin-bottom: 5%;
 }
 
+.description{
+      background-color: white;
+      border: 1px #6C2A02 solid !important;
+      border-radius: 20px;
+      margin: 2%;
+}
+
 @media (min-width: 800px) and (max-width: 1200px) {
       .gridEspece{
             display: grid;

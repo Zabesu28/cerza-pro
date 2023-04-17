@@ -45,7 +45,7 @@ const Description = () => {
                         ))}
                   </Slider>
                   {data.map((espece) => (
-                        <div key={espece.idEspece}>
+                        <div key={espece.idEspece} className='description'>
                               <h1 className='titre'>{espece.libelleEspece}</h1>
                               <p className='texte'>{espece.description}</p>
                               <p className='texte'>Régime alimentaire : {espece.regime}</p>
