@@ -17,7 +17,7 @@ Nous faisons partis de la société TKT ayant pour but d'aider les personnes dan
 ## Contributeurs
 
 - [ZABETH Romain](https://github.com/Zabesu28) (Chef de projet)
-- [Nolle Damien](https://github.com/DNOLLE27) (Développeur)
+- [NOLLE Damien](https://github.com/DNOLLE27) (Développeur)
 - [FENEROL Miguel](https://github.com/Migou27) (Développeur)
 
 ## Guide et standardisation
