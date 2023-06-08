@@ -15,6 +15,10 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Encyclopedie from './Encyclopedie';
 import Description from './Description';
 import QuestionnaireSante from './QuestionnaireSante';
+import TestList from './TestList';
+import TestAdd from './TestAdd';
+import TestModif from './TestModif';
+
 
 function App() {
   const [showNav, setShowNav] = useState(false);
@@ -37,6 +41,9 @@ function App() {
           <Route path="" element={<Encyclopedie/>}></Route>
           <Route path="/:espece" element={<Description/>}></Route>
           <Route path="questionnaireSante" element={<QuestionnaireSante/>}></Route>
+          <Route path="listTest" element={<TestList/>}></Route>
+          <Route path="addTest" element={<TestAdd/>}></Route>
+          <Route path="modifTest/:id" element={<TestModif/>}></Route>
       </Routes>
     </BrowserRouter>
     </div>

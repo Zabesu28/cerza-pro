@@ -958,3 +958,44 @@ app.delete("/supprMission/attribuer/:id", (req, res) => {
     }
   );
 });
+
+//TEST
+
+app.get("/ListTest", (req, res) => {
+  let sql = "SELECT idTest, libelleTest FROM test";
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+      res.json({results});    
+  })
+});
+
+app.post("/AddTest", (req, res) => {
+  const libelleTest =  req.body.libelleTest;
+  let sql = "INSERT INTO test (libelleTest) VALUES ('" + libelleTest + "')"
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+  })
+})
+
+app.put("/ModifTest/:id", (req, res) => {
+  res.send(req.body);
+  const id = parseInt(req.params.id)
+  const libelleTest =  req.body.libelleTest;
+  let sql = "UPDATE test SET libelleTest ='"+libelleTest+"' WHERE idTest ="+id 
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+      
+  })
+})
+
+app.delete("/DeleteTest/:id", (req, res) => {
+  const id = parseInt(req.params.id)
+  let sql = "DELETE FROM test WHERE idTest = "+id
+  db.query(sql,(err, results) =>{
+      if(err) {throw err}
+      console.log(results);
+  })
+})

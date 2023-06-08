@@ -78,6 +78,11 @@ function Navbar() {
               QUESTIONNAIRE SANTE
             </NavLink>
           </MenuItem>
+          <MenuItem>
+            <NavLink className="lien" to="/listTest">
+              TEST
+            </NavLink>
+          </MenuItem>
           
 
           <Box className="BoxBtnProfilCnx" sx={{ flexGrow: 0 }}>
